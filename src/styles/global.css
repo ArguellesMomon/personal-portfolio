@@ -1,0 +1,194 @@
+@import './variables.css';
+
+/* ---------- Reset ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: 1.6;
+  transition: background-color var(--duration-micro) var(--easing-standard),
+    color var(--duration-micro) var(--easing-standard);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* ---------- Typography ---------- */
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.15;
+  margin: 0;
+}
+
+h1 {
+  font-size: var(--text-h1);
+}
+
+h2 {
+  font-size: var(--text-h2);
+}
+
+h3 {
+  font-size: var(--text-h3);
+}
+
+p {
+  margin: 0;
+}
+
+.mono-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono);
+  letter-spacing: 0.02em;
+  color: var(--color-text-muted);
+}
+
+/* ---------- Layout helpers ---------- */
+.section {
+  padding: var(--space-6) var(--space-2);
+  /* Offsets anchor-jump targets so the sticky navbar doesn't cover the
+     top of the section when a nav link scrolls to it. */
+  scroll-margin-top: 96px;
+}
+
+.section-inner {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+}
+
+.section-heading {
+  margin-bottom: var(--space-4);
+}
+
+.section-eyebrow {
+  display: block;
+  margin-bottom: var(--space-1);
+}
+
+@media (min-width: 640px) {
+  .section {
+    padding: var(--space-7) var(--space-4);
+  }
+}
+
+@media (min-width: 1024px) {
+  .section {
+    padding: var(--space-7) var(--space-5);
+  }
+}
+
+/* ---------- Accessibility: focus states ---------- */
+/* Browser default outline clashes with the dark theme, so it's styled
+   explicitly rather than removed. */
+:focus-visible {
+  outline: 2px solid var(--color-signal);
+  outline-offset: 2px;
+  border-radius: var(--radius);
+}
+
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: var(--space-2);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  z-index: 1000;
+  transition: top var(--duration-micro) var(--easing-standard);
+}
+
+.skip-link:focus {
+  top: var(--space-2);
+}
+
+/* ---------- Shared card + tag patterns ---------- */
+/* Reused as-is by Skills, Projects, and Achievements so the page reads as
+   one system rather than one-off styles per section. */
+.card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: var(--space-3);
+}
+
+.tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: var(--text-mono);
+  padding: 4px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  color: var(--color-text-muted);
+}
+
+/* ---------- Scroll reveal ---------- */
+/* useScrollReveal toggles .is-visible on a section; children stagger via
+   the --delay custom property set inline per child index. */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity var(--duration-load) var(--easing-standard),
+    transform var(--duration-load) var(--easing-standard);
+  transition-delay: var(--delay, 0ms);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal {
+    transform: none;
+    transition: opacity var(--duration-micro) linear;
+    transition-delay: 0ms;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}

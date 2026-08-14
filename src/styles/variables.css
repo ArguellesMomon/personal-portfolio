@@ -1,0 +1,59 @@
+/* Color tokens: dark is the default, light overrides via [data-theme="light"].
+   Ink and Paper swap roles between modes instead of a generic invert. */
+:root,
+[data-theme='dark'] {
+  --color-bg: #10131a;
+  --color-surface: #171b22;
+  --color-text: #f1efe9;
+  --color-text-muted: #7c8494;
+  --color-signal: #5ee6c0;
+  --color-ember: #f0a840;
+  --color-border: #262b33;
+}
+
+[data-theme='light'] {
+  --color-bg: #f1efe9;
+  --color-surface: #ffffff;
+  --color-text: #10131a;
+  --color-text-muted: #5b6373;
+  --color-signal: #0e9f7e;
+  --color-ember: #c97a1b;
+  --color-border: #dedad0;
+}
+
+:root {
+  /* Typography */
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --text-h1: 3rem;
+  --text-h2: 2rem;
+  --text-h3: 1.5rem;
+  --text-body: 1rem;
+  --text-mono: 0.8rem;
+
+  /* Spacing: 8px-based scale */
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 48px;
+  --space-6: 64px;
+  --space-7: 96px;
+
+  --radius: 4px;
+
+  /* Breakpoints (referenced in comments; CSS media queries can't read
+     custom properties directly, so these document the values used below) */
+  --breakpoint-tablet: 640px;
+  --breakpoint-desktop: 1024px;
+
+  /* Motion timing, per the spec's restraint rules */
+  --duration-micro: 250ms;
+  --duration-load: 700ms;
+  --easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Shared layout constraint */
+  --content-max-width: 1120px;
+}

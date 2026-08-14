@@ -1,0 +1,161 @@
+// Project content lives here, not in JSX. Each project carries a category tag
+// (used for future filtering) and case-study fields shown on expand.
+//
+// problem / approach / challenges / outcome / role are placeholders where real
+// write-ups haven't been provided yet — fill these in with the real story for
+// each project. shortDescription and techStack reflect what's already known.
+const projects = [
+  {
+    id: 'aedescapella',
+    title: 'AedesCapella',
+    category: 'Embedded/Hardware',
+    shortDescription:
+      'Thesis project: an acoustic mosquito detection system that listens for wingbeat signatures and automatically triggers a citronella misting response.',
+    techStack: ['ESP32-S3', 'TinyML', '1D-CNN', 'React', 'Next.js', 'Firebase'],
+    role: '[PLACEHOLDER: your role and contribution]',
+    problem: '[PLACEHOLDER: what problem this thesis addresses]',
+    approach:
+      '[PLACEHOLDER: how the acoustic sensing + on-device 1D-CNN model works, and how it connects to the misting response and dashboard]',
+    challenges: '[PLACEHOLDER: hardest technical or research challenges]',
+    outcome: '[PLACEHOLDER: results, defense outcome, or measured accuracy]',
+    links: {
+      github: '[PLACEHOLDER: repo link]',
+      live: '[PLACEHOLDER: dashboard/demo link]',
+    },
+    image: null,
+    imageAlt: '[PLACEHOLDER: describe the AedesCapella dashboard or hardware screenshot]',
+  },
+  {
+    id: 'wellbot',
+    title: 'WellBot (MedTech Mate)',
+    category: 'Web App',
+    shortDescription:
+      'A web app for medical interns and students featuring an AI chatbot companion, Pip, for wellness support.',
+    techStack: ['React', 'Vite', 'Supabase'],
+    role: '[PLACEHOLDER: your role and contribution]',
+    problem: '[PLACEHOLDER: what problem WellBot addresses for medical interns/students]',
+    approach: '[PLACEHOLDER: how Pip and the wellness features were designed and built]',
+    challenges: '[PLACEHOLDER: hardest technical or design challenges]',
+    outcome: '[PLACEHOLDER: results, usage, or feedback]',
+    links: {
+      github: '[PLACEHOLDER: repo link]',
+      live: '[PLACEHOLDER: live demo link]',
+    },
+    image: null,
+    imageAlt: '[PLACEHOLDER: describe a WellBot screenshot]',
+  },
+  {
+    id: 'photobooth',
+    title: 'Portable Photobooth App',
+    category: 'Web App',
+    shortDescription:
+      'A phone-first, installable PWA with a retro photobooth aesthetic, offline photo capture and editing, and local-first storage.',
+    techStack: ['React', 'Vite', 'PWA'],
+    role: '[PLACEHOLDER: your role and contribution]',
+    problem: '[PLACEHOLDER: what this project addresses]',
+    approach: '[PLACEHOLDER: how offline capture, editing, and local-first storage work]',
+    challenges: '[PLACEHOLDER: hardest technical challenges]',
+    outcome: '[PLACEHOLDER: results or reception]',
+    links: {
+      github: '[PLACEHOLDER: repo link]',
+      live: '[PLACEHOLDER: live demo link]',
+    },
+    image: null,
+    imageAlt: '[PLACEHOLDER: describe a Photobooth app screenshot]',
+  },
+  {
+    id: 'iris',
+    title: 'IRIS',
+    category: 'Embedded/Hardware',
+    shortDescription:
+      'A Raspberry Pi facial recognition security system, built as a team project.',
+    techStack: ['Raspberry Pi', 'Facial Recognition'],
+    role: 'QA Tester — test case design and documentation',
+    problem: '[PLACEHOLDER: what problem IRIS addresses]',
+    approach: '[PLACEHOLDER: how the team approached testing and the system design]',
+    challenges: '[PLACEHOLDER: hardest QA or system challenges encountered]',
+    outcome: '[PLACEHOLDER: results, test coverage, or team outcome]',
+    links: {
+      github: '[PLACEHOLDER: repo link]',
+      live: '[PLACEHOLDER: demo link]',
+    },
+    image: null,
+    imageAlt: '[PLACEHOLDER: describe an IRIS screenshot]',
+  },
+  {
+    id: 'king-ace-trading',
+    title: 'King Ace Trading Capstone',
+    category: 'ML/Data',
+    shortDescription:
+      'A data science capstone using ML-based demand forecasting for a school supply distributor, including a formal defense presentation.',
+    techStack: ['Linear Regression', 'Data Science'],
+    role: '[PLACEHOLDER: your role and contribution]',
+    problem: '[PLACEHOLDER: the demand forecasting problem for the distributor]',
+    approach: '[PLACEHOLDER: how the forecasting model and analysis were built]',
+    challenges: '[PLACEHOLDER: hardest data or modeling challenges]',
+    outcome: '[PLACEHOLDER: results and defense outcome]',
+    links: {
+      github: '[PLACEHOLDER: repo link]',
+      live: '[PLACEHOLDER: presentation/report link]',
+    },
+    image: null,
+    imageAlt: '[PLACEHOLDER: describe a King Ace Trading chart/screenshot]',
+  },
+  {
+    id: 'eventure',
+    title: 'Eventure',
+    category: 'Mobile',
+    shortDescription:
+      'A campus event booking app with multi-step form validation.',
+    techStack: ['React Native', 'Expo', 'TypeScript'],
+    role: '[PLACEHOLDER: your role and contribution]',
+    problem: '[PLACEHOLDER: what problem Eventure addresses for campus events]',
+    approach: '[PLACEHOLDER: how the booking flow and form validation were built]',
+    challenges: '[PLACEHOLDER: hardest technical challenges]',
+    outcome: '[PLACEHOLDER: results or adoption]',
+    links: {
+      github: '[PLACEHOLDER: repo link]',
+      live: '[PLACEHOLDER: demo/store link]',
+    },
+    image: null,
+    imageAlt: '[PLACEHOLDER: describe an Eventure screenshot]',
+  },
+  {
+    id: 'node-red-dashboard',
+    title: 'Node-RED Analytics Dashboard',
+    category: 'Web App',
+    shortDescription: 'A smaller analytics dashboard built with Node-RED.',
+    techStack: ['Node-RED'],
+    role: '[PLACEHOLDER: your role and contribution]',
+    problem: '[PLACEHOLDER: what this dashboard tracks or solves]',
+    approach: '[PLACEHOLDER: how the flows and dashboard were built]',
+    challenges: '[PLACEHOLDER: hardest challenges]',
+    outcome: '[PLACEHOLDER: results]',
+    links: {
+      github: '[PLACEHOLDER: repo link]',
+      live: '[PLACEHOLDER: demo link]',
+    },
+    image: null,
+    imageAlt: '[PLACEHOLDER: describe a Node-RED dashboard screenshot]',
+  },
+  {
+    id: 'travel-diary',
+    title: 'Travel Diary App',
+    category: 'Web App',
+    shortDescription: 'A smaller travel diary build.',
+    techStack: ['[PLACEHOLDER: tech stack]'],
+    role: '[PLACEHOLDER: your role and contribution]',
+    problem: '[PLACEHOLDER: what this app solves]',
+    approach: '[PLACEHOLDER: how it was built]',
+    challenges: '[PLACEHOLDER: hardest challenges]',
+    outcome: '[PLACEHOLDER: results]',
+    links: {
+      github: '[PLACEHOLDER: repo link]',
+      live: '[PLACEHOLDER: demo link]',
+    },
+    image: null,
+    imageAlt: '[PLACEHOLDER: describe a Travel Diary screenshot]',
+  },
+];
+
+export default projects;

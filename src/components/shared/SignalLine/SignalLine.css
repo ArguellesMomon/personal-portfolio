@@ -1,0 +1,69 @@
+.signal-line {
+  width: 100%;
+}
+
+.signal-line__path {
+  fill: none;
+  stroke: var(--color-signal);
+  vector-effect: non-scaling-stroke;
+}
+
+/* ---------- Hero variant ---------- */
+.signal-line--hero {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.signal-line--hero svg {
+  width: 100%;
+  height: 100%;
+}
+
+.signal-line--hero .signal-line__path {
+  stroke-width: 2;
+  opacity: 0.6;
+  /* Large placeholder length; real paths are always shorter, so the line
+     starts fully hidden and draws in once .is-drawn is applied. */
+  stroke-dasharray: 3000;
+  stroke-dashoffset: 3000;
+  transition: stroke-dashoffset var(--duration-load) var(--easing-standard);
+}
+
+.signal-line--hero .signal-line__path.is-drawn {
+  stroke-dashoffset: 0;
+}
+
+/* ---------- Trace variant ---------- */
+.signal-line--trace {
+  height: 24px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.signal-line--trace svg {
+  width: 100%;
+  height: 100%;
+}
+
+.signal-line--trace .signal-line__path {
+  stroke-width: 1.5;
+}
+
+.signal-line__path--track {
+  opacity: 0.35;
+}
+
+.signal-line__path--fill {
+  transition: stroke-dashoffset 120ms linear;
+}
+
+.signal-line__path--fill.no-transition {
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .signal-line--hero .signal-line__path {
+    stroke-dashoffset: 0;
+    transition: none;
+  }
+}
