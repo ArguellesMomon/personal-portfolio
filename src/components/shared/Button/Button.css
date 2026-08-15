@@ -13,7 +13,9 @@
   min-height: 44px;
   transition: background-color var(--duration-micro) var(--easing-standard),
     color var(--duration-micro) var(--easing-standard),
-    border-color var(--duration-micro) var(--easing-standard);
+    border-color var(--duration-micro) var(--easing-standard),
+    box-shadow var(--duration-micro) var(--easing-standard),
+    transform var(--duration-micro) var(--easing-standard);
 }
 
 .btn--primary {
@@ -24,6 +26,8 @@
 .btn--primary:hover,
 .btn--primary:focus-visible {
   background-color: var(--color-ember);
+  box-shadow: 0 0 0 4px rgba(255, 107, 26, 0.22);
+  transform: translateY(-2px);
 }
 
 .btn--secondary {
@@ -36,8 +40,18 @@
 .btn--secondary:focus-visible {
   border-color: var(--color-signal);
   color: var(--color-signal);
+  transform: translateY(-2px);
 }
 
 .btn__icon {
   flex-shrink: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn--primary:hover,
+  .btn--primary:focus-visible,
+  .btn--secondary:hover,
+  .btn--secondary:focus-visible {
+    transform: none;
+  }
 }

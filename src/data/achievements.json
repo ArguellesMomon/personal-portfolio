@@ -1,0 +1,22 @@
+[
+  {
+    "id": "achievement-1",
+    "title": "[PLACEHOLDER: Certification title]",
+    "issuer": "[PLACEHOLDER: ISSUING ORGANIZATION]",
+    "date": "[PLACEHOLDER: month/year]",
+    "verifyUrl": "[PLACEHOLDER: verification URL]"
+  },
+  {
+    "id": "achievement-2",
+    "title": "[PLACEHOLDER: Certification title]",
+    "issuer": "[PLACEHOLDER: ISSUING ORGANIZATION]",
+    "date": "[PLACEHOLDER: month/year]",
+    "verifyUrl": "[PLACEHOLDER: verification URL]"
+  },
+  {
+    "id": "achievement-3",
+    "title": "[PLACEHOLDER: Thesis defense completion]",
+    "description": "[PLACEHOLDER: brief note, e.g. panel/date/honors]",
+    "date": "[PLACEHOLDER: month/year]"
+  }
+]

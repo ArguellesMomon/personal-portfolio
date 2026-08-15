@@ -1,0 +1,50 @@
+.site-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background-color: var(--color-bg);
+}
+
+.site-backdrop picture,
+.site-backdrop__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.site-backdrop__image {
+  object-fit: cover;
+  /* Subject sits right-of-center in the 16:9 desktop crop. */
+  object-position: 70% 28%;
+}
+
+@media (max-width: 639px) {
+  .site-backdrop__image {
+    /* The 9:16 mobile crop is already centered on the subject, so this just
+       fine-tunes the vertical framing. */
+    object-position: 50% 20%;
+  }
+}
+
+.site-backdrop__scrim {
+  position: absolute;
+  inset: 0;
+  /* Vibrant rather than heavily darkened — Hero's text leans on text-shadow
+     (see Hero.css) for legibility instead of a dark overlay doing all the
+     work, so the photo itself stays punchy. */
+  background-image: radial-gradient(
+      ellipse 60% 55% at 70% 28%,
+      rgba(255, 122, 26, 0.28),
+      transparent 68%
+    ),
+    linear-gradient(
+      100deg,
+      rgba(13, 12, 11, 0.7) 0%,
+      rgba(13, 12, 11, 0.5) 32%,
+      rgba(13, 12, 11, 0.18) 62%,
+      rgba(13, 12, 11, 0.02) 100%
+    ),
+    linear-gradient(to top, var(--color-bg) 0%, transparent 32%);
+}

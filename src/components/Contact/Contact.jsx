@@ -30,7 +30,7 @@ export default function Contact() {
     <section id="contact" className="section contact">
       <div className="section-inner" ref={revealRef}>
         <div className="reveal">
-          <span className="mono-label section-eyebrow">Contact</span>
+          <span className="mono-label section-eyebrow">05 — contact</span>
           <h2 className="section-heading">Get In Touch</h2>
           <p className="contact__intro">
             [PLACEHOLDER: one line inviting recruiters/collaborators to reach out]

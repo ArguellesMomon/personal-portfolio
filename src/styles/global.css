@@ -78,6 +78,9 @@ p {
 
 /* ---------- Layout helpers ---------- */
 .section {
+  position: relative;
+  z-index: 1;
+  background-color: var(--color-bg);
   padding: var(--space-6) var(--space-2);
   /* Offsets anchor-jump targets so the sticky navbar doesn't cover the
      top of the section when a nav link scrolls to it. */
@@ -156,12 +159,59 @@ p {
   color: var(--color-text-muted);
 }
 
+/* Icon-only circular/square link button, reused by Footer and Hero's social
+   row. --olive variant is used only for personal links (see variables.css). */
+.icon-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  transition: color var(--duration-micro) var(--easing-standard),
+    border-color var(--duration-micro) var(--easing-standard);
+}
+
+.icon-link:hover,
+.icon-link:focus-visible {
+  color: var(--color-signal);
+  border-color: var(--color-signal);
+}
+
+.icon-link--olive:hover,
+.icon-link--olive:focus-visible {
+  color: var(--color-olive);
+  border-color: var(--color-olive);
+}
+
+/* "View All" toggle button, shared by Projects and Achievements section headers */
+.section-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  padding: var(--space-1) 0;
+  transition: color var(--duration-micro) var(--easing-standard);
+}
+
+.section-toggle:hover,
+.section-toggle:focus-visible {
+  color: var(--color-signal);
+}
+
 /* ---------- Scroll reveal ---------- */
 /* useScrollReveal toggles .is-visible on a section; children stagger via
-   the --delay custom property set inline per child index. */
+   the --delay custom property set inline per child index. The slight
+   rotateX (perspective-based, no parent perspective needed) gives sections
+   a bit of tilt-into-place depth rather than a flat fade/slide. */
 .reveal {
   opacity: 0;
-  transform: translateY(16px);
+  transform: perspective(1000px) rotateX(6deg) translateY(20px) scale(0.97);
+  transform-origin: bottom;
   transition: opacity var(--duration-load) var(--easing-standard),
     transform var(--duration-load) var(--easing-standard);
   transition-delay: var(--delay, 0ms);
@@ -169,7 +219,7 @@ p {
 
 .reveal.is-visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: perspective(1000px) rotateX(0deg) translateY(0) scale(1);
 }
 
 /* ---------- Reduced motion ---------- */

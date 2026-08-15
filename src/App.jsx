@@ -1,5 +1,6 @@
 import Navbar from './components/shared/Navbar/Navbar.jsx';
 import Footer from './components/shared/Footer/Footer.jsx';
+import SiteBackdrop from './components/shared/SiteBackdrop/SiteBackdrop.jsx';
 import Hero from './components/Hero/Hero.jsx';
 import About from './components/About/About.jsx';
 import Skills from './components/Skills/Skills.jsx';
@@ -14,6 +15,7 @@ export default function App() {
         Skip to content
       </a>
 
+      <SiteBackdrop />
       <Navbar />
 
       <main id="main-content">

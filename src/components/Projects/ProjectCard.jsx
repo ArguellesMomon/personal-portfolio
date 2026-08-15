@@ -1,6 +1,18 @@
-import { useState } from 'react';
-import { ChevronDown, ExternalLink, Github } from 'lucide-react';
+import { useRef, useState } from 'react';
+import { ChevronDown, ExternalLink, Github, Cpu, Globe, Smartphone, LineChart } from 'lucide-react';
+import usePrefersReducedMotion from '../../hooks/usePrefersReducedMotion';
 import './Projects.css';
+
+// One icon per category, drawn from the same icon system as the rest of the
+// site — this is purely a visual anchor for the card header, not a new set.
+const CATEGORY_ICONS = {
+  'Embedded/Hardware': Cpu,
+  'Web App': Globe,
+  Mobile: Smartphone,
+  'ML/Data': LineChart,
+};
+
+const MAX_TILT_DEG = 8;
 
 // Accessible accordion pattern: the actual toggle control is a <button> that
 // wraps only the title (inside an <h3>), so its accessible name stays short.
@@ -9,7 +21,12 @@ import './Projects.css';
 // button remains the real, keyboard-operable control.
 export default function ProjectCard({ project }) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+  const cardRef = useRef(null);
+  const prefersReducedMotion = usePrefersReducedMotion();
   const panelId = `project-panel-${project.id}`;
+  const CategoryIcon = CATEGORY_ICONS[project.category];
 
   const toggle = () => setIsExpanded((open) => !open);
 
@@ -19,23 +36,73 @@ export default function ProjectCard({ project }) {
     toggle();
   };
 
+  // Tilts the card toward the cursor — rotateY follows horizontal position,
+  // rotateX follows vertical (inverted: cursor near the top tilts the top
+  // edge back, like the card is leaning toward you).
+  const handleMouseMove = (event) => {
+    if (prefersReducedMotion) return;
+    const card = cardRef.current;
+    if (!card) return;
+    const rect = card.getBoundingClientRect();
+    const relX = (event.clientX - rect.left) / rect.width;
+    const relY = (event.clientY - rect.top) / rect.height;
+    setTilt({
+      x: -(relY - 0.5) * MAX_TILT_DEG * 2,
+      y: (relX - 0.5) * MAX_TILT_DEG * 2,
+    });
+  };
+
+  const handleMouseEnter = () => setIsHovered(true);
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    setTilt({ x: 0, y: 0 });
+  };
+
+  const cardStyle = prefersReducedMotion
+    ? undefined
+    : {
+        transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) translateY(${
+          isHovered ? -5 : 0
+        }px)`,
+      };
+
   return (
-    <article className="card project-card">
+    <article
+      ref={cardRef}
+      className="card project-card"
+      style={cardStyle}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
       <div className="project-card__header" onClick={handleHeaderClick}>
+        {project.badge && (
+          <span className="mono-label project-card__badge">
+            &lsaquo; {project.badge} &rsaquo;
+          </span>
+        )}
+
         <div className="project-card__top">
-          <h3 className="project-card__title">
-            <button
-              type="button"
-              className="project-card__trigger"
-              aria-expanded={isExpanded}
-              aria-controls={panelId}
-              onClick={handleTriggerClick}
-            >
-              {project.title}
-              <span className="project-card__trace" aria-hidden="true" />
-            </button>
-          </h3>
+          <div className="project-card__title-row">
+            {CategoryIcon && (
+              <span className="project-card__icon-chip" aria-hidden="true">
+                <CategoryIcon size={18} strokeWidth={1.75} />
+              </span>
+            )}
+            <h3 className="project-card__title">
+              <button
+                type="button"
+                className="project-card__trigger"
+                aria-expanded={isExpanded}
+                aria-controls={panelId}
+                onClick={handleTriggerClick}
+              >
+                {project.title}
+                <span className="project-card__trace" aria-hidden="true" />
+              </button>
+            </h3>
+          </div>
           <ChevronDown
             className={`project-card__chevron ${isExpanded ? 'is-open' : ''}`}
             size={20}

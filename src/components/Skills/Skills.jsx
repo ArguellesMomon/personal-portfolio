@@ -9,7 +9,7 @@ export default function Skills() {
     <section id="skills" className="section skills">
       <div className="section-inner" ref={revealRef}>
         <div className="reveal">
-          <span className="mono-label section-eyebrow">Skills</span>
+          <span className="mono-label section-eyebrow">02 — skills</span>
           <h2 className="section-heading">Skills &amp; Expertise</h2>
         </div>
 

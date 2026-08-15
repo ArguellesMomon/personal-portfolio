@@ -1,27 +1,18 @@
-/* Color tokens: dark is the default, light overrides via [data-theme="light"].
-   Ink and Paper swap roles between modes instead of a generic invert. */
-:root,
-[data-theme='dark'] {
-  --color-bg: #10131a;
-  --color-surface: #171b22;
-  --color-text: #f1efe9;
-  --color-text-muted: #7c8494;
-  --color-signal: #5ee6c0;
-  --color-ember: #f0a840;
-  --color-border: #262b33;
-}
-
-[data-theme='light'] {
-  --color-bg: #f1efe9;
-  --color-surface: #ffffff;
-  --color-text: #10131a;
-  --color-text-muted: #5b6373;
-  --color-signal: #0e9f7e;
-  --color-ember: #c97a1b;
-  --color-border: #dedad0;
-}
-
+/* Single dark theme — no toggle, no [data-theme] attribute. Tokens named
+   --color-signal / --color-ember / --color-olive are kept as-is even though
+   "signal" and "ember" originally referred to a retired teal/amber system;
+   the names are just internal handles at this point (orange primary, rust
+   secondary, olive as the personal accent on Hero's social icons). */
 :root {
+  --color-bg: #0d0c0b;
+  --color-surface: #17140f;
+  --color-text: #f5f1ea;
+  --color-text-muted: #9a9488;
+  --color-signal: #ff6b1a;
+  --color-ember: #d9540a;
+  --color-olive: #a9b87c;
+  --color-border: #2a251e;
+
   /* Typography */
   --font-display: 'Space Grotesk', sans-serif;
   --font-body: 'Inter', system-ui, sans-serif;
@@ -49,7 +40,7 @@
   --breakpoint-tablet: 640px;
   --breakpoint-desktop: 1024px;
 
-  /* Motion timing, per the spec's restraint rules */
+  /* Motion timing */
   --duration-micro: 250ms;
   --duration-load: 700ms;
   --easing-standard: cubic-bezier(0.4, 0, 0.2, 1);

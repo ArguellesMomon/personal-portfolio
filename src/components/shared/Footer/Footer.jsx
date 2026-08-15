@@ -15,7 +15,7 @@ export default function Footer() {
             target="_blank"
             rel="noreferrer"
             aria-label="GitHub"
-            className="footer__icon-link"
+            className="icon-link"
           >
             <Github size={20} strokeWidth={1.75} aria-hidden="true" />
           </a>
@@ -24,14 +24,14 @@ export default function Footer() {
             target="_blank"
             rel="noreferrer"
             aria-label="LinkedIn"
-            className="footer__icon-link"
+            className="icon-link"
           >
             <Linkedin size={20} strokeWidth={1.75} aria-hidden="true" />
           </a>
           <a
             href="mailto:[PLACEHOLDER: email address]"
             aria-label="Email"
-            className="footer__icon-link"
+            className="icon-link"
           >
             <Mail size={20} strokeWidth={1.75} aria-hidden="true" />
           </a>

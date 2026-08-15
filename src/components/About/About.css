@@ -1,8 +1,52 @@
+/* Overrides .section's solid background-color with a gradient — this is
+   what creates the "fade to black" illusion. SiteBackdrop is fixed and
+   always visible behind everything, so it still shows through faintly at
+   the top of this section (right where Hero hands off) and is fully
+   covered by the time this gradient resolves to solid, about 60% of the
+   way down. Every section after this one just uses .section's normal solid
+   background, since the backdrop is already fully hidden by then. */
+.section.about {
+  background: linear-gradient(to bottom, transparent 0%, var(--color-bg) 60%, var(--color-bg) 100%);
+}
+
 .about__body {
-  max-width: 640px;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
+  max-width: 680px;
+}
+
+.about__intro {
   color: var(--color-text-muted);
   font-size: 1.0625rem;
+  margin-bottom: var(--space-3);
+}
+
+.about__expertise {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  margin-bottom: var(--space-4);
+}
+
+.about__expertise-tag {
+  color: var(--color-signal);
+  border-color: var(--color-signal);
+}
+
+.about__quote {
+  position: relative;
+  margin: 0;
+  padding-left: var(--space-4);
+  border-left: 2px solid var(--color-signal);
+}
+
+.about__quote-icon {
+  color: var(--color-signal);
+  opacity: 0.6;
+  margin-bottom: var(--space-1);
+}
+
+.about__quote p {
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+  line-height: 1.4;
+  color: var(--color-text);
 }

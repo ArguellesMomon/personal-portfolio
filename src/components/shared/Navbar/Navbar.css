@@ -1,8 +1,16 @@
 .navbar {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 100;
-  background-color: var(--color-bg);
+  /* Glass effect: translucent tint of --color-bg (hardcoded as rgba since
+     CSS can't apply alpha to a hex custom property directly) plus a blur of
+     whatever's behind it — the photo backdrop over Hero, or a section's
+     content once scrolled past it. */
+  background-color: rgba(13, 12, 11, 0.55);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   /* Last step of the load sequence: signal line draws, then hero text
      settles in, then the nav fades in on top of everything. */
   animation: navbar-fade 400ms var(--easing-standard) 650ms both;
@@ -21,6 +29,18 @@
   .navbar {
     animation: none;
   }
+}
+
+/* Fallback for the rare browser without backdrop-filter support — a plain
+   translucent bar still reads fine, just without the blur. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .navbar {
+    background-color: rgba(13, 12, 11, 0.85);
+  }
+}
+
+.navbar__spacer {
+  height: 96px;
 }
 
 .navbar__bar {
