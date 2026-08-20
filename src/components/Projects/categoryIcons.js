@@ -9,3 +9,8 @@ export const CATEGORY_ICONS = {
   Mobile: Smartphone,
   'ML/Data': LineChart,
 };
+
+// Fixed display order for category filter chips and grouped sections on
+// /projects — deliberate (roughly "closest to the metal" first) rather than
+// alphabetical, so the order reads as a considered choice, not a fallback.
+export const CATEGORY_ORDER = ['Embedded/Hardware', 'Web App', 'Mobile', 'ML/Data'];

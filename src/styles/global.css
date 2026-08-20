@@ -155,6 +155,22 @@ body::after {
   top: var(--space-2);
 }
 
+/* Standard visually-hidden pattern: present for screen readers, removed
+   from the visual layout without display:none (which VoiceOver/NVDA would
+   also skip). Used to give icon-only or icon-plus-input controls a real
+   accessible name without printing redundant label text on screen. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* ---------- Shared card + tag patterns ---------- */
 /* Reused as-is by Skills, Projects, Achievements, Contact, and About's
    expertise items so the page reads as one system rather than one-off

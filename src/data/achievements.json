@@ -1,82 +1,90 @@
 [
   {
-    "id": "achievement-1",
+    "id": "cert-ai-1",
+    "type": "certification",
+    "category": "ai",
     "title": "[PLACEHOLDER: Certification title]",
-    "issuer": "[PLACEHOLDER: ISSUING ORGANIZATION]",
-    "date": "[PLACEHOLDER: month/year]",
+    "issuer": "[PLACEHOLDER: Issuing organization]",
+    "date": "[PLACEHOLDER: Month YYYY]",
     "verifyUrl": "[PLACEHOLDER: verification URL]"
   },
   {
-    "id": "achievement-2",
+    "id": "cert-ai-2",
+    "type": "certification",
+    "category": "ai",
     "title": "[PLACEHOLDER: Certification title]",
-    "issuer": "[PLACEHOLDER: ISSUING ORGANIZATION]",
-    "date": "[PLACEHOLDER: month/year]",
+    "issuer": "[PLACEHOLDER: Issuing organization]",
+    "date": "[PLACEHOLDER: Month YYYY]",
     "verifyUrl": "[PLACEHOLDER: verification URL]"
   },
   {
-    "id": "achievement-3",
+    "id": "cert-ai-3",
+    "type": "certification",
+    "category": "ai",
+    "title": "[PLACEHOLDER: Certification title]",
+    "issuer": "[PLACEHOLDER: Issuing organization]",
+    "date": "[PLACEHOLDER: Month YYYY]",
+    "verifyUrl": "[PLACEHOLDER: verification URL]"
+  },
+  {
+    "id": "cert-cloud-1",
+    "type": "certification",
+    "category": "cloud",
+    "title": "[PLACEHOLDER: Certification title]",
+    "issuer": "[PLACEHOLDER: Issuing organization]",
+    "date": "[PLACEHOLDER: Month YYYY]",
+    "verifyUrl": "[PLACEHOLDER: verification URL]"
+  },
+  {
+    "id": "cert-cloud-2",
+    "type": "certification",
+    "category": "cloud",
+    "title": "[PLACEHOLDER: Certification title]",
+    "issuer": "[PLACEHOLDER: Issuing organization]",
+    "date": "[PLACEHOLDER: Month YYYY]",
+    "verifyUrl": "[PLACEHOLDER: verification URL]"
+  },
+  {
+    "id": "cert-cloud-3",
+    "type": "certification",
+    "category": "cloud",
+    "title": "[PLACEHOLDER: Certification title]",
+    "issuer": "[PLACEHOLDER: Issuing organization]",
+    "date": "[PLACEHOLDER: Month YYYY]",
+    "verifyUrl": "[PLACEHOLDER: verification URL]"
+  },
+  {
+    "id": "cert-eng-1",
+    "type": "certification",
+    "category": "engineering",
+    "title": "[PLACEHOLDER: Certification title]",
+    "issuer": "[PLACEHOLDER: Issuing organization]",
+    "date": "[PLACEHOLDER: Month YYYY]",
+    "verifyUrl": "[PLACEHOLDER: verification URL]"
+  },
+  {
+    "id": "cert-eng-2",
+    "type": "certification",
+    "category": "engineering",
+    "title": "[PLACEHOLDER: Certification title]",
+    "issuer": "[PLACEHOLDER: Issuing organization]",
+    "date": "[PLACEHOLDER: Month YYYY]",
+    "verifyUrl": "[PLACEHOLDER: verification URL]"
+  },
+  {
+    "id": "milestone-academic-1",
+    "type": "milestone",
+    "category": "academic",
     "title": "[PLACEHOLDER: Thesis defense completion]",
     "description": "[PLACEHOLDER: brief note, e.g. panel/date/honors]",
-    "date": "[PLACEHOLDER: month/year]"
-  },
-   {
-    "id": "achievement-4",
-    "title": "[PLACEHOLDER: Certification title]",
-    "issuer": "[PLACEHOLDER: ISSUING ORGANIZATION]",
-    "date": "[PLACEHOLDER: month/year]",
-    "verifyUrl": "[PLACEHOLDER: verification URL]"
+    "date": "[PLACEHOLDER: Month YYYY]"
   },
   {
-    "id": "achievement-5",
-    "title": "[PLACEHOLDER: Certification title]",
-    "issuer": "[PLACEHOLDER: ISSUING ORGANIZATION]",
-    "date": "[PLACEHOLDER: month/year]",
-    "verifyUrl": "[PLACEHOLDER: verification URL]"
-  },
-  {
-    "id": "achievement-6",
-    "title": "[PLACEHOLDER: Thesis defense completion]",
-    "description": "[PLACEHOLDER: brief note, e.g. panel/date/honors]",
-    "date": "[PLACEHOLDER: month/year]"
-  },
-  {
-    "id": "achievement-1",
-    "title": "[PLACEHOLDER: Certification title]",
-    "issuer": "[PLACEHOLDER: ISSUING ORGANIZATION]",
-    "date": "[PLACEHOLDER: month/year]",
-    "verifyUrl": "[PLACEHOLDER: verification URL]"
-  },
-  {
-    "id": "achievement-2",
-    "title": "[PLACEHOLDER: Certification title]",
-    "issuer": "[PLACEHOLDER: ISSUING ORGANIZATION]",
-    "date": "[PLACEHOLDER: month/year]",
-    "verifyUrl": "[PLACEHOLDER: verification URL]"
-  },
-  {
-    "id": "achievement-3",
-    "title": "[PLACEHOLDER: Thesis defense completion]",
-    "description": "[PLACEHOLDER: brief note, e.g. panel/date/honors]",
-    "date": "[PLACEHOLDER: month/year]"
-  },
-   {
-    "id": "achievement-4",
-    "title": "[PLACEHOLDER: Certification title]",
-    "issuer": "[PLACEHOLDER: ISSUING ORGANIZATION]",
-    "date": "[PLACEHOLDER: month/year]",
-    "verifyUrl": "[PLACEHOLDER: verification URL]"
-  },
-  {
-    "id": "achievement-5",
-    "title": "[PLACEHOLDER: Certification title]",
-    "issuer": "[PLACEHOLDER: ISSUING ORGANIZATION]",
-    "date": "[PLACEHOLDER: month/year]",
-    "verifyUrl": "[PLACEHOLDER: verification URL]"
-  },
-  {
-    "id": "achievement-6",
-    "title": "[PLACEHOLDER: Thesis defense completion]",
-    "description": "[PLACEHOLDER: brief note, e.g. panel/date/honors]",
-    "date": "[PLACEHOLDER: month/year]"
+    "id": "milestone-academic-2",
+    "type": "milestone",
+    "category": "academic",
+    "title": "[PLACEHOLDER: Academic honor or milestone]",
+    "description": "[PLACEHOLDER: brief note, e.g. Dean's Lister, Latin honors]",
+    "date": "[PLACEHOLDER: Month YYYY]"
   }
 ]

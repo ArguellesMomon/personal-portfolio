@@ -38,6 +38,69 @@
   margin-bottom: var(--space-5);
 }
 
+/* Remounts (see the `key` in AchievementsPage.jsx) on every search/category
+   change, replaying this entrance rather than relying on the one-shot
+   scroll-triggered .reveal system — mirrors ProjectsPage.css. */
+.achievements-page__results {
+  animation: achievements-results-in 380ms var(--easing-standard);
+}
+
+@keyframes achievements-results-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.achievements-page__group {
+  margin-bottom: var(--space-5);
+}
+
+.achievements-page__group:last-child {
+  margin-bottom: 0;
+}
+
+.achievements-page__group-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-bottom: var(--space-2);
+}
+
+.achievements-page__group-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  color: var(--color-signal);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+.achievements-page__group-label {
+  color: var(--color-text);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.achievements-page__group-rule {
+  flex: 1;
+  height: 1px;
+  background-color: var(--color-border);
+}
+
+.achievements-page__group-count {
+  flex-shrink: 0;
+  min-width: 20px;
+  text-align: center;
+}
+
 /* Same responsive behavior as .achievements__list (Achievements.css) — one
    grid pattern for "a row of achievement cards" wherever it's used. */
 .achievements-page__grid {
@@ -63,5 +126,11 @@
 
   .achievements-page__grid {
     grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .achievements-page__results {
+    animation: none;
   }
 }

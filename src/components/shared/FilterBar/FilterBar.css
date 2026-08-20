@@ -1,0 +1,223 @@
+/* Sticks directly under the fixed navbar (96px, matching
+   .navbar__spacer in Navbar.css) once the page scrolls up to it, so
+   filtering stays reachable while browsing a long list — the whole point
+   of adding it is convenience, which a toolbar that scrolls out of reach
+   would undercut. */
+.filter-bar {
+  position: sticky;
+  top: 96px;
+  z-index: 40;
+  margin: 0 calc(var(--space-2) * -1) var(--space-4);
+  padding: var(--space-2);
+  background-color: rgba(13, 12, 11, 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--color-border);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .filter-bar {
+    background-color: rgba(13, 12, 11, 0.94);
+  }
+}
+
+.filter-bar__row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/* ---------- Search ---------- */
+.filter-bar__search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 0 var(--space-2);
+  height: 44px;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  color: var(--color-text-muted);
+  transition: border-color var(--duration-micro) var(--easing-standard),
+    box-shadow var(--duration-micro) var(--easing-standard);
+}
+
+.filter-bar__search:focus-within {
+  border-color: var(--color-signal);
+  box-shadow: 0 0 0 4px rgba(255, 107, 26, 0.14);
+}
+
+.filter-bar__search input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  background: none;
+  border: none;
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+}
+
+.filter-bar__search input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.filter-bar__search input:focus {
+  outline: none;
+}
+
+.filter-bar__clear-search {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  border-radius: 50%;
+  transition: color var(--duration-micro) var(--easing-standard),
+    background-color var(--duration-micro) var(--easing-standard);
+}
+
+.filter-bar__clear-search:hover,
+.filter-bar__clear-search:focus-visible {
+  color: var(--color-signal);
+  background-color: var(--color-bg);
+}
+
+/* ---------- Category chips ---------- */
+.filter-bar__chips {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: var(--space-1);
+  overflow-x: auto;
+  padding-bottom: 2px;
+  /* Without min-width:0, a flex child's intrinsic content width can't
+     shrink below its content size, so this row would push past its
+     container (and off the viewport edge) instead of clipping to the
+     available space and scrolling internally like it's meant to. */
+  min-width: 0;
+  /* Hides the scrollbar itself while keeping the row scrollable on
+     touch/trackpad — the chips already signal "more may be off-screen"
+     via their nowrap layout, a visible scrollbar would just add noise. */
+  scrollbar-width: none;
+}
+
+.filter-bar__chips::-webkit-scrollbar {
+  display: none;
+}
+
+.filter-chip {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 6px;
+  height: 36px;
+  padding: 0 var(--space-2);
+  background-color: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-mono);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  transition: color var(--duration-micro) var(--easing-standard),
+    border-color var(--duration-micro) var(--easing-standard),
+    background-color var(--duration-micro) var(--easing-standard),
+    transform var(--duration-micro) var(--easing-standard);
+}
+
+.filter-chip:hover {
+  color: var(--color-text);
+  border-color: var(--color-signal);
+  transform: translateY(-1px);
+}
+
+.filter-chip.is-active {
+  background-color: var(--color-signal);
+  border-color: var(--color-signal);
+  color: var(--color-bg);
+}
+
+.filter-chip__count {
+  padding: 1px 6px;
+  border-radius: 999px;
+  background-color: rgba(245, 241, 234, 0.08);
+  font-size: 0.7rem;
+}
+
+.filter-chip.is-active .filter-chip__count {
+  background-color: rgba(13, 12, 11, 0.2);
+}
+
+/* ---------- Meta row ---------- */
+.filter-bar__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.filter-bar__count {
+  color: var(--color-text-muted);
+}
+
+.filter-bar__reset {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  transition: color var(--duration-micro) var(--easing-standard);
+}
+
+.filter-bar__reset:hover,
+.filter-bar__reset:focus-visible {
+  color: var(--color-signal);
+}
+
+@media (min-width: 640px) {
+  .filter-bar {
+    margin-left: calc(var(--space-4) * -1);
+    margin-right: calc(var(--space-4) * -1);
+    padding: var(--space-2) var(--space-4);
+  }
+
+  .filter-bar__row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .filter-bar__search {
+    width: 260px;
+    flex-shrink: 0;
+  }
+
+  /* Takes the remaining row width after the fixed-width search field, and
+     scrolls its own overflow horizontally rather than the whole toolbar
+     spilling past the page edge (see the min-width:0 note above). */
+  .filter-bar__chips {
+    flex: 1;
+  }
+}
+
+@media (min-width: 1024px) {
+  .filter-bar {
+    margin-left: calc(var(--space-5) * -1);
+    margin-right: calc(var(--space-5) * -1);
+    padding: var(--space-2) var(--space-5);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .filter-chip:hover {
+    transform: none;
+  }
+}

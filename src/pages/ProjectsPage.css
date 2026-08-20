@@ -38,6 +38,70 @@
   margin-bottom: var(--space-5);
 }
 
+/* Remounts (see the `key` in ProjectsPage.jsx) on every search/category
+   change, replaying this entrance rather than relying on the one-shot
+   scroll-triggered .reveal system, which can't replay for cards that swap
+   in after a filter change. */
+.projects-page__results {
+  animation: projects-results-in 380ms var(--easing-standard);
+}
+
+@keyframes projects-results-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.projects-page__group {
+  margin-bottom: var(--space-5);
+}
+
+.projects-page__group:last-child {
+  margin-bottom: 0;
+}
+
+.projects-page__group-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-bottom: var(--space-2);
+}
+
+.projects-page__group-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  color: var(--color-signal);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+.projects-page__group-label {
+  color: var(--color-text);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.projects-page__group-rule {
+  flex: 1;
+  height: 1px;
+  background-color: var(--color-border);
+}
+
+.projects-page__group-count {
+  flex-shrink: 0;
+  min-width: 20px;
+  text-align: center;
+}
+
 .projects-page__grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -57,5 +121,11 @@
 @media (min-width: 1024px) {
   .projects-page {
     padding: var(--space-6) var(--space-5) var(--space-7);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .projects-page__results {
+    animation: none;
   }
 }
