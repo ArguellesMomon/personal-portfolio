@@ -1,0 +1,67 @@
+.achievements-page {
+  position: relative;
+  z-index: 1;
+  min-height: 100svh;
+  background-color: var(--color-bg);
+  padding: var(--space-6) var(--space-2) var(--space-7);
+}
+
+.achievements-page__inner {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+}
+
+.achievements-page__back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-bottom: var(--space-4);
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-mono);
+  transition: color var(--duration-micro) var(--easing-standard);
+}
+
+.achievements-page__back:hover,
+.achievements-page__back:focus-visible {
+  color: var(--color-signal);
+}
+
+.achievements-page__title {
+  margin-bottom: var(--space-2);
+}
+
+.achievements-page__intro {
+  color: var(--color-text-muted);
+  font-size: 1.0625rem;
+  max-width: 560px;
+  margin-bottom: var(--space-5);
+}
+
+/* Same responsive behavior as .achievements__list (Achievements.css) — one
+   grid pattern for "a row of achievement cards" wherever it's used. */
+.achievements-page__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3);
+}
+
+@media (min-width: 640px) {
+  .achievements-page {
+    padding: var(--space-6) var(--space-4) var(--space-7);
+  }
+
+  .achievements-page__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .achievements-page {
+    padding: var(--space-6) var(--space-5) var(--space-7);
+  }
+
+  .achievements-page__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

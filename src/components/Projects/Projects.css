@@ -1,10 +1,4 @@
-.projects__grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-3);
-}
-
-/* ---------- Section header + View All toggle ---------- */
+/* ---------- Section header + View All link ---------- */
 .projects__header {
   display: flex;
   flex-wrap: wrap;
@@ -13,20 +7,106 @@
   gap: var(--space-2);
 }
 
+/* ---------- Featured Projects grid (homepage) ---------- */
+/* Same breakpoints as Achievements' grid, deliberately — this replaced an
+   earlier fan/carousel pair that made this section behave differently from
+   the rest of the site; matching Achievements' exact responsive pattern is
+   the fix for that, not a new one-off. */
+.featured-projects__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3);
+}
 
 @media (min-width: 640px) {
-  .projects__grid {
+  .featured-projects__grid {
     grid-template-columns: repeat(2, 1fr);
   }
+}
+
+@media (min-width: 1024px) {
+  .featured-projects__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.featured-project {
+  display: flex;
+  flex-direction: column;
+}
+
+.featured-project__badge {
+  display: inline-block;
+  color: var(--color-signal);
+  margin-bottom: var(--space-2);
+}
+
+.featured-project__heading {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+.featured-project__icon-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  color: var(--color-signal);
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+.featured-project__title {
+  font-size: 1.25rem;
+}
+
+.featured-project__description {
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-3);
+  /* Pushes the links row to the bottom consistently even when descriptions
+     are different lengths, so all 3 cards' Code/Live buttons line up
+     across the row instead of sitting at whatever height each card's text
+     happens to end at. */
+  flex-grow: 1;
+}
+
+.featured-project__links {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.featured-project__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  color: var(--color-text);
+  font-size: 0.9rem;
+  transition: color var(--duration-micro) var(--easing-standard),
+    border-color var(--duration-micro) var(--easing-standard);
+}
+
+.featured-project__link:hover,
+.featured-project__link:focus-visible {
+  color: var(--color-signal);
+  border-color: var(--color-signal);
 }
 
 /* ---------- Card ---------- */
 .project-card {
   padding: 0;
-  overflow: hidden;
-  transform-style: preserve-3d;
-  transition: box-shadow var(--duration-micro) var(--easing-standard),
-    transform 100ms ease-out;
+  /* .card already sets overflow:hidden and a comprehensive transition
+     (opacity/transform/box-shadow/border-color) — nothing extra needed
+     here now that hover is a plain lift + spotlight glow, not a JS-driven
+     tilt with its own bespoke timing. */
 }
 
 .project-card:hover {
@@ -167,7 +247,14 @@
 }
 
 .project-card__image-placeholder {
-  padding: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  padding: var(--space-5) var(--space-3);
+  color: var(--color-text-muted);
+  background-color: var(--color-bg);
   border: 1px dashed var(--color-border);
   border-radius: var(--radius);
   text-align: center;

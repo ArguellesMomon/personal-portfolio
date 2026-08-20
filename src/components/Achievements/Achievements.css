@@ -19,6 +19,10 @@
   align-items: center;
   text-align: center;
   gap: var(--space-1);
+  /* .card already sets overflow:hidden and a comprehensive transition
+     (opacity/transform/box-shadow/border-color) — nothing extra needed
+     here now that hover is a plain lift + spotlight glow, not a JS-driven
+     tilt with its own bespoke timing. */
 }
 
 .achievements__icon-chip {

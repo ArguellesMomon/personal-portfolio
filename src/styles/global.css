@@ -101,6 +101,22 @@ p {
   margin-bottom: var(--space-1);
 }
 
+/* A very light film-grain layer over the whole page, tying the "cinematic"
+   direction together — same trick used for texture in photography/film,
+   generated as an inline SVG filter so it needs no external asset. Kept
+   deliberately faint (0.035 opacity) so it never competes with body text;
+   see the skill's explicit warning against noise that hurts legibility. */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
 @media (min-width: 640px) {
   .section {
     padding: var(--space-7) var(--space-4);
@@ -140,13 +156,58 @@ p {
 }
 
 /* ---------- Shared card + tag patterns ---------- */
-/* Reused as-is by Skills, Projects, and Achievements so the page reads as
-   one system rather than one-off styles per section. */
+/* Reused as-is by Skills, Projects, Achievements, Contact, and About's
+   expertise items so the page reads as one system rather than one-off
+   styles per section. */
 .card {
+  position: relative;
+  overflow: hidden; /* clips the spotlight glow below to the card's corners */
   background-color: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
   padding: var(--space-3);
+  /* Elevation: a tight contact shadow plus a softer ambient one, so cards
+     read as sitting slightly above the page rather than flat against it. */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 10px 24px rgba(0, 0, 0, 0.2);
+  /* Includes opacity/--duration-load so cards that also carry .reveal (e.g.
+     Skills' category cards) get a correct fade-in regardless of which of
+     these two same-specificity rules wins the cascade — see the .reveal
+     rule below and the matching note in each section's own CSS. */
+  transition: opacity var(--duration-load) var(--easing-standard),
+    transform var(--duration-micro) var(--easing-standard),
+    box-shadow var(--duration-micro) var(--easing-standard),
+    border-color var(--duration-micro) var(--easing-standard);
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 107, 26, 0.35);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35), 0 18px 36px rgba(0, 0, 0, 0.3);
+}
+
+/* Cursor-tracked spotlight glow, replacing an earlier cursor-tilt effect
+   that read as more gimmicky than premium. Position comes from
+   --spotlight-x/--spotlight-y (see useSpotlight.js), written directly to
+   the element on mousemove — a plain radial gradient reading those
+   properties, revealed only on hover. Sits behind the card's real content
+   in paint order (pseudo-elements paint before their element's children),
+   so no z-index juggling is needed. */
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  background: radial-gradient(
+    480px circle at var(--spotlight-x, 50%) var(--spotlight-y, 50%),
+    rgba(255, 107, 26, 0.12),
+    transparent 70%
+  );
+  transition: opacity 300ms ease;
+  pointer-events: none;
+}
+
+.card:hover::before {
+  opacity: 1;
 }
 
 .tag {
@@ -157,6 +218,15 @@ p {
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
   color: var(--color-text-muted);
+  transition: transform var(--duration-micro) var(--easing-standard),
+    border-color var(--duration-micro) var(--easing-standard),
+    color var(--duration-micro) var(--easing-standard);
+}
+
+.tag:hover {
+  transform: translateY(-1px);
+  border-color: var(--color-signal);
+  color: var(--color-signal);
 }
 
 /* Icon-only circular/square link button, reused by Footer and Hero's social
@@ -232,6 +302,11 @@ p {
     transform: none;
     transition: opacity var(--duration-micro) linear;
     transition-delay: 0ms;
+  }
+
+  .card:hover,
+  .tag:hover {
+    transform: none;
   }
 
   *,

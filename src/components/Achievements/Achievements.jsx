@@ -1,75 +1,47 @@
-import { useState } from 'react';
-import { Award, ArrowRight, ArrowUp } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
 import achievements from '../../data/achievements.json';
+import AchievementCard from './AchievementCard.jsx';
 import useScrollReveal from '../../hooks/useScrollReveal';
 import './Achievements.css';
 
-// Mirrors the View All pattern in Projects — only relevant once real entries
-// push the list past one row, so the toggle stays hidden until then.
-const INITIAL_VISIBLE = 4;
+// The full list moved to its own page (see src/pages/AchievementsPage.jsx),
+// mirroring how Projects works — this section only shows a preview.
+// Matches Projects' featured count (3) for a clean single row instead of
+// one card wrapping alone onto a second row.
+const INITIAL_VISIBLE = 3;
 
 export default function Achievements() {
-  const revealRef = useScrollReveal();
-  const [showAll, setShowAll] = useState(false);
+  const headerRef = useScrollReveal();
+  const listRef = useScrollReveal();
   const hasMore = achievements.length > INITIAL_VISIBLE;
-  const visibleAchievements = showAll
-    ? achievements
-    : achievements.slice(0, INITIAL_VISIBLE);
+  const visibleAchievements = achievements.slice(0, INITIAL_VISIBLE);
 
   return (
     <section id="achievements" className="section achievements">
-      <div className="section-inner" ref={revealRef}>
-        <div className="reveal achievements__header">
-          <div>
-            <span className="mono-label section-eyebrow">04 — achievements</span>
-            <h2 className="section-heading">Achievements &amp; Highlights</h2>
-          </div>
+      <div className="section-inner">
+        <div ref={headerRef}>
+          <div className="reveal achievements__header">
+            <div>
+              <span className="mono-label section-eyebrow">04 — achievements</span>
+              <h2 className="section-heading">Achievements &amp; Highlights</h2>
+            </div>
 
-          {hasMore && (
-            <button
-              type="button"
-              className="mono-label section-toggle"
-              onClick={() => setShowAll((open) => !open)}
-              aria-expanded={showAll}
-            >
-              {showAll ? 'Show Fewer' : 'View All Achievements'}
-              {showAll ? (
-                <ArrowUp size={16} strokeWidth={1.75} aria-hidden="true" />
-              ) : (
+            {hasMore && (
+              <Link to="/achievements" className="mono-label section-toggle">
+                View All Achievements
                 <ArrowRight size={16} strokeWidth={1.75} aria-hidden="true" />
-              )}
-            </button>
-          )}
+              </Link>
+            )}
+          </div>
         </div>
 
-        <ul className="reveal achievements__list">
+        {/* Each card is its own direct .reveal child here, so they cascade
+            in one at a time as this list enters the viewport — same
+            per-card stagger pattern used in Skills/Projects/Contact. */}
+        <ul className="achievements__list" ref={listRef}>
           {visibleAchievements.map((item) => (
-            <li key={item.id} className="card achievements__item">
-              <span className="achievements__icon-chip" aria-hidden="true">
-                <Award size={22} strokeWidth={1.75} />
-              </span>
-
-              <h3 className="achievements__title">{item.title}</h3>
-
-              {item.issuer ? (
-                <p className="mono-label achievements__issuer">{item.issuer}</p>
-              ) : (
-                <p className="achievements__description">{item.description}</p>
-              )}
-
-              <p className="mono-label achievements__date">{item.date}</p>
-
-              {item.verifyUrl && (
-                <a
-                  href={item.verifyUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="mono-label achievements__verify"
-                >
-                  &lsaquo; Verify &rsaquo;
-                </a>
-              )}
-            </li>
+            <AchievementCard key={item.id} item={item} className="reveal" />
           ))}
         </ul>
       </div>

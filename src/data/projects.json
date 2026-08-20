@@ -26,50 +26,6 @@
     "imageAlt": "[PLACEHOLDER: describe the AedesCapella dashboard or hardware screenshot]"
   },
   {
-    "id": "wellbot",
-    "title": "WellBot (MedTech Mate)",
-    "category": "Web App",
-    "shortDescription": "A web app for medical interns and students featuring an AI chatbot companion, Pip, for wellness support.",
-    "techStack": [
-      "React",
-      "Vite",
-      "Supabase"
-    ],
-    "role": "[PLACEHOLDER: your role and contribution]",
-    "problem": "[PLACEHOLDER: what problem WellBot addresses for medical interns/students]",
-    "approach": "[PLACEHOLDER: how Pip and the wellness features were designed and built]",
-    "challenges": "[PLACEHOLDER: hardest technical or design challenges]",
-    "outcome": "[PLACEHOLDER: results, usage, or feedback]",
-    "links": {
-      "github": "[PLACEHOLDER: repo link]",
-      "live": "[PLACEHOLDER: live demo link]"
-    },
-    "image": null,
-    "imageAlt": "[PLACEHOLDER: describe a WellBot screenshot]"
-  },
-  {
-    "id": "photobooth",
-    "title": "Portable Photobooth App",
-    "category": "Web App",
-    "shortDescription": "A phone-first, installable PWA with a retro photobooth aesthetic, offline photo capture and editing, and local-first storage.",
-    "techStack": [
-      "React",
-      "Vite",
-      "PWA"
-    ],
-    "role": "[PLACEHOLDER: your role and contribution]",
-    "problem": "[PLACEHOLDER: what this project addresses]",
-    "approach": "[PLACEHOLDER: how offline capture, editing, and local-first storage work]",
-    "challenges": "[PLACEHOLDER: hardest technical challenges]",
-    "outcome": "[PLACEHOLDER: results or reception]",
-    "links": {
-      "github": "[PLACEHOLDER: repo link]",
-      "live": "[PLACEHOLDER: live demo link]"
-    },
-    "image": null,
-    "imageAlt": "[PLACEHOLDER: describe a Photobooth app screenshot]"
-  },
-  {
     "id": "iris",
     "title": "IRIS",
     "category": "Embedded/Hardware",
@@ -112,6 +68,50 @@
     },
     "image": null,
     "imageAlt": "[PLACEHOLDER: describe a King Ace Trading chart/screenshot]"
+  },
+  {
+    "id": "wellbot",
+    "title": "WellBot (MedTech Mate)",
+    "category": "Web App",
+    "shortDescription": "A web app for medical interns and students featuring an AI chatbot companion, Pip, for wellness support.",
+    "techStack": [
+      "React",
+      "Vite",
+      "Supabase"
+    ],
+    "role": "[PLACEHOLDER: your role and contribution]",
+    "problem": "[PLACEHOLDER: what problem WellBot addresses for medical interns/students]",
+    "approach": "[PLACEHOLDER: how Pip and the wellness features were designed and built]",
+    "challenges": "[PLACEHOLDER: hardest technical or design challenges]",
+    "outcome": "[PLACEHOLDER: results, usage, or feedback]",
+    "links": {
+      "github": "[PLACEHOLDER: repo link]",
+      "live": "[PLACEHOLDER: live demo link]"
+    },
+    "image": null,
+    "imageAlt": "[PLACEHOLDER: describe a WellBot screenshot]"
+  },
+  {
+    "id": "photobooth",
+    "title": "Portable Photobooth App",
+    "category": "Web App",
+    "shortDescription": "A phone-first, installable PWA with a retro photobooth aesthetic, offline photo capture and editing, and local-first storage.",
+    "techStack": [
+      "React",
+      "Vite",
+      "PWA"
+    ],
+    "role": "[PLACEHOLDER: your role and contribution]",
+    "problem": "[PLACEHOLDER: what this project addresses]",
+    "approach": "[PLACEHOLDER: how offline capture, editing, and local-first storage work]",
+    "challenges": "[PLACEHOLDER: hardest technical challenges]",
+    "outcome": "[PLACEHOLDER: results or reception]",
+    "links": {
+      "github": "[PLACEHOLDER: repo link]",
+      "live": "[PLACEHOLDER: live demo link]"
+    },
+    "image": null,
+    "imageAlt": "[PLACEHOLDER: describe a Photobooth app screenshot]"
   },
   {
     "id": "eventure",

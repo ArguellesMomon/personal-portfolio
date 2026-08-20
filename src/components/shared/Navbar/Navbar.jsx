@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import SignalLine from '../SignalLine/SignalLine';
 import './Navbar.css';
@@ -12,12 +13,27 @@ const NAV_LINKS = [
   { id: 'contact', label: 'Contact' },
 ];
 
+// Dedicated pages that each correspond to one home-page section, for the
+// active-highlight logic below. Add an entry here for any future page like
+// this (e.g. a /skills page) rather than hardcoding one route by name.
+const PAGE_ROUTES = {
+  '/projects': 'projects',
+  '/achievements': 'achievements',
+};
+
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeId, setActiveId] = useState('home');
+  const { pathname } = useLocation();
+  const activeSectionId = PAGE_ROUTES[pathname];
 
   // Highlights the nav link for whichever section is currently most visible.
+  // Only relevant on the home page — a dedicated page like /projects or
+  // /achievements doesn't have any of these section ids, so this naturally
+  // finds nothing there (handled separately below via activeSectionId).
   useEffect(() => {
+    if (activeSectionId) return undefined;
+
     const sections = NAV_LINKS.map((link) => document.getElementById(link.id)).filter(
       Boolean
     );
@@ -34,28 +50,38 @@ export default function Navbar() {
 
     sections.forEach((section) => observer.observe(section));
     return () => observer.disconnect();
-  }, []);
+  }, [activeSectionId]);
 
   const handleLinkClick = () => setIsMenuOpen(false);
+
+  // Every section link points at an absolute "/#id" rather than a bare
+  // "#id" — a bare hash resolves relative to whatever page you're
+  // currently on, which would keep you on /projects instead of taking you
+  // back to the home page section it actually refers to.
+  const isActive = (id) => (activeSectionId ? id === activeSectionId : activeId === id);
+
+  const renderLinks = (onClick) =>
+    NAV_LINKS.map((link) => (
+      <Link
+        key={link.id}
+        to={`/#${link.id}`}
+        className={`navbar__link ${isActive(link.id) ? 'is-active' : ''}`}
+        onClick={onClick}
+      >
+        {link.label}
+      </Link>
+    ));
 
   return (
     <>
       <header className="navbar">
         <div className="navbar__bar">
-          <a href="#home" className="navbar__brand mono-label">
-            Richmond L. Arguelles
-          </a>
+          <Link to="/#home" className="navbar__brand mono-label">
+            [PLACEHOLDER: Name]
+          </Link>
 
           <nav className="navbar__links navbar__links--desktop" aria-label="Primary">
-            {NAV_LINKS.map((link) => (
-              <a
-                key={link.id}
-                href={`#${link.id}`}
-                className={`navbar__link ${activeId === link.id ? 'is-active' : ''}`}
-              >
-                {link.label}
-              </a>
-            ))}
+            {renderLinks()}
           </nav>
 
           <div className="navbar__actions">
@@ -81,23 +107,14 @@ export default function Navbar() {
           aria-label="Mobile"
           className={`navbar__links navbar__links--mobile ${isMenuOpen ? 'is-open' : ''}`}
         >
-          {NAV_LINKS.map((link) => (
-            <a
-              key={link.id}
-              href={`#${link.id}`}
-              className={`navbar__link ${activeId === link.id ? 'is-active' : ''}`}
-              onClick={handleLinkClick}
-            >
-              {link.label}
-            </a>
-          ))}
+          {renderLinks(handleLinkClick)}
         </nav>
 
         <SignalLine />
       </header>
 
       {/* Now that .navbar is position:fixed (removed from normal flow), this
-          takes its old place in the document so Hero's content doesn't start
+          takes its old place in the document so page content doesn't start
           out hidden underneath it. Same height the navbar actually renders
           at — see .navbar__spacer in Navbar.css. */}
       <div className="navbar__spacer" aria-hidden="true" />

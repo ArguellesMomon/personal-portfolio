@@ -1,30 +1,22 @@
-import { useRef, useState } from 'react';
-import { ChevronDown, ExternalLink, Github, Cpu, Globe, Smartphone, LineChart } from 'lucide-react';
-import usePrefersReducedMotion from '../../hooks/usePrefersReducedMotion';
+import { useState } from 'react';
+import { ChevronDown, ExternalLink, Github, ImageOff } from 'lucide-react';
+import useSpotlight from '../../hooks/useSpotlight';
+import { CATEGORY_ICONS } from './categoryIcons.js';
 import './Projects.css';
-
-// One icon per category, drawn from the same icon system as the rest of the
-// site — this is purely a visual anchor for the card header, not a new set.
-const CATEGORY_ICONS = {
-  'Embedded/Hardware': Cpu,
-  'Web App': Globe,
-  Mobile: Smartphone,
-  'ML/Data': LineChart,
-};
-
-const MAX_TILT_DEG = 8;
 
 // Accessible accordion pattern: the actual toggle control is a <button> that
 // wraps only the title (inside an <h3>), so its accessible name stays short.
 // Clicking anywhere on the header also toggles, for a larger mouse/touch
 // target, but that click handler sits on a non-interactive wrapper — the
 // button remains the real, keyboard-operable control.
-export default function ProjectCard({ project }) {
+//
+// className/style are passed through from wherever this is used — a plain
+// scroll-triggered .reveal on the dedicated /projects page
+// (src/pages/ProjectsPage.jsx), where every project now lives with full
+// case-study detail.
+export default function ProjectCard({ project, className = '', style }) {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
-  const [isHovered, setIsHovered] = useState(false);
-  const cardRef = useRef(null);
-  const prefersReducedMotion = usePrefersReducedMotion();
+  const { ref: cardRef, handleMouseMove } = useSpotlight();
   const panelId = `project-panel-${project.id}`;
   const CategoryIcon = CATEGORY_ICONS[project.category];
 
@@ -36,44 +28,12 @@ export default function ProjectCard({ project }) {
     toggle();
   };
 
-  // Tilts the card toward the cursor — rotateY follows horizontal position,
-  // rotateX follows vertical (inverted: cursor near the top tilts the top
-  // edge back, like the card is leaning toward you).
-  const handleMouseMove = (event) => {
-    if (prefersReducedMotion) return;
-    const card = cardRef.current;
-    if (!card) return;
-    const rect = card.getBoundingClientRect();
-    const relX = (event.clientX - rect.left) / rect.width;
-    const relY = (event.clientY - rect.top) / rect.height;
-    setTilt({
-      x: -(relY - 0.5) * MAX_TILT_DEG * 2,
-      y: (relX - 0.5) * MAX_TILT_DEG * 2,
-    });
-  };
-
-  const handleMouseEnter = () => setIsHovered(true);
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-    setTilt({ x: 0, y: 0 });
-  };
-
-  const cardStyle = prefersReducedMotion
-    ? undefined
-    : {
-        transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) translateY(${
-          isHovered ? -5 : 0
-        }px)`,
-      };
-
   return (
     <article
       ref={cardRef}
-      className="card project-card"
-      style={cardStyle}
+      className={`card project-card ${className}`.trim()}
+      style={style}
       onMouseMove={handleMouseMove}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
     >
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
       <div className="project-card__header" onClick={handleHeaderClick}>
@@ -159,9 +119,10 @@ export default function ProjectCard({ project }) {
               className="project-card__image"
             />
           ) : (
-            <p className="mono-label project-card__image-placeholder">
-              [PLACEHOLDER: project screenshot]
-            </p>
+            <div className="project-card__image-placeholder">
+              <ImageOff size={22} strokeWidth={1.5} aria-hidden="true" />
+              <span className="mono-label">[PLACEHOLDER: project screenshot]</span>
+            </div>
           )}
 
           <div className="project-card__links">

@@ -16,7 +16,14 @@
   align-items: center;
   gap: var(--space-2);
   color: var(--color-text);
-  transition: border-color var(--duration-micro) var(--easing-standard),
+  /* Includes opacity/--duration-load so this rule works correctly
+     regardless of cascade order against .reveal's own transition
+     declaration (see the matching note on .card in global.css). transform
+     uses the shorter --duration-micro to match .card's hover lift timing
+     rather than the slower reveal-in duration. */
+  transition: opacity var(--duration-load) var(--easing-standard),
+    transform var(--duration-micro) var(--easing-standard),
+    border-color var(--duration-micro) var(--easing-standard),
     color var(--duration-micro) var(--easing-standard);
 }
 
@@ -24,6 +31,25 @@
 .contact__link:focus-visible {
   border-color: var(--color-signal);
   color: var(--color-signal);
+}
+
+.contact__link-icon-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  color: var(--color-signal);
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  transition: border-color var(--duration-micro) var(--easing-standard);
+}
+
+.contact__link:hover .contact__link-icon-chip,
+.contact__link:focus-visible .contact__link-icon-chip {
+  border-color: var(--color-signal);
 }
 
 .contact__link-label {

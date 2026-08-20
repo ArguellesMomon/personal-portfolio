@@ -1,12 +1,48 @@
 /* Overrides .section's solid background-color with a gradient — this is
    what creates the "fade to black" illusion. SiteBackdrop is fixed and
    always visible behind everything, so it still shows through faintly at
-   the top of this section (right where Hero hands off) and is fully
-   covered by the time this gradient resolves to solid, about 60% of the
-   way down. Every section after this one just uses .section's normal solid
-   background, since the backdrop is already fully hidden by then. */
+   the top of this section (right where Hero hands off) and dissolves to
+   fully solid gradually across nearly this whole section's height (previous
+   version resolved by 60%, which — especially on shorter viewports where
+   this section isn't very tall — completed in too short a scroll distance
+   to read as smooth; more stops + more distance both help). Every section
+   after this one just uses .section's normal solid background, since the
+   backdrop is fully hidden well before this one ends. */
 .section.about {
-  background: linear-gradient(to bottom, transparent 0%, var(--color-bg) 60%, var(--color-bg) 100%);
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(13, 12, 11, 0.25) 25%,
+    rgba(13, 12, 11, 0.6) 50%,
+    rgba(13, 12, 11, 0.88) 75%,
+    var(--color-bg) 96%,
+    var(--color-bg) 100%
+  );
+  /* Extra bottom padding buys more scroll distance for the fade to resolve
+     over, independent of how much actual content is in this section. */
+  padding-bottom: calc(var(--space-7) * 1.5);
+  overflow: hidden;
+}
+
+/* Soft ambient light behind the quote — depth via atmosphere rather than a
+   new color; it's the existing signal orange at very low opacity. */
+.about__glow {
+  position: absolute;
+  bottom: -10%;
+  left: 50%;
+  width: 60vw;
+  max-width: 600px;
+  height: 60vw;
+  max-height: 600px;
+  transform: translateX(-50%);
+  background: radial-gradient(circle, rgba(255, 107, 26, 0.1), transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.section-inner {
+  position: relative;
+  z-index: 1;
 }
 
 .about__body {
@@ -20,15 +56,32 @@
 }
 
 .about__expertise {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-1);
-  margin-bottom: var(--space-4);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-2);
+  margin-bottom: var(--space-5);
 }
 
-.about__expertise-tag {
+.about__expertise-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  /* Background/border/shadow/hover-lift/spotlight all come from .card —
+     just the compact flex layout is specific to this smaller card size. */
+}
+
+.about__expertise-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
   color: var(--color-signal);
-  border-color: var(--color-signal);
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
 }
 
 .about__quote {
@@ -46,7 +99,13 @@
 
 .about__quote p {
   font-family: var(--font-display);
-  font-size: 1.375rem;
+  font-size: clamp(1.25rem, 1rem + 1vw, 1.625rem);
   line-height: 1.4;
   color: var(--color-text);
+}
+
+@media (min-width: 640px) {
+  .about__expertise {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }

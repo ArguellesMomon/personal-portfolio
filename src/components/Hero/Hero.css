@@ -11,6 +11,19 @@
   color: var(--color-text);
 }
 
+/* Mirrors .section-inner (global.css) exactly — same max-width, same
+   auto-centering — so Hero's text starts at the same horizontal position
+   as every other section's, on every viewport width. Without this, Hero's
+   text sits flush against .hero's own padding edge while every other
+   section's text is inset further in (centered within its own 1120px cap)
+   on any viewport wider than roughly 1120px + padding — that gap is what
+   was actually visible. */
+.hero__inner {
+  width: 100%;
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+}
+
 .hero__content {
   display: flex;
   flex-direction: column;
