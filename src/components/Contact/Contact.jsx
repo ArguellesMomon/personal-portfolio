@@ -54,6 +54,8 @@ export default function Contact() {
 
   return (
     <section id="contact" className="section contact">
+      <div className="contact__glow contact__glow--signal" aria-hidden="true" />
+      <div className="contact__glow contact__glow--olive" aria-hidden="true" />
       <div className="section-inner">
         <div ref={headerRef}>
           <div className="reveal">

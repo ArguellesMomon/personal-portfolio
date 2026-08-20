@@ -43,6 +43,7 @@ export default function Skills() {
 
   return (
     <section id="skills" className="section skills">
+      <div className="skills__glow" aria-hidden="true" />
       <div className="section-inner">
         <div ref={headerRef}>
           <div className="reveal">

@@ -19,6 +19,7 @@ export default function Achievements() {
 
   return (
     <section id="achievements" className="section achievements">
+      <div className="achievements__glow" aria-hidden="true" />
       <div className="section-inner">
         <div ref={headerRef}>
           <div className="reveal achievements__header">

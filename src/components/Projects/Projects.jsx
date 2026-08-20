@@ -72,6 +72,7 @@ export default function Projects() {
 
   return (
     <section id="projects" className="section projects">
+      <div className="projects__glow" aria-hidden="true" />
       <div className="section-inner">
         <div ref={headerRef}>
           <div className="reveal projects__header">

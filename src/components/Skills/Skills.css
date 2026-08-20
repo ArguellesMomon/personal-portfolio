@@ -1,3 +1,29 @@
+.skills {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Soft signal-orange ambient light, top-right — same trick as About's
+   .about__glow, carried into this section so the page doesn't go flat the
+   moment the photo backdrop fades out. */
+.skills__glow {
+  position: absolute;
+  top: -12%;
+  right: -8%;
+  width: 55vw;
+  max-width: 520px;
+  height: 55vw;
+  max-height: 520px;
+  background: radial-gradient(circle, rgba(255, 107, 26, 0.08), transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.skills .section-inner {
+  position: relative;
+  z-index: 1;
+}
+
 .skills__grid {
   display: grid;
   grid-template-columns: 1fr;

@@ -4,6 +4,22 @@
   background-color: var(--color-bg);
   border-top: 1px solid var(--color-border);
   padding: var(--space-4) var(--space-2);
+  overflow: hidden;
+}
+
+/* A quiet glowing accent centered on the border, so the page doesn't just
+   stop dead on a flat line — a small closing flourish that echoes the
+   signal-orange glows used throughout the rest of the page. */
+.footer::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(480px, 70%);
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--color-signal), transparent);
+  opacity: 0.45;
 }
 
 .footer__inner {

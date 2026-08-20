@@ -1,3 +1,28 @@
+.achievements {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Ember/rust glow, bottom-left — echoes achievements__icon-chip's own
+   color so the ambient light and the foreground icons feel connected. */
+.achievements__glow {
+  position: absolute;
+  bottom: -18%;
+  left: -10%;
+  width: 55vw;
+  max-width: 560px;
+  height: 55vw;
+  max-height: 560px;
+  background: radial-gradient(circle, rgba(217, 84, 10, 0.09), transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.achievements .section-inner {
+  position: relative;
+  z-index: 1;
+}
+
 .achievements__header {
   display: flex;
   flex-wrap: wrap;

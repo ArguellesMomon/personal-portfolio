@@ -5,6 +5,10 @@
    secondary, olive as the personal accent on Hero's social icons). */
 :root {
   --color-bg: #0d0c0b;
+  /* Slightly lifted off --color-bg — used to zebra-stripe alternating
+     sections (Projects, Contact) so the page isn't one unbroken slab of
+     black once the photo backdrop has faded out after About. */
+  --color-bg-alt: #141210;
   --color-surface: #17140f;
   --color-text: #f5f1ea;
   --color-text-muted: #9a9488;

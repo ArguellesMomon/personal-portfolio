@@ -92,6 +92,33 @@ p {
   margin: 0 auto;
 }
 
+/* Faint dot-grid, sitting behind every section's content (z-index: -1 —
+   see the stacking note above the rule) so the flat black past About no
+   longer reads as totally empty. Skipped on About itself since the photo
+   backdrop + film grain are already enough texture there. Individual
+   sections add their own radial "glow" elements on top of this for extra
+   depth — see e.g. .skills__glow, .contact__glow. */
+.section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: radial-gradient(circle, rgba(245, 241, 234, 0.05) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.section.about::before {
+  content: none;
+}
+
+/* Gives scrolling from section to section a defined seam once the photo
+   backdrop is gone. Only fires between two .section elements — Hero (not
+   a .section) to About keeps relying on the photo fade instead. */
+.section + .section {
+  border-top: 1px solid var(--color-border);
+}
+
 .section-heading {
   margin-bottom: var(--space-4);
 }
@@ -178,7 +205,10 @@ body::after {
 .card {
   position: relative;
   overflow: hidden; /* clips the spotlight glow below to the card's corners */
-  background-color: var(--color-surface);
+  /* A very faint top-left highlight over the flat surface color, so cards
+     read as having a light source rather than being a flat cutout. */
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.035), transparent 45%),
+    var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
   padding: var(--space-3);
