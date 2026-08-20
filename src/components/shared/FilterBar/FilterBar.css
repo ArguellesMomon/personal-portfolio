@@ -27,66 +27,10 @@
   gap: var(--space-2);
 }
 
-/* ---------- Search ---------- */
-.filter-bar__search {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: var(--space-1);
-  padding: 0 var(--space-2);
-  height: 44px;
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius);
-  color: var(--color-text-muted);
-  transition: border-color var(--duration-micro) var(--easing-standard),
-    box-shadow var(--duration-micro) var(--easing-standard);
-}
 
-.filter-bar__search:focus-within {
-  border-color: var(--color-signal);
-  box-shadow: 0 0 0 4px rgba(255, 107, 26, 0.14);
-}
 
-.filter-bar__search input {
-  flex: 1;
-  min-width: 0;
-  height: 100%;
-  background: none;
-  border: none;
-  color: var(--color-text);
-  font-family: var(--font-body);
-  font-size: 0.95rem;
-}
 
-.filter-bar__search input::placeholder {
-  color: var(--color-text-muted);
-}
 
-.filter-bar__search input:focus {
-  outline: none;
-}
-
-.filter-bar__clear-search {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 22px;
-  height: 22px;
-  flex-shrink: 0;
-  background: none;
-  border: none;
-  color: var(--color-text-muted);
-  border-radius: 50%;
-  transition: color var(--duration-micro) var(--easing-standard),
-    background-color var(--duration-micro) var(--easing-standard);
-}
-
-.filter-bar__clear-search:hover,
-.filter-bar__clear-search:focus-visible {
-  color: var(--color-signal);
-  background-color: var(--color-bg);
-}
 
 /* ---------- Category chips ---------- */
 .filter-bar__chips {
@@ -94,7 +38,7 @@
   flex-wrap: nowrap;
   gap: var(--space-1);
   overflow-x: auto;
-  padding-bottom: 2px;
+padding: 4px 0 6px; 
   /* Without min-width:0, a flex child's intrinsic content width can't
      shrink below its content size, so this row would push past its
      container (and off the viewport edge) instead of clipping to the
@@ -191,20 +135,18 @@
 
   .filter-bar__row {
     flex-direction: row;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
   }
 
-  .filter-bar__search {
-    width: 260px;
-    flex-shrink: 0;
-  }
 
   /* Takes the remaining row width after the fixed-width search field, and
      scrolls its own overflow horizontally rather than the whole toolbar
      spilling past the page edge (see the min-width:0 note above). */
   .filter-bar__chips {
     flex: 1;
+    flex-wrap: wrap;        /* new */
+    overflow-x: visible; 
   }
 }
 

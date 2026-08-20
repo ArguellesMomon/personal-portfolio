@@ -10,8 +10,6 @@ import './FilterBar.css';
 export default function FilterBar({
   searchValue,
   onSearchChange,
-  searchPlaceholder = 'Search…',
-  searchLabel = 'Search',
   categories,
   activeCategory,
   onCategoryChange,
@@ -29,26 +27,7 @@ export default function FilterBar({
   return (
     <div className="filter-bar">
       <div className="filter-bar__row">
-        <label className="filter-bar__search">
-          <Search size={17} strokeWidth={1.75} aria-hidden="true" />
-          <span className="visually-hidden">{searchLabel}</span>
-          <input
-            type="text"
-            value={searchValue}
-            onChange={(event) => onSearchChange(event.target.value)}
-            placeholder={searchPlaceholder}
-          />
-          {searchValue && (
-            <button
-              type="button"
-              className="filter-bar__clear-search"
-              onClick={() => onSearchChange('')}
-              aria-label="Clear search"
-            >
-              <X size={15} strokeWidth={2} aria-hidden="true" />
-            </button>
-          )}
-        </label>
+        
 
         <div className="filter-bar__chips" role="group" aria-label="Filter by category">
           {categories.map((cat) => {
