@@ -11,6 +11,12 @@
   font-weight: 500;
   line-height: 1;
   min-height: 44px;
+  /* Driven by useMagnetic (falls back to 0px when the hook is inactive —
+     touch devices, reduced motion, or simply not currently in range of
+     the cursor) — kept separate from the hover lift below so both can
+     combine into one transform instead of one silently replacing the
+     other. */
+  transform: translate(var(--magnetic-x, 0px), var(--magnetic-y, 0px));
   transition: background-color var(--duration-micro) var(--easing-standard),
     color var(--duration-micro) var(--easing-standard),
     border-color var(--duration-micro) var(--easing-standard),
@@ -27,7 +33,7 @@
 .btn--primary:focus-visible {
   background-color: var(--color-ember);
   box-shadow: 0 0 0 4px rgba(255, 107, 26, 0.22);
-  transform: translateY(-2px);
+  transform: translate(var(--magnetic-x, 0px), calc(var(--magnetic-y, 0px) - 2px));
 }
 
 .btn--secondary {
@@ -40,7 +46,7 @@
 .btn--secondary:focus-visible {
   border-color: var(--color-signal);
   color: var(--color-signal);
-  transform: translateY(-2px);
+  transform: translate(var(--magnetic-x, 0px), calc(var(--magnetic-y, 0px) - 2px));
 }
 
 .btn__icon {

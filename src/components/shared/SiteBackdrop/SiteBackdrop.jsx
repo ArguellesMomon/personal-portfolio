@@ -1,3 +1,4 @@
+import useParallax from '../../../hooks/useParallax';
 import './SiteBackdrop.css';
 
 // Desktop/tablet gets the wide 16:9 crop; phones get the 9:16 crop (see the
@@ -14,11 +15,13 @@ const BACKDROP_MOBILE = '/hero-portrait-mobile.jpg';
 // it fades out of view naturally instead of needing its own scroll-linked
 // opacity logic.
 export default function SiteBackdrop() {
+  const parallaxRef = useParallax();
+
   return (
     <div className="site-backdrop" aria-hidden="true">
       <picture>
         <source media="(max-width: 639px)" srcSet={BACKDROP_MOBILE} />
-        <img src={BACKDROP_DESKTOP} alt="" className="site-backdrop__image" />
+        <img ref={parallaxRef} src={BACKDROP_DESKTOP} alt="" className="site-backdrop__image" />
       </picture>
       <div className="site-backdrop__scrim" />
     </div>

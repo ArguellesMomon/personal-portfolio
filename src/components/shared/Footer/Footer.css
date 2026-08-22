@@ -3,26 +3,70 @@
   z-index: 1;
   background-color: var(--color-bg);
   border-top: 1px solid var(--color-border);
-  padding: var(--space-4) var(--space-2);
   overflow: hidden;
 }
 
-/* A quiet glowing accent centered on the border, so the page doesn't just
-   stop dead on a flat line — a small closing flourish that echoes the
-   signal-orange glows used throughout the rest of the page. */
-.footer::before {
-  content: '';
-  position: absolute;
-  top: -1px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: min(480px, 70%);
-  height: 1px;
-  background: linear-gradient(to right, transparent, var(--color-signal), transparent);
-  opacity: 0.45;
+/* ---------- Sign-off (name bookend + back-to-top) ---------- */
+.footer__signoff {
+  position: relative;
+  padding: var(--space-6) var(--space-2) var(--space-4);
 }
 
+/* Same glow trick as every other section, just very low and wide since
+   this sits right at the bottom of the page. */
+.footer__signoff::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 100% at 50% 100%, rgba(255, 107, 26, 0.07), transparent 70%);
+  pointer-events: none;
+}
+
+.footer__signoff-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.footer__eyebrow {
+  display: block;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-1);
+}
+
+.footer__name {
+  font-size: clamp(2rem, 1.6rem + 2vw, 3.5rem);
+  line-height: 1.05;
+}
+
+.footer__top-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  align-self: flex-start;
+  padding: var(--space-1) var(--space-2);
+  background: none;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  color: var(--color-text-muted);
+  transition: color var(--duration-micro) var(--easing-standard),
+    border-color var(--duration-micro) var(--easing-standard),
+    transform var(--duration-micro) var(--easing-standard);
+}
+
+.footer__top-btn:hover,
+.footer__top-btn:focus-visible {
+  color: var(--color-signal);
+  border-color: var(--color-signal);
+  transform: translateY(-2px);
+}
+
+/* ---------- Bottom bar (copyright + social) ---------- */
 .footer__inner {
+  position: relative;
+  z-index: 1;
   max-width: var(--content-max-width);
   margin: 0 auto;
   display: flex;
@@ -30,6 +74,8 @@
   align-items: center;
   gap: var(--space-2);
   text-align: center;
+  padding: var(--space-3) var(--space-2) var(--space-4);
+  border-top: 1px solid var(--color-border);
 }
 
 .footer__links {
@@ -38,9 +84,37 @@
 }
 
 @media (min-width: 640px) {
+  .footer__signoff {
+    padding: var(--space-7) var(--space-4) var(--space-4);
+  }
+
+  .footer__signoff-inner {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+
   .footer__inner {
     flex-direction: row;
     justify-content: space-between;
     text-align: left;
+    padding: var(--space-3) var(--space-4) var(--space-4);
+  }
+}
+
+@media (min-width: 1024px) {
+  .footer__signoff {
+    padding: var(--space-7) var(--space-5) var(--space-4);
+  }
+
+  .footer__inner {
+    padding: var(--space-3) var(--space-5) var(--space-4);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer__top-btn:hover,
+  .footer__top-btn:focus-visible {
+    transform: none;
   }
 }

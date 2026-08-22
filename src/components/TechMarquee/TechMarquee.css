@@ -1,0 +1,74 @@
+.tech-marquee {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  background-color: var(--color-bg-alt);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  padding: var(--space-3) 0;
+  /* Fades the strip to transparent at both edges instead of hard-cutting
+     mid-word, so items appear to dissolve in/out rather than pop. */
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+
+.tech-marquee__track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  animation: tech-marquee-scroll 36s linear infinite;
+}
+
+/* A visible, deliberate "you can stop this" affordance — small but it's
+   exactly the kind of thing that reads as interactive rather than just
+   decorative. */
+.tech-marquee:hover .tech-marquee__track {
+  animation-play-state: paused;
+}
+
+@keyframes tech-marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    /* Exactly half, since the item list is rendered twice back-to-back —
+       at -50% the second copy sits exactly where the first started. */
+    transform: translateX(-50%);
+  }
+}
+
+.tech-marquee__item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 0 var(--space-3);
+  flex-shrink: 0;
+}
+
+.tech-marquee__word {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.1rem, 1rem + 0.5vw, 1.5rem);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  transition: color var(--duration-micro) var(--easing-standard);
+}
+
+.tech-marquee__item:hover .tech-marquee__word {
+  color: var(--color-signal);
+}
+
+.tech-marquee__dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: var(--color-signal);
+  opacity: 0.5;
+  flex-shrink: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tech-marquee__track {
+    animation: none;
+  }
+}

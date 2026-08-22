@@ -1,0 +1,110 @@
+.project-media {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background-color: var(--color-bg);
+}
+
+/* Each tint variant only defines these 3 custom properties — the actual
+   rules that use them (below) stay written once instead of being repeated
+   per category, so adding a 5th category later is a one-line addition. */
+.project-media--signal {
+  --tint-color: var(--color-signal);
+  --tint-glow: color-mix(in srgb, var(--color-signal) 20%, transparent);
+  --tint-border: color-mix(in srgb, var(--color-signal) 45%, var(--color-border));
+}
+
+.project-media--ember {
+  --tint-color: var(--color-ember);
+  --tint-glow: color-mix(in srgb, var(--color-ember) 20%, transparent);
+  --tint-border: color-mix(in srgb, var(--color-ember) 45%, var(--color-border));
+}
+
+.project-media--olive {
+  --tint-color: var(--color-olive);
+  --tint-glow: color-mix(in srgb, var(--color-olive) 20%, transparent);
+  --tint-border: color-mix(in srgb, var(--color-olive) 45%, var(--color-border));
+}
+
+/* ---------- Chrome bar ---------- */
+.project-media__chrome {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  height: 26px;
+  padding: 0 10px;
+  background-color: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.project-media__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  opacity: 0.55;
+}
+
+/* The 3-dot "traffic light" is a pure convention borrowed from window
+   chrome — using the site's own 3 accent colors here (rather than the
+   usual literal red/yellow/green) keeps it from being the one place on
+   the page that breaks the palette. */
+.project-media__dot--signal {
+  background-color: var(--color-signal);
+}
+
+.project-media__dot--ember {
+  background-color: var(--color-ember);
+}
+
+.project-media__dot--olive {
+  background-color: var(--color-olive);
+}
+
+/* ---------- Real screenshot ---------- */
+.project-media__image {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  object-fit: cover;
+}
+
+/* ---------- Placeholder (no image yet) ---------- */
+.project-media__placeholder {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  position: relative;
+  background-color: var(--color-bg-alt);
+  /* Same faint dot-grid as .section::before (global.css) layered under a
+     category-tinted glow, so an unfilled project card still visually
+     belongs to the rest of the page instead of introducing a new texture. */
+  background-image: radial-gradient(circle, rgba(245, 241, 234, 0.05) 1px, transparent 1px),
+    radial-gradient(circle at 50% 35%, var(--tint-glow), transparent 70%);
+  background-size: 22px 22px, 100% 100%;
+}
+
+.project-media__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  color: var(--tint-color);
+  background-color: var(--color-bg);
+  border: 1px solid var(--tint-border);
+  border-radius: var(--radius);
+}
+
+.project-media__category {
+  color: var(--color-text-muted);
+  letter-spacing: 0.04em;
+}

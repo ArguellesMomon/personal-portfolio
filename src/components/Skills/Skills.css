@@ -28,6 +28,12 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--space-3);
+  /* Grid items stretch to equal height by default — fine when every card
+     has similar content, but "Other" (2 tags) vs "Languages & Frameworks"
+     (5 tags) stretching to match left a visibly empty lower half in the
+     shorter card. Letting each card size to its own content instead reads
+     as an intentional, slightly uneven row rather than a padding bug. */
+  align-items: start;
 }
 
 .skills__icon-chip {

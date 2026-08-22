@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { ChevronDown, ExternalLink, Github, ImageOff } from 'lucide-react';
+import { ChevronDown, ExternalLink, Github } from 'lucide-react';
 import useSpotlight from '../../hooks/useSpotlight';
 import { CATEGORY_ICONS } from './categoryIcons.js';
+import ProjectMedia from './ProjectMedia.jsx';
 import './Projects.css';
 
 // Accessible accordion pattern: the actual toggle control is a <button> that
@@ -35,6 +36,8 @@ export default function ProjectCard({ project, className = '', style }) {
       style={style}
       onMouseMove={handleMouseMove}
     >
+      <ProjectMedia project={project} />
+
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
       <div className="project-card__header" onClick={handleHeaderClick}>
         {project.badge && (
@@ -111,19 +114,6 @@ export default function ProjectCard({ project, className = '', style }) {
               <dd>{project.outcome}</dd>
             </div>
           </dl>
-
-          {project.image ? (
-            <img
-              src={project.image}
-              alt={project.imageAlt}
-              className="project-card__image"
-            />
-          ) : (
-            <div className="project-card__image-placeholder">
-              <ImageOff size={22} strokeWidth={1.5} aria-hidden="true" />
-              <span className="mono-label">[PLACEHOLDER: project screenshot]</span>
-            </div>
-          )}
 
           <div className="project-card__links">
             <a

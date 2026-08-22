@@ -3,8 +3,8 @@
   overflow: hidden;
 }
 
-/* Ember/rust glow, bottom-left — echoes achievements__icon-chip's own
-   color so the ambient light and the foreground icons feel connected. */
+/* Ember/rust glow, bottom-left — a warm ambient echo of the badge tints
+   used across the grid (see AchievementBadge.css). */
 .achievements__glow {
   position: absolute;
   bottom: -18%;
@@ -48,18 +48,6 @@
      (opacity/transform/box-shadow/border-color) — nothing extra needed
      here now that hover is a plain lift + spotlight glow, not a JS-driven
      tilt with its own bespoke timing. */
-}
-
-.achievements__icon-chip {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  color: var(--color-ember);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius);
-  margin-bottom: var(--space-1);
 }
 
 .achievements__title {

@@ -20,3 +20,14 @@ export const CATEGORY_LABELS = {
 
 // Fixed display order for category filter chips and grouped sections.
 export const CATEGORY_ORDER = ['ai', 'cloud', 'engineering', 'academic'];
+
+// Which of the site's 3 accent colors (signal/ember/olive) tints each
+// category's badge (see AchievementBadge.jsx) — mirrors CATEGORY_TINT in
+// Projects/categoryIcons.js. Olive repeats once since there are 4
+// categories and only 3 accent colors, same as Projects does with ember.
+export const CATEGORY_TINT = {
+  ai: 'signal',
+  cloud: 'olive',
+  engineering: 'ember',
+  academic: 'olive',
+};

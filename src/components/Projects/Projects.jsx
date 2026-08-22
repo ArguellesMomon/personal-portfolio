@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, ExternalLink, Github } from 'lucide-react';
 import { featuredProjects } from '../../data/featuredProjects.js';
 import { CATEGORY_ICONS } from './categoryIcons.js';
+import ProjectMedia from './ProjectMedia.jsx';
 import useScrollReveal from '../../hooks/useScrollReveal';
 import useSpotlight from '../../hooks/useSpotlight';
 import './Projects.css';
@@ -20,6 +21,10 @@ function FeaturedProjectCard({ project, className = '' }) {
       onMouseMove={handleMouseMove}
       className={`card featured-project ${className}`.trim()}
     >
+      <div className="featured-project__media">
+        <ProjectMedia project={project} />
+      </div>
+
       {project.badge && (
         <span className="mono-label featured-project__badge">
           &lsaquo; {project.badge} &rsaquo;

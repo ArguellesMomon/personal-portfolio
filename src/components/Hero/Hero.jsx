@@ -1,12 +1,18 @@
 import { ArrowDown, FileDown, Github, Linkedin, Instagram } from 'lucide-react';
 import Button from '../shared/Button/Button';
+import useTypewriter from '../../hooks/useTypewriter';
 import './Hero.css';
 
 // "Web Developer" undersells the range in your project list (embedded ML,
 // mobile, data science, not just web) — went with "Software Engineer" as a
 // broader, still-punchy fit. One line to change if you'd rather have
 // something else.
-const HERO_ROLE = 'Software Engineer';
+const HERO_ROLE = 'Computer Science Student & Developer';
+
+// Starts right as the role line's own fade/rise settles (280ms delay + a
+// 650ms animation, see .hero__enter in Hero.css) rather than typing while
+// it's still animating in.
+const ROLE_TYPE_DELAY = 950;
 
 const SOCIAL_LINKS = [
   { label: 'GitHub', href: 'https://github.com/ArguellesMomon', icon: Github },
@@ -18,6 +24,8 @@ const SOCIAL_LINKS = [
 // App.jsx) shows through it. This section is just the transparent content
 // layer that sits on top for the first viewport height.
 export default function Hero() {
+  const role = useTypewriter(HERO_ROLE, { startDelay: ROLE_TYPE_DELAY });
+
   return (
     <section id="home" className="hero">
       {/* Matches .section-inner (global.css), used by every other section,
@@ -28,20 +36,23 @@ export default function Hero() {
       <div className="hero__inner">
         <div className="hero__content">
           <h1 className="hero__name hero__enter" style={{ '--enter-delay': '150ms' }}>
-            [PLACEHOLDER: Your Name]
+            Richmond L. Arguelles
           </h1>
 
           <p className="hero__role hero__enter" style={{ '--enter-delay': '280ms' }}>
-            {HERO_ROLE}
+            <span aria-hidden="true">
+              {role.text}
+              <span className={`hero__role-cursor ${role.isDone ? 'is-done' : ''}`} />
+            </span>
+            <span className="visually-hidden">{HERO_ROLE}</span>
           </p>
 
           <p className="hero__tagline hero__enter" style={{ '--enter-delay': '400ms' }}>
-            [PLACEHOLDER: Learn. Build. Ship.]
+            DESIGN. BUILD. ITERATE.
           </p>
 
           <p className="hero__description hero__enter" style={{ '--enter-delay': '500ms' }}>
-            [PLACEHOLDER: one short paragraph — who you are, what you study/
-            build, and what kind of work excites you.]
+            Computer Science student at De La Salle Lipa specializing in software development, web applications, and emerging technologies. I build practical digital solutions and IoT systems with a focus on functionality, usability, and purposeful design.
           </p>
 
           <div className="hero__actions hero__enter" style={{ '--enter-delay': '600ms' }}>

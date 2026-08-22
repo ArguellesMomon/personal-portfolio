@@ -18,6 +18,15 @@
   object-fit: cover;
   /* Subject sits right-of-center in the 16:9 desktop crop. */
   object-position: 70% 28%;
+  /* --parallax-x/--parallax-y are written by useParallax (only on
+     fine-pointer, non-reduced-motion — both fall back to 0px otherwise,
+     so this is inert everywhere else). The 1.08 scale gives enough
+     overscan that the ±14px drift never reveals an edge of the photo. */
+  transform: scale(1.08) translate(var(--parallax-x, 0px), var(--parallax-y, 0px));
+  /* Longer than a single animation frame, so each new position the hook
+     writes becomes a new easing target — the image trails the cursor
+     smoothly instead of snapping to it 1:1. */
+  transition: transform 300ms ease-out;
 }
 
 @media (max-width: 639px) {
@@ -47,4 +56,15 @@
       rgba(13, 12, 11, 0.02) 100%
     ),
     linear-gradient(to top, var(--color-bg) 0%, transparent 32%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* The hook never writes --parallax-x/y under reduced motion, so this is
+     belt-and-suspenders — it also drops the 1.08 overscan zoom, which
+     exists purely to give the parallax drift headroom and has no reason
+     to be there when the drift itself is off. */
+  .site-backdrop__image {
+    transform: none;
+    transition: none;
+  }
 }

@@ -1,12 +1,8 @@
-import { Award } from 'lucide-react';
 import useSpotlight from '../../hooks/useSpotlight';
-import { CATEGORY_ICONS } from './categoryIcons.js';
+import AchievementBadge from './AchievementBadge.jsx';
 
 export default function AchievementCard({ item, className = '', style }) {
   const { ref: cardRef, handleMouseMove } = useSpotlight();
-  // Falls back to a plain Award mark for any item without a recognized
-  // category, so this never renders blank if the dataset is extended later.
-  const CategoryIcon = CATEGORY_ICONS[item.category] || Award;
 
   return (
     <li
@@ -15,9 +11,7 @@ export default function AchievementCard({ item, className = '', style }) {
       style={style}
       onMouseMove={handleMouseMove}
     >
-      <span className="achievements__icon-chip" aria-hidden="true">
-        <CategoryIcon size={22} strokeWidth={1.75} />
-      </span>
+      <AchievementBadge category={item.category} verified={Boolean(item.verifyUrl)} />
 
       <h3 className="achievements__title">{item.title}</h3>
 

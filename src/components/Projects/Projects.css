@@ -61,9 +61,32 @@
   }
 }
 
+/* ---------- Featured project card ---------- */
 .featured-project {
   display: flex;
   flex-direction: column;
+}
+
+/* Cancels .card's own padding (var(--space-3), all sides) on just this
+   element, so the media block reaches the card's actual edges — .card's
+   overflow:hidden still clips it to the card's own border-radius, so the
+   corners stay rounded correctly. */
+.featured-project__media {
+  margin: calc(-1 * var(--space-3)) calc(-1 * var(--space-3)) var(--space-3);
+}
+
+/* ProjectMedia (ProjectMedia.css) is a self-contained "framed window" with
+   its own border and radius on all 4 sides, for when it's used standalone.
+   Embedded flush at the top of a card here, its left/right/top border would
+   double up against the card's own outer border, and rounding its bottom
+   corners would look like a stray inset partway down the card — so both
+   get squared off/dropped for just this context. */
+.project-card > .project-media,
+.featured-project__media .project-media {
+  border-radius: var(--radius) var(--radius) 0 0;
+  border-left: none;
+  border-right: none;
+  border-top: none;
 }
 
 .featured-project__badge {
@@ -269,27 +292,6 @@
 .project-card__case-study dd {
   margin: 0;
   color: var(--color-text-muted);
-}
-
-.project-card__image {
-  border-radius: var(--radius);
-  border: 1px solid var(--color-border);
-  margin-bottom: var(--space-3);
-}
-
-.project-card__image-placeholder {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-1);
-  padding: var(--space-5) var(--space-3);
-  color: var(--color-text-muted);
-  background-color: var(--color-bg);
-  border: 1px dashed var(--color-border);
-  border-radius: var(--radius);
-  text-align: center;
-  margin-bottom: var(--space-3);
 }
 
 .project-card__links {
