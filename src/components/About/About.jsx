@@ -7,10 +7,10 @@ import './About.css';
 // LineChart) so the two sections read as one system rather than each
 // inventing its own iconography. Swap labels for your real focus areas.
 const EXPERTISE = [
-  { label: 'Web Development', icon: Code2 },
-  { label: 'IoT & Embedded Systems', icon: Cpu },
-  { label: 'Mobile Applications', icon: Smartphone },
-  { label: 'UI/UX & Product Design', icon: LineChart },
+  { label: '[PLACEHOLDER: Full-Stack Development]', icon: Code2 },
+  { label: '[PLACEHOLDER: Embedded ML]', icon: Cpu },
+  { label: '[PLACEHOLDER: Mobile Apps]', icon: Smartphone },
+  { label: '[PLACEHOLDER: Data Science]', icon: LineChart },
 ];
 
 function ExpertiseItem({ label, icon: Icon }) {
@@ -44,7 +44,8 @@ export default function About() {
 
         <div className="about__body" ref={contentRef}>
           <p className="reveal about__intro">
-            Computer Science student at De La Salle Lipa specializing in software development, web applications, and emerging technologies. I build practical digital solutions and IoT systems focused on functionality, usability, and purposeful design.
+            [PLACEHOLDER: a short paragraph on who you are, what you study,
+            and the kind of engineering work you gravitate toward.]
           </p>
 
           <div className="reveal about__expertise">
@@ -55,7 +56,7 @@ export default function About() {
 
           <blockquote className="reveal about__quote">
             <Quote className="about__quote-icon" size={32} strokeWidth={1.5} aria-hidden="true" />
-            <p>Build with purpose. Keep it simple. Make it work.</p>
+            <p>[PLACEHOLDER: a short personal quote or mantra that sums up how you approach your work.]</p>
           </blockquote>
         </div>
       </div>

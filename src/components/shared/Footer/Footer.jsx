@@ -19,8 +19,8 @@ export default function Footer() {
       <div className="footer__signoff">
         <div className="section-inner footer__signoff-inner">
           <div>
-            <p className="mono-label footer__eyebrow">Still learning. Still building.</p>
-            <h2 className="footer__name">Richmond L. Arguelles</h2>
+            <p className="mono-label footer__eyebrow">[PLACEHOLDER: closing line, e.g. a thanks-for-visiting note]</p>
+            <h2 className="footer__name">[PLACEHOLDER: Your Name]</h2>
           </div>
 
           <button type="button" className="footer__top-btn" onClick={scrollToTop}>
@@ -31,7 +31,7 @@ export default function Footer() {
       </div>
 
       <div className="footer__inner">
-        <p className="mono-label">© {year} Richmond L. Arguelles</p>
+        <p className="mono-label">© {year} [PLACEHOLDER: Name]</p>
 
         <div className="footer__links">
           <a

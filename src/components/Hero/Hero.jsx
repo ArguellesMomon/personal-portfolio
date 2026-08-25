@@ -7,12 +7,19 @@ import './Hero.css';
 // mobile, data science, not just web) — went with "Software Engineer" as a
 // broader, still-punchy fit. One line to change if you'd rather have
 // something else.
-const HERO_ROLE = 'Computer Science Student & Developer';
+const HERO_ROLE = 'Software Engineer';
 
 // Starts right as the role line's own fade/rise settles (280ms delay + a
 // 650ms animation, see .hero__enter in Hero.css) rather than typing while
 // it's still animating in.
 const ROLE_TYPE_DELAY = 950;
+
+// Flip once a real /public/resume.pdf exists — until then the button shows
+// a clearly-disabled "coming soon" state rather than linking to a file
+// that 404s. A placeholder PDF that just says "not ready yet" would be a
+// worse experience than this: it costs a click + a download + opening a
+// file to learn the same thing this button already says up front.
+const RESUME_AVAILABLE = false;
 
 const SOCIAL_LINKS = [
   { label: 'GitHub', href: 'https://github.com/ArguellesMomon', icon: Github },
@@ -36,7 +43,7 @@ export default function Hero() {
       <div className="hero__inner">
         <div className="hero__content">
           <h1 className="hero__name hero__enter" style={{ '--enter-delay': '150ms' }}>
-            Richmond L. Arguelles
+            [PLACEHOLDER: Your Name]
           </h1>
 
           <p className="hero__role hero__enter" style={{ '--enter-delay': '280ms' }}>
@@ -48,20 +55,35 @@ export default function Hero() {
           </p>
 
           <p className="hero__tagline hero__enter" style={{ '--enter-delay': '400ms' }}>
-            DESIGN. BUILD. ITERATE.
+            [PLACEHOLDER: Learn. Build. Ship.]
           </p>
 
           <p className="hero__description hero__enter" style={{ '--enter-delay': '500ms' }}>
-            Computer Science student at De La Salle Lipa specializing in software development, web applications, and emerging technologies. I build practical digital solutions and IoT systems with a focus on functionality, usability, and purposeful design.
+            [PLACEHOLDER: one short paragraph — who you are, what you study/
+            build, and what kind of work excites you.]
           </p>
 
           <div className="hero__actions hero__enter" style={{ '--enter-delay': '600ms' }}>
             <Button as="a" href="#projects" variant="primary" icon={ArrowDown}>
               View My Work
             </Button>
-            <Button as="a" href="/resume.pdf" variant="secondary" icon={FileDown} download>
-              Download Resume
-            </Button>
+            {RESUME_AVAILABLE ? (
+              <Button as="a" href="/resume.pdf" variant="secondary" icon={FileDown} download>
+                Download Resume
+              </Button>
+            ) : (
+              <Button
+                as="button"
+                type="button"
+                variant="secondary"
+                icon={FileDown}
+                disabled
+                aria-disabled="true"
+                title="Resume coming soon"
+              >
+                Resume — Coming Soon
+              </Button>
+            )}
           </div>
 
           <div className="hero__socials hero__enter" style={{ '--enter-delay': '700ms' }}>

@@ -77,7 +77,7 @@ export default function Navbar() {
       <header className="navbar">
         <div className="navbar__bar">
           <Link to="/#home" className="navbar__brand mono-label">
-            Richmond L. Arguelles
+            [PLACEHOLDER: Name]
           </Link>
 
           <nav className="navbar__links navbar__links--desktop" aria-label="Primary">

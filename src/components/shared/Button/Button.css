@@ -49,6 +49,26 @@
   transform: translate(var(--magnetic-x, 0px), calc(var(--magnetic-y, 0px) - 2px));
 }
 
+/* Real <button disabled> (see Hero.jsx's resume button) rather than a
+   dead link — :disabled overrides win regardless of variant, so a
+   disabled .btn--secondary can't be nudged into looking clickable by its
+   own hover rules. */
+.btn:disabled {
+  color: var(--color-text-muted);
+  border-color: var(--color-border);
+  background-color: transparent;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.btn:disabled:hover,
+.btn:disabled:focus-visible {
+  color: var(--color-text-muted);
+  border-color: var(--color-border);
+  box-shadow: none;
+  transform: translate(var(--magnetic-x, 0px), var(--magnetic-y, 0px));
+}
+
 .btn__icon {
   flex-shrink: 0;
 }

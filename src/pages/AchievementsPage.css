@@ -71,18 +71,6 @@
   margin-bottom: var(--space-2);
 }
 
-.achievements-page__group-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  flex-shrink: 0;
-  color: var(--color-signal);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius);
-}
-
 .achievements-page__group-label {
   color: var(--color-text);
   text-transform: uppercase;
@@ -101,12 +89,19 @@
   text-align: center;
 }
 
-/* Same responsive behavior as .achievements__list (Achievements.css) — one
-   grid pattern for "a row of achievement cards" wherever it's used. */
+/* One grid pattern for "a row of full achievement cards," used only on
+   the full /achievements page — the homepage preview uses the more
+   compact .achievements__strip (Achievements.css) instead. */
 .achievements-page__grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-3);
+  gap: var(--space-2);
+}
+
+@media (min-width: 480px) {
+  .achievements-page__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (min-width: 640px) {
@@ -115,7 +110,7 @@
   }
 
   .achievements-page__grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
@@ -125,7 +120,13 @@
   }
 
   .achievements-page__grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (min-width: 1400px) {
+  .achievements-page__grid {
+    grid-template-columns: repeat(5, 1fr);
   }
 }
 

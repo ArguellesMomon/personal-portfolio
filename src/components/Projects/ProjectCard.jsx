@@ -11,10 +11,12 @@ import './Projects.css';
 // target, but that click handler sits on a non-interactive wrapper — the
 // button remains the real, keyboard-operable control.
 //
-// className/style are passed through from wherever this is used — a plain
-// scroll-triggered .reveal on the dedicated /projects page
-// (src/pages/ProjectsPage.jsx), where every project now lives with full
-// case-study detail.
+// Collapsed view is deliberately minimal — media, badge, title, and a
+// 2-line description only. Tags, the case-study narrative, and the
+// Code/Live links all live behind the expand: on a real mobile viewport a
+// collapsed card was previously taking 55-65% of screen height with all
+// of that visible up front, which reads as overwhelming when browsing a
+// list of 8, not "detailed."
 export default function ProjectCard({ project, className = '', style }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const { ref: cardRef, handleMouseMove } = useSpotlight();
@@ -75,15 +77,6 @@ export default function ProjectCard({ project, className = '', style }) {
         </div>
 
         <p className="project-card__description">{project.shortDescription}</p>
-
-        <div className="project-card__tags">
-          <span className="tag project-card__category-tag">{project.category}</span>
-          {project.techStack.map((tech) => (
-            <span key={tech} className="tag">
-              {tech}
-            </span>
-          ))}
-        </div>
       </div>
 
       <div
@@ -92,6 +85,15 @@ export default function ProjectCard({ project, className = '', style }) {
         aria-hidden={!isExpanded}
       >
         <div className="project-card__panel-inner">
+          <div className="project-card__tags">
+            <span className="tag project-card__category-tag">{project.category}</span>
+            {project.techStack.map((tech) => (
+              <span key={tech} className="tag">
+                {tech}
+              </span>
+            ))}
+          </div>
+
           <dl className="project-card__case-study">
             <div>
               <dt className="mono-label">Role</dt>
@@ -123,7 +125,7 @@ export default function ProjectCard({ project, className = '', style }) {
               className="project-card__link"
               tabIndex={isExpanded ? 0 : -1}
             >
-              <Github size={18} strokeWidth={1.75} aria-hidden="true" />
+              <Github size={16} strokeWidth={1.75} aria-hidden="true" />
               Code
             </a>
             <a
@@ -133,7 +135,7 @@ export default function ProjectCard({ project, className = '', style }) {
               className="project-card__link"
               tabIndex={isExpanded ? 0 : -1}
             >
-              <ExternalLink size={18} strokeWidth={1.75} aria-hidden="true" />
+              <ExternalLink size={16} strokeWidth={1.75} aria-hidden="true" />
               Live
             </a>
           </div>

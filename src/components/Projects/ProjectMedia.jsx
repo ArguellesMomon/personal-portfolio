@@ -23,7 +23,7 @@ export default function ProjectMedia({ project }) {
         <div className="project-media__placeholder">
           {CategoryIcon && (
             <span className="project-media__icon" aria-hidden="true">
-              <CategoryIcon size={30} strokeWidth={1.5} />
+              <CategoryIcon size={22} strokeWidth={1.5} />
             </span>
           )}
           <span className="mono-label project-media__category">{project.category}</span>

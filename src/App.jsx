@@ -6,6 +6,7 @@ import CursorGlow from './components/shared/CursorGlow/CursorGlow.jsx';
 import Home from './pages/Home.jsx';
 import ProjectsPage from './pages/ProjectsPage.jsx';
 import AchievementsPage from './pages/AchievementsPage.jsx';
+import NotFoundPage from './pages/NotFoundPage.jsx';
 import useScrollToHash from './hooks/useScrollToHash';
 
 // Navbar/Footer/SiteBackdrop/CursorGlow are outside <Routes> so they
@@ -29,6 +30,7 @@ function Layout() {
         <Route path="/" element={<Home />} />
         <Route path="/projects" element={<ProjectsPage />} />
         <Route path="/achievements" element={<AchievementsPage />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
 
       <Footer />

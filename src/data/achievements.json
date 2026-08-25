@@ -1,80 +1,95 @@
 [
   {
-    "id": "cert-ai-1",
+    "id": "datacamp-1",
     "type": "certification",
-    "category": "ai",
-    "title": "[PLACEHOLDER: Certification title]",
-    "issuer": "[PLACEHOLDER: Issuing organization]",
+    "issuer": "DataCamp",
+    "issuerLogo": "/issuers/datacamp.png",
+    "title": "[PLACEHOLDER: Course or track title]",
     "date": "[PLACEHOLDER: Month YYYY]",
     "verifyUrl": "[PLACEHOLDER: verification URL]"
   },
   {
-    "id": "cert-ai-2",
+    "id": "jpcs-dlsl-1",
+    "type": "seminar",
+    "issuer": "JPCS - DLSL Chapter",
+    "issuerLogo": "/issuers/jpcs-dlsl.png",
+    "title": "[PLACEHOLDER: Seminar or webinar title]",
+    "date": "[PLACEHOLDER: Month YYYY]"
+  },
+  {
+    "id": "datacamp-2",
     "type": "certification",
-    "category": "ai",
-    "title": "[PLACEHOLDER: Certification title]",
-    "issuer": "[PLACEHOLDER: Issuing organization]",
+    "issuer": "DataCamp",
+    "issuerLogo": "/issuers/datacamp.png",
+    "title": "[PLACEHOLDER: Course or track title]",
     "date": "[PLACEHOLDER: Month YYYY]",
     "verifyUrl": "[PLACEHOLDER: verification URL]"
   },
   {
-    "id": "cert-ai-3",
+    "id": "jpcs-dlsl-2",
+    "type": "seminar",
+    "issuer": "JPCS - DLSL Chapter",
+    "issuerLogo": "/issuers/jpcs-dlsl.png",
+    "title": "[PLACEHOLDER: Seminar or webinar title]",
+    "date": "[PLACEHOLDER: Month YYYY]"
+  },
+  {
+    "id": "datacamp-3",
     "type": "certification",
-    "category": "ai",
-    "title": "[PLACEHOLDER: Certification title]",
-    "issuer": "[PLACEHOLDER: Issuing organization]",
+    "issuer": "DataCamp",
+    "issuerLogo": "/issuers/datacamp.png",
+    "title": "[PLACEHOLDER: Course or track title]",
     "date": "[PLACEHOLDER: Month YYYY]",
     "verifyUrl": "[PLACEHOLDER: verification URL]"
   },
   {
-    "id": "cert-cloud-1",
+    "id": "jpcs-dlsl-3",
+    "type": "seminar",
+    "issuer": "JPCS - DLSL Chapter",
+    "issuerLogo": "/issuers/jpcs-dlsl.png",
+    "title": "[PLACEHOLDER: Seminar or webinar title]",
+    "date": "[PLACEHOLDER: Month YYYY]"
+  },
+  {
+    "id": "datacamp-4",
     "type": "certification",
-    "category": "cloud",
-    "title": "[PLACEHOLDER: Certification title]",
-    "issuer": "[PLACEHOLDER: Issuing organization]",
+    "issuer": "DataCamp",
+    "issuerLogo": "/issuers/datacamp.png",
+    "title": "[PLACEHOLDER: Course or track title]",
     "date": "[PLACEHOLDER: Month YYYY]",
     "verifyUrl": "[PLACEHOLDER: verification URL]"
   },
   {
-    "id": "cert-cloud-2",
+    "id": "datacamp-5",
     "type": "certification",
-    "category": "cloud",
-    "title": "[PLACEHOLDER: Certification title]",
-    "issuer": "[PLACEHOLDER: Issuing organization]",
+    "issuer": "DataCamp",
+    "issuerLogo": "/issuers/datacamp.png",
+    "title": "[PLACEHOLDER: Course or track title]",
     "date": "[PLACEHOLDER: Month YYYY]",
     "verifyUrl": "[PLACEHOLDER: verification URL]"
   },
   {
-    "id": "cert-cloud-3",
+    "id": "datacamp-6",
     "type": "certification",
-    "category": "cloud",
-    "title": "[PLACEHOLDER: Certification title]",
-    "issuer": "[PLACEHOLDER: Issuing organization]",
+    "issuer": "DataCamp",
+    "issuerLogo": "/issuers/datacamp.png",
+    "title": "[P  LACEHOLDER: Course or track title]",
     "date": "[PLACEHOLDER: Month YYYY]",
     "verifyUrl": "[PLACEHOLDER: verification URL]"
   },
   {
-    "id": "cert-eng-1",
+    "id": "datacamp-7",
     "type": "certification",
-    "category": "engineering",
-    "title": "[PLACEHOLDER: Certification title]",
-    "issuer": "[PLACEHOLDER: Issuing organization]",
-    "date": "[PLACEHOLDER: Month YYYY]",
-    "verifyUrl": "[PLACEHOLDER: verification URL]"
-  },
-  {
-    "id": "cert-eng-2",
-    "type": "certification",
-    "category": "engineering",
-    "title": "[PLACEHOLDER: Certification title]",
-    "issuer": "[PLACEHOLDER: Issuing organization]",
+    "issuer": "DataCamp",
+    "issuerLogo": "/issuers/datacamp.png",
+    "title": "[PLACEHOLDER: Course or track title]",
     "date": "[PLACEHOLDER: Month YYYY]",
     "verifyUrl": "[PLACEHOLDER: verification URL]"
   },
   {
     "id": "milestone-academic-1",
     "type": "milestone",
-    "category": "academic",
+    "issuer": "Academic",
     "title": "[PLACEHOLDER: Thesis defense completion]",
     "description": "[PLACEHOLDER: brief note, e.g. panel/date/honors]",
     "date": "[PLACEHOLDER: Month YYYY]"
@@ -82,7 +97,7 @@
   {
     "id": "milestone-academic-2",
     "type": "milestone",
-    "category": "academic",
+    "issuer": "Academic",
     "title": "[PLACEHOLDER: Academic honor or milestone]",
     "description": "[PLACEHOLDER: brief note, e.g. Dean's Lister, Latin honors]",
     "date": "[PLACEHOLDER: Month YYYY]"

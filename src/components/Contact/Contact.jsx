@@ -3,11 +3,11 @@ import useScrollReveal from '../../hooks/useScrollReveal';
 import useCopyToClipboard from '../../hooks/useCopyToClipboard';
 import './Contact.css';
 
-const EMAIL = 'arguellesrichmond@gmail.com';
+const EMAIL = '[PLACEHOLDER: email address]';
 
 const SECONDARY_LINKS = [
   { label: 'GitHub', href: 'https://github.com/ArguellesMomon', icon: Github },
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/richmond-arguelles-71708a430/', icon: Linkedin },
+  { label: 'LinkedIn', href: '[PLACEHOLDER: LinkedIn URL]', icon: Linkedin },
 ];
 
 // Previously 3 identical link-cards in a row — the same treatment as
@@ -31,13 +31,13 @@ export default function Contact() {
             <span className="mono-label section-eyebrow">05 — contact</span>
             <h2 className="section-heading">Get In Touch</h2>
             <p className="contact__intro">
-              Open to meaningful opportunities, collaborations, and conversations.
+              [PLACEHOLDER: one line inviting recruiters/collaborators to reach out]
             </p>
 
             <div className="contact__status">
               <span className="contact__status-dot" aria-hidden="true" />
               <span className="mono-label">
-                Open to internships, freelance projects, and collaborations.
+                [PLACEHOLDER: availability status, e.g. &ldquo;Open to internships&rdquo;]
               </span>
             </div>
           </div>

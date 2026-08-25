@@ -127,6 +127,14 @@
      across the row instead of sitting at whatever height each card's text
      happens to end at. */
   flex-grow: 1;
+  /* Caps every card's description to the same 2 lines regardless of how
+     much text a project has — combined with the shorter ProjectMedia
+     frame (ProjectMedia.css), this is most of what was making cards feel
+     tall before there was even real screenshot content to fill them. */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .featured-project__links {
@@ -168,7 +176,7 @@
 }
 
 .project-card__header {
-  padding: var(--space-3);
+  padding: var(--space-2) var(--space-3) var(--space-3);
   cursor: pointer;
 }
 
@@ -248,13 +256,20 @@
 
 .project-card__description {
   color: var(--color-text-muted);
-  margin-bottom: var(--space-2);
+  /* Same reasoning as .featured-project__description above — one
+     consistent collapsed height regardless of how long a given project's
+     description happens to be. */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .project-card__tags {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-1);
+  margin-bottom: var(--space-3);
 }
 
 .project-card__category-tag {
@@ -274,9 +289,8 @@
 }
 
 .project-card__panel-inner {
-  padding: 0 var(--space-3) var(--space-3);
+  padding: var(--space-3) var(--space-3) var(--space-2);
   border-top: 1px solid var(--color-border);
-  padding-top: var(--space-3);
 }
 
 .project-card__case-study {
