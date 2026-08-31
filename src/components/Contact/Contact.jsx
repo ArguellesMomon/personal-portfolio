@@ -1,56 +1,31 @@
-import { Mail, Github, Linkedin } from 'lucide-react';
+import { Mail, Github, Linkedin, Copy, Check } from 'lucide-react';
 import useScrollReveal from '../../hooks/useScrollReveal';
-import useSpotlight from '../../hooks/useSpotlight';
+import useCopyToClipboard from '../../hooks/useCopyToClipboard';
 import './Contact.css';
 
-const CONTACT_LINKS = [
-  {
-    label: 'Email',
-    value: '[PLACEHOLDER: email address]',
-    href: 'mailto:[PLACEHOLDER: email address]',
-    icon: Mail,
-  },
-  {
-    label: 'GitHub',
-    value: 'github.com/ArguellesMomon',
-    href: 'https://github.com/ArguellesMomon',
-    icon: Github,
-  },
-  {
-    label: 'LinkedIn',
-    value: '[PLACEHOLDER: LinkedIn handle]',
-    href: '[PLACEHOLDER: LinkedIn URL]',
-    icon: Linkedin,
-  },
+// Same pattern as Hero's RESUME_AVAILABLE: flip to true and fill in EMAIL
+// once a real address exists. Until then this renders an honest
+// "coming soon" state instead of a mailto link that goes nowhere real.
+const EMAIL_AVAILABLE = false;
+const EMAIL = '';
+
+// href left empty until a real URL exists — filtered before render, same
+// as Hero's SOCIAL_LINKS, so LinkedIn just doesn't show up until it's set.
+const SECONDARY_LINKS = [
+  { label: 'GitHub', href: 'https://github.com/ArguellesMomon', icon: Github },
+  { label: 'LinkedIn', href: '', icon: Linkedin },
 ];
 
-function ContactLink({ label, value, href, icon: Icon }) {
-  const { ref, handleMouseMove } = useSpotlight();
-  const isExternal = !href.startsWith('mailto:');
-
-  return (
-    <a
-      ref={ref}
-      onMouseMove={handleMouseMove}
-      href={href}
-      target={isExternal ? '_blank' : undefined}
-      rel={isExternal ? 'noreferrer' : undefined}
-      className="reveal card contact__link"
-    >
-      <span className="contact__link-icon-chip" aria-hidden="true">
-        <Icon size={22} strokeWidth={1.75} />
-      </span>
-      <span>
-        <span className="mono-label contact__link-label">{label}</span>
-        <span className="contact__link-value">{value}</span>
-      </span>
-    </a>
-  );
-}
-
+// Previously 3 identical link-cards in a row — the same treatment as
+// every other section, and the very last thing before the footer, so it
+// needed a stronger sense of "this is the point of the page" than a plain
+// grid gave it. Email is now the one clear primary action (large, with a
+// copy affordance); GitHub/LinkedIn are secondary, smaller links below it
+// rather than equal-weight peers.
 export default function Contact() {
   const headerRef = useScrollReveal();
-  const linksRef = useScrollReveal();
+  const ctaRef = useScrollReveal();
+  const { copied, copy } = useCopyToClipboard();
 
   return (
     <section id="contact" className="section contact">
@@ -62,15 +37,66 @@ export default function Contact() {
             <span className="mono-label section-eyebrow">05 — contact</span>
             <h2 className="section-heading">Get In Touch</h2>
             <p className="contact__intro">
-              [PLACEHOLDER: one line inviting recruiters/collaborators to reach out]
+              Open to internships and collaborations — if any of this
+              overlaps with what you're working on, I'd like to hear about
+              it.
             </p>
+
+            <div className="status-pill contact__status">
+              <span className="status-pill__dot" aria-hidden="true" />
+              <span className="mono-label">Open to internship opportunities</span>
+            </div>
           </div>
         </div>
 
-        <div className="contact__links" ref={linksRef}>
-          {CONTACT_LINKS.map((link) => (
-            <ContactLink key={link.label} {...link} />
-          ))}
+        <div className="contact__body" ref={ctaRef}>
+          {EMAIL_AVAILABLE ? (
+            <div className="reveal contact__cta">
+              <a href={`mailto:${EMAIL}`} className="contact__email">
+                <Mail size={22} strokeWidth={1.75} className="contact__email-icon" aria-hidden="true" />
+                <span className="contact__email-text">{EMAIL}</span>
+              </a>
+
+              <button
+                type="button"
+                className={`contact__copy-btn ${copied ? 'is-copied' : ''}`}
+                onClick={() => copy(EMAIL)}
+              >
+                {copied ? (
+                  <Check size={16} strokeWidth={2.25} aria-hidden="true" />
+                ) : (
+                  <Copy size={16} strokeWidth={1.75} aria-hidden="true" />
+                )}
+                <span className="mono-label">{copied ? 'Copied' : 'Copy'}</span>
+              </button>
+
+              <span className="visually-hidden" role="status" aria-live="polite">
+                {copied ? 'Email address copied to clipboard' : ''}
+              </span>
+            </div>
+          ) : (
+            <div className="reveal contact__cta">
+              <span className="contact__email is-disabled" aria-disabled="true" title="Email coming soon">
+                <Mail size={22} strokeWidth={1.75} className="contact__email-icon" aria-hidden="true" />
+                <span className="contact__email-text">Email — Coming Soon</span>
+              </span>
+            </div>
+          )}
+
+          <div className="reveal contact__secondary">
+            {SECONDARY_LINKS.filter(({ href }) => href).map(({ label, href, icon: Icon }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noreferrer"
+                className="contact__secondary-link"
+              >
+                <Icon size={18} strokeWidth={1.75} aria-hidden="true" />
+                <span className="mono-label">{label}</span>
+              </a>
+            ))}
+          </div>
         </div>
       </div>
     </section>

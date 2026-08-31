@@ -1,0 +1,23 @@
+.cursor-glow {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: var(--cursor-opacity, 0);
+  transition: opacity 260ms ease-out;
+  /* screen lightens rather than replaces the pixels underneath — over the
+     site's near-black backgrounds that reads as warm ambient light, but
+     it does almost nothing to already-light UI text, so legibility never
+     takes a hit. Two stacked radials (tight + wide) for a softer falloff
+     than a single flat circle would give. */
+  mix-blend-mode: screen;
+  background:
+    radial-gradient(420px circle at var(--cursor-x, 50%) var(--cursor-y, 50%), rgba(255, 107, 26, 0.10), transparent 60%),
+    radial-gradient(760px circle at var(--cursor-x, 50%) var(--cursor-y, 50%), rgba(255, 107, 26, 0.045), transparent 70%);
+}
+
+@media (prefers-reduced-motion: reduce), (hover: none), (pointer: coarse) {
+  .cursor-glow {
+    display: none;
+  }
+}

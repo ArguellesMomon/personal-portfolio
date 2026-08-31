@@ -5,84 +5,95 @@ import achievements from '../data/achievements.json';
 import AchievementCard from '../components/Achievements/AchievementCard.jsx';
 import FilterBar from '../components/shared/FilterBar/FilterBar.jsx';
 import EmptyState from '../components/shared/EmptyState/EmptyState.jsx';
-import {
-  CATEGORY_ICONS,
-  CATEGORY_LABELS,
-  CATEGORY_ORDER,
-} from '../components/Achievements/categoryIcons.js';
+import { ISSUER_ORDER } from '../components/Achievements/issuers.js';
 import useScrollReveal from '../hooks/useScrollReveal';
 import './AchievementsPage.css';
 
 export default function AchievementsPage() {
   const headerRef = useScrollReveal();
   const [searchQuery, setSearchQuery] = useState('');
-  const [activeCategory, setActiveCategory] = useState('all');
+  const [activeIssuer, setActiveIssuer] = useState('all');
 
   useEffect(() => {
-    document.title = 'Achievements — [PLACEHOLDER: Your Name]';
+    document.title = 'Achievements — Richmond Arguelles';
     return () => {
-      document.title = '[PLACEHOLDER: Your Name] — Computer Science Portfolio';
+      document.title = 'Richmond Arguelles — Computer Science Portfolio';
     };
   }, []);
 
-  const categories = useMemo(() => {
-    const counts = achievements.reduce((acc, item) => {
-      acc[item.category] = (acc[item.category] || 0) + 1;
+  // Entries without a real title are still-unconfirmed scaffolding (see
+  // achievements.json) — excluded everywhere on this page rather than
+  // showing placeholder text to a visitor.
+  const confirmedAchievements = useMemo(
+    () => achievements.filter((item) => item.title),
+    []
+  );
+
+  // No per-chip icon here (unlike Projects' category chips) — the real
+  // issuer logo already appears on every card, so a chip icon would just
+  // be a second, less accurate attempt at the same signal. The issuer
+  // name string doubles as both the data key and the display label, since
+  // "DataCamp" etc. is already exactly what should show on screen.
+  const issuers = useMemo(() => {
+    const counts = confirmedAchievements.reduce((acc, item) => {
+      acc[item.issuer] = (acc[item.issuer] || 0) + 1;
       return acc;
     }, {});
 
-    const ordered = CATEGORY_ORDER.filter((category) => counts[category]).map((category) => ({
-      id: category,
-      label: CATEGORY_LABELS[category],
-      count: counts[category],
-      Icon: CATEGORY_ICONS[category],
+    const ordered = ISSUER_ORDER.filter((issuer) => counts[issuer]).map((issuer) => ({
+      id: issuer,
+      label: issuer,
+      count: counts[issuer],
     }));
 
-    return [{ id: 'all', label: 'All', count: achievements.length }, ...ordered];
-  }, []);
+    return [{ id: 'all', label: 'All', count: confirmedAchievements.length }, ...ordered];
+  }, [confirmedAchievements]);
 
   const query = searchQuery.trim().toLowerCase();
 
   const filteredAchievements = useMemo(() => {
-    return achievements.filter((item) => {
-      if (activeCategory !== 'all' && item.category !== activeCategory) return false;
+    return confirmedAchievements.filter((item) => {
+      if (activeIssuer !== 'all' && item.issuer !== activeIssuer) return false;
       if (!query) return true;
 
-      const haystack = [item.title, item.issuer, item.description, CATEGORY_LABELS[item.category]]
+      const haystack = [item.title, item.issuer, item.description]
         .filter(Boolean)
         .join(' ')
         .toLowerCase();
       return haystack.includes(query);
     });
-  }, [activeCategory, query]);
+  }, [confirmedAchievements, activeIssuer, query]);
 
   // Same rationale as ProjectsPage: group into sections only for the
   // unfiltered "browse everything" state.
-  const shouldGroup = activeCategory === 'all' && query === '';
+  const shouldGroup = activeIssuer === 'all' && query === '';
 
   const groupedAchievements = useMemo(() => {
     if (!shouldGroup) return null;
-    return CATEGORY_ORDER.filter((category) =>
-      filteredAchievements.some((item) => item.category === category)
-    ).map((category) => ({
-      id: category,
-      label: CATEGORY_LABELS[category],
-      Icon: CATEGORY_ICONS[category],
-      items: filteredAchievements.filter((item) => item.category === category),
+    return ISSUER_ORDER.filter((issuer) =>
+      filteredAchievements.some((item) => item.issuer === issuer)
+    ).map((issuer) => ({
+      id: issuer,
+      label: issuer,
+      items: filteredAchievements.filter((item) => item.issuer === issuer),
     }));
   }, [shouldGroup, filteredAchievements]);
 
-  const resultsKey = `${activeCategory}::${query}`;
+  const resultsKey = `${activeIssuer}::${query}`;
 
-  const emptyMessage = query
+  const noneConfirmedYet = confirmedAchievements.length === 0;
+
+  const emptyMessage = noneConfirmedYet
+    ? 'Certifications, seminars, and milestones are being added here — check back soon.'
+    : query
     ? `No achievements match "${searchQuery.trim()}"${
-        activeCategory !== 'all' ? ` in ${CATEGORY_LABELS[activeCategory]}` : ''
+        activeIssuer !== 'all' ? ` from ${activeIssuer}` : ''
       }.`
-    : 'No achievements in this category yet.';
+    : 'No achievements from this issuer yet.';
 
   const handleReset = () => {
     setSearchQuery('');
-    setActiveCategory('all');
+    setActiveIssuer('all');
   };
 
   return (
@@ -97,27 +108,29 @@ export default function AchievementsPage() {
           <div className="reveal">
             <h1 className="achievements-page__title">Achievements &amp; Certifications</h1>
             <p className="achievements-page__intro">
-              [PLACEHOLDER: one or two lines introducing the full list — e.g.
-              certifications, honors, and milestones from your degree.]
+              Certifications, seminars, and academic milestones from my
+              degree so far.
             </p>
           </div>
         </div>
 
-        <FilterBar
-          searchValue={searchQuery}
-          onSearchChange={setSearchQuery}
-          searchPlaceholder="Search credentials…"
-          searchLabel="Search achievements"
-          categories={categories}
-          activeCategory={activeCategory}
-          onCategoryChange={setActiveCategory}
-          resultCount={filteredAchievements.length}
-          totalCount={achievements.length}
-          itemLabel="credentials"
-        />
+        {!noneConfirmedYet && (
+          <FilterBar
+            searchValue={searchQuery}
+            onSearchChange={setSearchQuery}
+            searchPlaceholder="Search credentials…"
+            searchLabel="Search achievements"
+            categories={issuers}
+            activeCategory={activeIssuer}
+            onCategoryChange={setActiveIssuer}
+            resultCount={filteredAchievements.length}
+            totalCount={confirmedAchievements.length}
+            itemLabel="credentials"
+          />
+        )}
 
         {filteredAchievements.length === 0 ? (
-          <EmptyState message={emptyMessage} onReset={handleReset} />
+          <EmptyState message={emptyMessage} onReset={noneConfirmedYet ? undefined : handleReset} />
         ) : (
           <div key={resultsKey} className="achievements-page__results">
             {shouldGroup ? (
@@ -128,11 +141,6 @@ export default function AchievementsPage() {
                   aria-labelledby={`achievements-group-${group.id}`}
                 >
                   <div className="achievements-page__group-header">
-                    {group.Icon && (
-                      <span className="achievements-page__group-icon" aria-hidden="true">
-                        <group.Icon size={15} strokeWidth={1.75} />
-                      </span>
-                    )}
                     <h2
                       id={`achievements-group-${group.id}`}
                       className="mono-label achievements-page__group-label"

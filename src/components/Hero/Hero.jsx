@@ -1,23 +1,40 @@
-import { ArrowDown, FileDown, Github, Linkedin, Instagram } from 'lucide-react';
+import { ArrowDown, FileDown, Github, Linkedin } from 'lucide-react';
 import Button from '../shared/Button/Button';
+import useTypewriter from '../../hooks/useTypewriter';
 import './Hero.css';
 
-// "Web Developer" undersells the range in your project list (embedded ML,
-// mobile, data science, not just web) — went with "Software Engineer" as a
-// broader, still-punchy fit. One line to change if you'd rather have
-// something else.
-const HERO_ROLE = 'Software Engineer';
+// "Software Developer" over "Software Engineer" on purpose — the latter
+// reads as more senior/scoped than a student portfolio should claim, and
+// "Developer" is still a fully professional title that doesn't oversell.
+const HERO_ROLE = 'Software Developer';
 
+// Starts right as the role line's own fade/rise settles (280ms delay + a
+// 650ms animation, see .hero__enter in Hero.css) rather than typing while
+// it's still animating in.
+const ROLE_TYPE_DELAY = 950;
+
+// Flip once a real /public/resume.pdf exists — until then the button shows
+// a clearly-disabled "coming soon" state rather than linking to a file
+// that 404s. A placeholder PDF that just says "not ready yet" would be a
+// worse experience than this: it costs a click + a download + opening a
+// file to learn the same thing this button already says up front.
+const RESUME_AVAILABLE = false;
+
+// href left empty until a real URL exists — SOCIAL_LINKS is filtered before
+// render, so an empty entry just doesn't show up instead of linking nowhere.
+// Instagram was dropped entirely: GitHub + LinkedIn are what belong on a
+// recruiter-facing engineering portfolio, per the earlier review.
 const SOCIAL_LINKS = [
   { label: 'GitHub', href: 'https://github.com/ArguellesMomon', icon: Github },
-  { label: 'LinkedIn', href: '[PLACEHOLDER: LinkedIn URL]', icon: Linkedin },
-  { label: 'Instagram', href: '[PLACEHOLDER: Instagram URL]', icon: Instagram },
+  { label: 'LinkedIn', href: '', icon: Linkedin },
 ];
 
 // Hero itself has no background of its own — the fixed SiteBackdrop (see
 // App.jsx) shows through it. This section is just the transparent content
 // layer that sits on top for the first viewport height.
 export default function Hero() {
+  const role = useTypewriter(HERO_ROLE, { startDelay: ROLE_TYPE_DELAY });
+
   return (
     <section id="home" className="hero">
       {/* Matches .section-inner (global.css), used by every other section,
@@ -28,33 +45,53 @@ export default function Hero() {
       <div className="hero__inner">
         <div className="hero__content">
           <h1 className="hero__name hero__enter" style={{ '--enter-delay': '150ms' }}>
-            [PLACEHOLDER: Your Name]
+            Richmond Arguelles
           </h1>
 
           <p className="hero__role hero__enter" style={{ '--enter-delay': '280ms' }}>
-            {HERO_ROLE}
+            <span aria-hidden="true">
+              {role.text}
+              <span className={`hero__role-cursor ${role.isDone ? 'is-done' : ''}`} />
+            </span>
+            <span className="visually-hidden">{HERO_ROLE}</span>
           </p>
 
           <p className="hero__tagline hero__enter" style={{ '--enter-delay': '400ms' }}>
-            [PLACEHOLDER: Learn. Build. Ship.]
+            Built to work. Designed to feel right.
           </p>
 
           <p className="hero__description hero__enter" style={{ '--enter-delay': '500ms' }}>
-            [PLACEHOLDER: one short paragraph — who you are, what you study/
-            build, and what kind of work excites you.]
+            Computer Science student at De La Salle Lipa, building practical
+            software and hardware — web apps, mobile apps, and embedded ML
+            systems. I care as much about how something works as how it
+            feels to use.
           </p>
 
           <div className="hero__actions hero__enter" style={{ '--enter-delay': '600ms' }}>
             <Button as="a" href="#projects" variant="primary" icon={ArrowDown}>
               View My Work
             </Button>
-            <Button as="a" href="/resume.pdf" variant="secondary" icon={FileDown} download>
-              Download Resume
-            </Button>
+            {RESUME_AVAILABLE ? (
+              <Button as="a" href="/resume.pdf" variant="secondary" icon={FileDown} download>
+                Download Resume
+              </Button>
+            ) : (
+              <Button
+                as="button"
+                type="button"
+                variant="secondary"
+                icon={FileDown}
+                disabled
+                aria-disabled="true"
+                title="Resume coming soon"
+              >
+                Resume — Coming Soon
+              </Button>
+            )}
           </div>
 
           <div className="hero__socials hero__enter" style={{ '--enter-delay': '700ms' }}>
-            {SOCIAL_LINKS.map(({ label, href, icon: Icon }) => (
+            {SOCIAL_LINKS.filter(({ href }) => href).map(({ label, href, icon: Icon }) => (
               <a key={label} href={href} target="_blank" rel="noreferrer" className="hero__social-link">
                 <span className="hero__social-icon-chip" aria-hidden="true">
                   <Icon size={18} strokeWidth={1.75} />

@@ -1,0 +1,42 @@
+.not-found {
+  /* Matches .projects-page/.achievements-page exactly (same bug class:
+     without position+z-index, this is normal-flow static content, which
+     paints BELOW the fixed SiteBackdrop's z-index:0 layer regardless of
+     DOM order — any element with an explicit stacking context (even
+     z-index:0) always wins over plain static content per the CSS spec.
+     The opaque background-color is what actually hides the backdrop
+     photo on this route, same as the other full-page routes do. */
+  position: relative;
+  z-index: 1;
+  background-color: var(--color-bg);
+  min-height: calc(100vh - 96px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6) var(--space-2);
+  text-align: center;
+}
+
+.not-found__inner {
+  max-width: 420px;
+}
+
+.not-found__eyebrow {
+  display: block;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-2);
+}
+
+.not-found__code {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(4rem, 3rem + 6vw, 7rem);
+  line-height: 1;
+  color: var(--color-signal);
+  margin-bottom: var(--space-3);
+}
+
+.not-found__message {
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-4);
+}

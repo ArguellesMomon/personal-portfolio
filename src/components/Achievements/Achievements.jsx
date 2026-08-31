@@ -5,17 +5,26 @@ import AchievementCard from './AchievementCard.jsx';
 import useScrollReveal from '../../hooks/useScrollReveal';
 import './Achievements.css';
 
-// The full list moved to its own page (see src/pages/AchievementsPage.jsx),
-// mirroring how Projects works — this section only shows a preview.
-// Matches Projects' featured count (3) for a clean single row instead of
-// one card wrapping alone onto a second row.
+// Compact chips (see AchievementCard's `compact` prop) take much less
+// space than full cards. Kept to 3 — same as Projects' featured count —
+// so this reads as a curated highlight strip, not a second full list;
+// the complete set lives on /achievements.
 const INITIAL_VISIBLE = 3;
 
 export default function Achievements() {
   const headerRef = useScrollReveal();
   const listRef = useScrollReveal();
-  const hasMore = achievements.length > INITIAL_VISIBLE;
-  const visibleAchievements = achievements.slice(0, INITIAL_VISIBLE);
+
+  // Entries without a real title are still-unconfirmed scaffolding (see
+  // achievements.json) — filtered out here rather than rendering a chip
+  // with placeholder text. If nothing's confirmed yet, the whole section
+  // skips itself instead of showing an empty "Achievements" band with
+  // nothing in it.
+  const confirmed = achievements.filter((item) => item.title);
+  if (confirmed.length === 0) return null;
+
+  const hasMore = confirmed.length > INITIAL_VISIBLE;
+  const visibleAchievements = confirmed.slice(0, INITIAL_VISIBLE);
 
   return (
     <section id="achievements" className="section achievements">
@@ -37,12 +46,12 @@ export default function Achievements() {
           </div>
         </div>
 
-        {/* Each card is its own direct .reveal child here, so they cascade
+        {/* Each chip is its own direct .reveal child here, so they cascade
             in one at a time as this list enters the viewport — same
             per-card stagger pattern used in Skills/Projects/Contact. */}
-        <ul className="achievements__list" ref={listRef}>
+        <ul className="achievements__strip" ref={listRef}>
           {visibleAchievements.map((item) => (
-            <AchievementCard key={item.id} item={item} className="reveal" />
+            <AchievementCard key={item.id} item={item} compact className="reveal" />
           ))}
         </ul>
       </div>

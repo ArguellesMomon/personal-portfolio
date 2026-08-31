@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, ExternalLink, Github } from 'lucide-react';
 import { featuredProjects } from '../../data/featuredProjects.js';
 import { CATEGORY_ICONS } from './categoryIcons.js';
+import ProjectMedia from './ProjectMedia.jsx';
 import useScrollReveal from '../../hooks/useScrollReveal';
 import useSpotlight from '../../hooks/useSpotlight';
 import './Projects.css';
@@ -20,6 +21,10 @@ function FeaturedProjectCard({ project, className = '' }) {
       onMouseMove={handleMouseMove}
       className={`card featured-project ${className}`.trim()}
     >
+      <div className="featured-project__media">
+        <ProjectMedia project={project} />
+      </div>
+
       {project.badge && (
         <span className="mono-label featured-project__badge">
           &lsaquo; {project.badge} &rsaquo;
@@ -37,26 +42,35 @@ function FeaturedProjectCard({ project, className = '' }) {
 
       <p className="featured-project__description">{project.shortDescription}</p>
 
-      <div className="featured-project__links">
-        <a
-          href={project.links.github}
-          target="_blank"
-          rel="noreferrer"
-          className="featured-project__link"
-        >
-          <Github size={16} strokeWidth={1.75} aria-hidden="true" />
-          Code
-        </a>
-        <a
-          href={project.links.live}
-          target="_blank"
-          rel="noreferrer"
-          className="featured-project__link"
-        >
-          <ExternalLink size={16} strokeWidth={1.75} aria-hidden="true" />
-          Live
-        </a>
-      </div>
+      {/* Only renders links that actually exist — an empty href would be a
+          dead link, and both are unset until real repo/demo URLs are added
+          to projects.json. */}
+      {(project.links.github || project.links.live) && (
+        <div className="featured-project__links">
+          {project.links.github && (
+            <a
+              href={project.links.github}
+              target="_blank"
+              rel="noreferrer"
+              className="featured-project__link"
+            >
+              <Github size={16} strokeWidth={1.75} aria-hidden="true" />
+              Code
+            </a>
+          )}
+          {project.links.live && (
+            <a
+              href={project.links.live}
+              target="_blank"
+              rel="noreferrer"
+              className="featured-project__link"
+            >
+              <ExternalLink size={16} strokeWidth={1.75} aria-hidden="true" />
+              Live
+            </a>
+          )}
+        </div>
+      )}
     </div>
   );
 }

@@ -15,9 +15,9 @@ export default function ProjectsPage() {
   const [activeCategory, setActiveCategory] = useState('all');
 
   useEffect(() => {
-    document.title = 'Projects — [PLACEHOLDER: Your Name]';
+    document.title = 'Projects — Richmond Arguelles';
     return () => {
-      document.title = '[PLACEHOLDER: Your Name] — Computer Science Portfolio';
+      document.title = 'Richmond Arguelles — Computer Science Portfolio';
     };
   }, []);
 
@@ -100,8 +100,9 @@ export default function ProjectsPage() {
           <div className="reveal">
             <h1 className="projects-page__title">Projects</h1>
             <p className="projects-page__intro">
-              [PLACEHOLDER: one or two lines introducing the full list — e.g.
-              the range of work below, from embedded ML to full-stack apps.]
+              Eight projects spanning embedded systems, web apps, mobile,
+              and data — from a thesis-level acoustic sensing system to
+              smaller weekend builds.
             </p>
           </div>
         </div>

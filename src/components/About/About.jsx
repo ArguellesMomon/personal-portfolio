@@ -1,16 +1,17 @@
-import { Quote, Code2, Cpu, Smartphone, LineChart } from 'lucide-react';
+import { Quote, Globe, Cpu, Smartphone, LineChart } from 'lucide-react';
 import useScrollReveal from '../../hooks/useScrollReveal';
 import useSpotlight from '../../hooks/useSpotlight';
 import './About.css';
 
-// Same icon vocabulary as Projects' category chips (Cpu, Smartphone,
-// LineChart) so the two sections read as one system rather than each
-// inventing its own iconography. Swap labels for your real focus areas.
+// Same icon + label vocabulary as Projects' CATEGORY_ICONS (categoryIcons.js)
+// so About and Projects read as one system instead of two different lists
+// of "the same four things" — a recruiter should see the same four words
+// here and again when browsing /projects.
 const EXPERTISE = [
-  { label: '[PLACEHOLDER: Full-Stack Development]', icon: Code2 },
-  { label: '[PLACEHOLDER: Embedded ML]', icon: Cpu },
-  { label: '[PLACEHOLDER: Mobile Apps]', icon: Smartphone },
-  { label: '[PLACEHOLDER: Data Science]', icon: LineChart },
+  { label: 'Web Development', icon: Globe },
+  { label: 'Embedded Systems', icon: Cpu },
+  { label: 'Mobile Apps', icon: Smartphone },
+  { label: 'Data & ML', icon: LineChart },
 ];
 
 function ExpertiseItem({ label, icon: Icon }) {
@@ -44,8 +45,13 @@ export default function About() {
 
         <div className="about__body" ref={contentRef}>
           <p className="reveal about__intro">
-            [PLACEHOLDER: a short paragraph on who you are, what you study,
-            and the kind of engineering work you gravitate toward.]
+            I'm a Computer Science student at De La Salle Lipa. Most of my
+            projects start as a technical problem — a sensor signal, a
+            forecasting model, a booking flow — and end as something people
+            can actually use. I spend as much time on the interface and
+            interaction as I do on making the underlying system work, and
+            I'd rather ship a smaller idea well than a big one
+            half-finished.
           </p>
 
           <div className="reveal about__expertise">
@@ -56,7 +62,7 @@ export default function About() {
 
           <blockquote className="reveal about__quote">
             <Quote className="about__quote-icon" size={32} strokeWidth={1.5} aria-hidden="true" />
-            <p>[PLACEHOLDER: a short personal quote or mantra that sums up how you approach your work.]</p>
+            <p>I'd rather ship something simple that works than something clever that doesn't.</p>
           </blockquote>
         </div>
       </div>

@@ -13,17 +13,61 @@
       "Next.js",
       "Firebase"
     ],
-    "role": "[PLACEHOLDER: your role and contribution]",
-    "problem": "[PLACEHOLDER: what problem this thesis addresses]",
-    "approach": "[PLACEHOLDER: how the acoustic sensing + on-device 1D-CNN model works, and how it connects to the misting response and dashboard]",
-    "challenges": "[PLACEHOLDER: hardest technical or research challenges]",
-    "outcome": "[PLACEHOLDER: results, defense outcome, or measured accuracy]",
+    "role": "Thesis project — designed and built the acoustic sensing pipeline, on-device model, and monitoring dashboard.",
+    "problem": "Mosquito-borne diseases like dengue are hard to catch early with manual monitoring, and most household mosquito control only reacts after someone notices a problem. AedesCapella tries to catch the mosquito by sound before it's noticed, and respond automatically instead of waiting on a person.",
+    "approach": "An ESP32-S3 continuously listens for mosquito wingbeat frequencies and runs a lightweight on-device 1D-CNN to classify what it hears. A positive detection triggers a citronella misting response locally, while detection events and system status sync to a React/Next.js dashboard backed by Firebase so activity can be checked remotely.",
+    "challenges": "",
+    "outcome": "",
     "links": {
-      "github": "[PLACEHOLDER: repo link]",
-      "live": "[PLACEHOLDER: dashboard/demo link]"
+      "github": "",
+      "live": ""
     },
     "image": null,
-    "imageAlt": "[PLACEHOLDER: describe the AedesCapella dashboard or hardware screenshot]"
+    "imageAlt": "Screenshot of the AedesCapella dashboard showing recent detection events"
+  },
+  {
+    "id": "wellbot",
+    "title": "WellBot (MedTech Mate)",
+    "category": "Web App",
+    "shortDescription": "A web app for medical interns and students featuring an AI chatbot companion, Pip, for wellness support.",
+    "techStack": [
+      "React",
+      "Vite",
+      "Supabase"
+    ],
+    "role": "Sole developer — designed and built the app, including Pip, the wellness chatbot.",
+    "problem": "Medical interns and students deal with a workload that leaves little room to check in on their own wellbeing, and most wellness apps aren't built around their specific schedule or stress points. WellBot gives them a low-effort way to check in through Pip, a chatbot companion, rather than another thing to actively maintain.",
+    "approach": "Built as a React + Vite web app with Supabase handling auth and data. WellBot centers on Pip, a chatbot that prompts light wellness check-ins rather than requiring users to fill out forms or track anything manually.",
+    "challenges": "",
+    "outcome": "",
+    "links": {
+      "github": "",
+      "live": ""
+    },
+    "image": null,
+    "imageAlt": "Screenshot of the WellBot app showing a conversation with Pip"
+  },
+  {
+    "id": "eventure",
+    "title": "Eventure",
+    "category": "Mobile",
+    "shortDescription": "A campus event booking app with multi-step form validation.",
+    "techStack": [
+      "React Native",
+      "Expo",
+      "TypeScript"
+    ],
+    "role": "Sole developer — built the booking flow and form validation.",
+    "problem": "Booking a spot at a campus event usually means a generic form with no real validation or feedback. Eventure gives students a proper multi-step booking flow that checks their input as they go, instead of surfacing every error at the end.",
+    "approach": "Built with React Native and Expo in TypeScript, with a multi-step form that validates each step before letting the user continue.",
+    "challenges": "",
+    "outcome": "",
+    "links": {
+      "github": "",
+      "live": ""
+    },
+    "image": null,
+    "imageAlt": "Screenshot of the Eventure event booking flow on mobile"
   },
   {
     "id": "iris",
@@ -36,16 +80,16 @@
       "Facial Recognition"
     ],
     "role": "QA Tester — test case design and documentation",
-    "problem": "[PLACEHOLDER: what problem IRIS addresses]",
-    "approach": "[PLACEHOLDER: how the team approached testing and the system design]",
-    "challenges": "[PLACEHOLDER: hardest QA or system challenges encountered]",
-    "outcome": "[PLACEHOLDER: results, test coverage, or team outcome]",
+    "problem": "IRIS is a Raspberry Pi–based facial recognition system built to control physical access without relying on keys or badges — the kind of system that needs to be tested thoroughly before it's trusted with an actual security decision.",
+    "approach": "As QA, focused on the system's real-world behavior rather than its code — writing test cases against expected recognition scenarios (correct match, no match, poor lighting, multiple faces) and documenting results so the team could see where the system held up and where it didn't.",
+    "challenges": "",
+    "outcome": "",
     "links": {
-      "github": "[PLACEHOLDER: repo link]",
-      "live": "[PLACEHOLDER: demo link]"
+      "github": "",
+      "live": ""
     },
     "image": null,
-    "imageAlt": "[PLACEHOLDER: describe an IRIS screenshot]"
+    "imageAlt": "Screenshot of the IRIS facial recognition interface"
   },
   {
     "id": "king-ace-trading",
@@ -57,39 +101,17 @@
       "Linear Regression",
       "Data Science"
     ],
-    "role": "[PLACEHOLDER: your role and contribution]",
-    "problem": "[PLACEHOLDER: the demand forecasting problem for the distributor]",
-    "approach": "[PLACEHOLDER: how the forecasting model and analysis were built]",
-    "challenges": "[PLACEHOLDER: hardest data or modeling challenges]",
-    "outcome": "[PLACEHOLDER: results and defense outcome]",
+    "role": "",
+    "problem": "King Ace Trading, a school supply distributor, had to plan inventory without a clear read on future demand — over-ordering ties up capital, under-ordering means stockouts. This capstone builds a forecasting model to give them a data-backed starting point instead of a guess.",
+    "approach": "Used linear regression over the distributor's historical sales data to project future demand, then packaged the analysis and results into a formal defense presentation.",
+    "challenges": "",
+    "outcome": "",
     "links": {
-      "github": "[PLACEHOLDER: repo link]",
-      "live": "[PLACEHOLDER: presentation/report link]"
+      "github": "",
+      "live": ""
     },
     "image": null,
-    "imageAlt": "[PLACEHOLDER: describe a King Ace Trading chart/screenshot]"
-  },
-  {
-    "id": "wellbot",
-    "title": "WellBot (MedTech Mate)",
-    "category": "Web App",
-    "shortDescription": "A web app for medical interns and students featuring an AI chatbot companion, Pip, for wellness support.",
-    "techStack": [
-      "React",
-      "Vite",
-      "Supabase"
-    ],
-    "role": "[PLACEHOLDER: your role and contribution]",
-    "problem": "[PLACEHOLDER: what problem WellBot addresses for medical interns/students]",
-    "approach": "[PLACEHOLDER: how Pip and the wellness features were designed and built]",
-    "challenges": "[PLACEHOLDER: hardest technical or design challenges]",
-    "outcome": "[PLACEHOLDER: results, usage, or feedback]",
-    "links": {
-      "github": "[PLACEHOLDER: repo link]",
-      "live": "[PLACEHOLDER: live demo link]"
-    },
-    "image": null,
-    "imageAlt": "[PLACEHOLDER: describe a WellBot screenshot]"
+    "imageAlt": "Chart from the King Ace Trading demand forecasting analysis"
   },
   {
     "id": "photobooth",
@@ -101,39 +123,17 @@
       "Vite",
       "PWA"
     ],
-    "role": "[PLACEHOLDER: your role and contribution]",
-    "problem": "[PLACEHOLDER: what this project addresses]",
-    "approach": "[PLACEHOLDER: how offline capture, editing, and local-first storage work]",
-    "challenges": "[PLACEHOLDER: hardest technical challenges]",
-    "outcome": "[PLACEHOLDER: results or reception]",
+    "role": "Sole developer — designed and built the app, including the offline capture and editing flow.",
+    "problem": "Most quick photobooth-style tools assume a constant connection and don't work well as an installable, offline-first app. This project is a phone-first PWA that works the same with or without a connection, with a deliberately retro aesthetic.",
+    "approach": "Built as a React + Vite PWA, installable to a phone's home screen, with photo capture, in-app editing, and local-first storage so captured photos aren't lost to a dropped connection.",
+    "challenges": "",
+    "outcome": "",
     "links": {
-      "github": "[PLACEHOLDER: repo link]",
-      "live": "[PLACEHOLDER: live demo link]"
+      "github": "",
+      "live": ""
     },
     "image": null,
-    "imageAlt": "[PLACEHOLDER: describe a Photobooth app screenshot]"
-  },
-  {
-    "id": "eventure",
-    "title": "Eventure",
-    "category": "Mobile",
-    "shortDescription": "A campus event booking app with multi-step form validation.",
-    "techStack": [
-      "React Native",
-      "Expo",
-      "TypeScript"
-    ],
-    "role": "[PLACEHOLDER: your role and contribution]",
-    "problem": "[PLACEHOLDER: what problem Eventure addresses for campus events]",
-    "approach": "[PLACEHOLDER: how the booking flow and form validation were built]",
-    "challenges": "[PLACEHOLDER: hardest technical challenges]",
-    "outcome": "[PLACEHOLDER: results or adoption]",
-    "links": {
-      "github": "[PLACEHOLDER: repo link]",
-      "live": "[PLACEHOLDER: demo/store link]"
-    },
-    "image": null,
-    "imageAlt": "[PLACEHOLDER: describe an Eventure screenshot]"
+    "imageAlt": "Screenshot of the Portable Photobooth app's retro-style camera interface"
   },
   {
     "id": "node-red-dashboard",
@@ -143,36 +143,34 @@
     "techStack": [
       "Node-RED"
     ],
-    "role": "[PLACEHOLDER: your role and contribution]",
-    "problem": "[PLACEHOLDER: what this dashboard tracks or solves]",
-    "approach": "[PLACEHOLDER: how the flows and dashboard were built]",
-    "challenges": "[PLACEHOLDER: hardest challenges]",
-    "outcome": "[PLACEHOLDER: results]",
+    "role": "Sole developer — built the flows and dashboard.",
+    "problem": "",
+    "approach": "Built using Node-RED's visual flow editor to wire together data sources and a dashboard without a traditional hand-coded backend.",
+    "challenges": "",
+    "outcome": "",
     "links": {
-      "github": "[PLACEHOLDER: repo link]",
-      "live": "[PLACEHOLDER: demo link]"
+      "github": "",
+      "live": ""
     },
     "image": null,
-    "imageAlt": "[PLACEHOLDER: describe a Node-RED dashboard screenshot]"
+    "imageAlt": "Screenshot of the Node-RED analytics dashboard"
   },
   {
     "id": "travel-diary",
     "title": "Travel Diary App",
     "category": "Web App",
     "shortDescription": "A smaller travel diary build.",
-    "techStack": [
-      "[PLACEHOLDER: tech stack]"
-    ],
-    "role": "[PLACEHOLDER: your role and contribution]",
-    "problem": "[PLACEHOLDER: what this app solves]",
-    "approach": "[PLACEHOLDER: how it was built]",
-    "challenges": "[PLACEHOLDER: hardest challenges]",
-    "outcome": "[PLACEHOLDER: results]",
+    "techStack": [],
+    "role": "Sole developer",
+    "problem": "",
+    "approach": "",
+    "challenges": "",
+    "outcome": "",
     "links": {
-      "github": "[PLACEHOLDER: repo link]",
-      "live": "[PLACEHOLDER: demo link]"
+      "github": "",
+      "live": ""
     },
     "image": null,
-    "imageAlt": "[PLACEHOLDER: describe a Travel Diary screenshot]"
+    "imageAlt": "Screenshot of the Travel Diary app"
   }
 ]

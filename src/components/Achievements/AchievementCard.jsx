@@ -1,12 +1,29 @@
-import { Award } from 'lucide-react';
 import useSpotlight from '../../hooks/useSpotlight';
-import { CATEGORY_ICONS } from './categoryIcons.js';
+import AchievementBadge from './AchievementBadge.jsx';
 
-export default function AchievementCard({ item, className = '', style }) {
+// `compact` renders a small horizontal "logo + name" chip instead of the
+// full card — used by the homepage preview (Achievements.jsx), which shows
+// more of the wall at a glance rather than full detail on 3 picks. The full
+// /achievements page always uses the default (non-compact) layout.
+export default function AchievementCard({ item, className = '', style, compact = false }) {
   const { ref: cardRef, handleMouseMove } = useSpotlight();
-  // Falls back to a plain Award mark for any item without a recognized
-  // category, so this never renders blank if the dataset is extended later.
-  const CategoryIcon = CATEGORY_ICONS[item.category] || Award;
+
+  if (compact) {
+    return (
+      <li
+        ref={cardRef}
+        className={`card achievements__chip ${className}`.trim()}
+        style={style}
+        onMouseMove={handleMouseMove}
+      >
+        <AchievementBadge issuer={item.issuer} />
+        <span className="achievements__chip-text">
+          <span className="achievements__chip-title">{item.title}</span>
+          <span className="mono-label achievements__chip-issuer">{item.issuer}</span>
+        </span>
+      </li>
+    );
+  }
 
   return (
     <li
@@ -15,16 +32,14 @@ export default function AchievementCard({ item, className = '', style }) {
       style={style}
       onMouseMove={handleMouseMove}
     >
-      <span className="achievements__icon-chip" aria-hidden="true">
-        <CategoryIcon size={22} strokeWidth={1.75} />
-      </span>
+      <AchievementBadge issuer={item.issuer} />
 
       <h3 className="achievements__title">{item.title}</h3>
 
-      {item.issuer ? (
-        <p className="mono-label achievements__issuer">{item.issuer}</p>
-      ) : (
+      {item.description ? (
         <p className="achievements__description">{item.description}</p>
+      ) : (
+        <p className="mono-label achievements__issuer">{item.issuer}</p>
       )}
 
       <p className="mono-label achievements__date">{item.date}</p>
