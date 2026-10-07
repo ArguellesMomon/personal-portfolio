@@ -1,62 +1,158 @@
 [
   {
     "id": "aedescapella",
+    "imagePosition": "top",
     "title": "AedesCapella",
     "category": "Embedded/Hardware",
     "badge": "Thesis Project",
-    "shortDescription": "Thesis project: an acoustic mosquito detection system that listens for wingbeat signatures and automatically triggers a citronella misting response.",
-    "techStack": [
-      "ESP32-S3",
-      "TinyML",
-      "1D-CNN",
-      "React",
-      "Next.js",
-      "Firebase"
-    ],
+    "shortDescription": "An acoustic mosquito detection thesis connecting on-device classification with relay control and an operator monitoring dashboard.",
+    "techStack": ["ESP32-S3", "TinyML", "1D-CNN", "React", "Supabase", "Recharts"],
     "role": "Thesis project — designed and built the acoustic sensing pipeline, on-device model, and monitoring dashboard.",
     "problem": "Mosquito-borne diseases like dengue are hard to catch early with manual monitoring, and most household mosquito control only reacts after someone notices a problem. AedesCapella tries to catch the mosquito by sound before it's noticed, and respond automatically instead of waiting on a person.",
-    "approach": "An ESP32-S3 continuously listens for mosquito wingbeat frequencies and runs a lightweight on-device 1D-CNN to classify what it hears. A positive detection triggers a citronella misting response locally, while detection events and system status sync to a React/Next.js dashboard backed by Firebase so activity can be checked remotely.",
+    "approach": "An ESP32-S3 listens for wingbeat signatures and runs a lightweight on-device 1D-CNN. Candidate events and relay evidence are surfaced in a React dashboard backed by Supabase, alongside sensor connectivity and location coverage. The interface distinguishes model candidates from biologically confirmed mosquitoes and relay activity from verified mist delivery.",
     "challenges": "",
     "outcome": "",
     "links": {
-      "github": "",
+      "github": "https://github.com/ArguellesMomon/AedesCapella-Dashboard",
       "live": ""
     },
-    "image": null,
-    "imageAlt": "Screenshot of the AedesCapella dashboard showing recent detection events"
+    "image": "/projects/aedescapella.png",
+    "imageWidth": 965,
+    "imageHeight": 902,
+    "imageAlt": "AedesCapella dashboard showing sensor connectivity, candidate events, and relay evidence",
+    "featured": true,
+    "imageSource": "https://github.com/ArguellesMomon/AedesCapella-Dashboard/blob/master/aedes-capella/live_integration_evidence/sensor_status_live_offline.png",
+    "imageSourceType": "repository"
+  },
+  {
+    "id": "pickletayo",
+    "title": "Pickle Batangas",
+    "featured": true,
+    "category": "Web App",
+    "shortDescription": "A pickleball court finder for Batangas with map exploration, opening hours, saved courts, and game planning.",
+    "techStack": ["React", "Vite", "Leaflet", "PWA"],
+    "problem": "Planning a game means comparing scattered court details, checking hours, and coordinating with friends. A local directory puts those decisions in one place.",
+    "approach": "A React app combines a searchable court directory with a Leaflet map. Players can review court details, save favorites, and plan a game with a shareable invitation.",
+    "links": {
+      "github": "https://github.com/ArguellesMomon/Pickleball-Locator-App",
+      "live": "https://pickletayo.vercel.app"
+    },
+    "imageAlt": "Pickle Batangas live homepage with court finder introduction and mobile map preview",
+    "image": "/projects/pickletayo.jpg",
+    "imageWidth": 1440,
+    "imageHeight": 1000,
+    "imageSource": "https://pickletayo.vercel.app",
+    "imageSourceType": "deployment"
+  },
+  {
+    "id": "photobooth",
+    "title": "Momento — Portable Photobooth",
+    "category": "Web App",
+    "shortDescription": "A phone-first, installable PWA with a retro photobooth aesthetic, offline photo capture and editing, and local-first storage.",
+    "techStack": ["React", "Vite", "PWA", "IndexedDB"],
+    "role": "Sole developer — designed and built the app, including the offline capture and editing flow.",
+    "problem": "Most quick photobooth-style tools assume a constant connection and don't work well as an installable, offline-first app. This project is a phone-first PWA that works the same with or without a connection, with a deliberately retro aesthetic.",
+    "approach": "Built as a React + Vite PWA, installable to a phone's home screen, with photo capture, in-app editing, and local-first storage so captured photos aren't lost to a dropped connection.",
+    "challenges": "",
+    "outcome": "",
+    "links": {
+      "github": "https://github.com/ArguellesMomon/Photobooth-app",
+      "live": "https://momento-booth.vercel.app"
+    },
+    "image": "/projects/photobooth.jpg",
+    "imageWidth": 1440,
+    "imageHeight": 1000,
+    "imageAlt": "Momento photobooth welcome screen with photo capture and gallery actions",
+    "featured": true,
+    "imageSource": "https://momento-booth.vercel.app",
+    "imageSourceType": "deployment"
   },
   {
     "id": "wellbot",
     "title": "WellBot (MedTech Mate)",
     "category": "Web App",
-    "shortDescription": "A web app for medical interns and students featuring an AI chatbot companion, Pip, for wellness support.",
-    "techStack": [
-      "React",
-      "Vite",
-      "Supabase"
-    ],
+    "shortDescription": "A medical internship companion with shift planning, exam tracking, clinical notes, wellness check-ins, and Pip, an AI study companion.",
+    "techStack": ["React", "Vite", "Supabase"],
     "role": "Sole developer — designed and built the app, including Pip, the wellness chatbot.",
     "problem": "Medical interns and students deal with a workload that leaves little room to check in on their own wellbeing, and most wellness apps aren't built around their specific schedule or stress points. WellBot gives them a low-effort way to check in through Pip, a chatbot companion, rather than another thing to actively maintain.",
-    "approach": "Built as a React + Vite web app with Supabase handling auth and data. WellBot centers on Pip, a chatbot that prompts light wellness check-ins rather than requiring users to fill out forms or track anything manually.",
+    "approach": "Built with React and Vite, with Supabase for authentication and data. The app organizes rotation shifts, department exams, clinical notes, and wellness tracking. Pip provides a conversational companion for medical interns and students.",
     "challenges": "",
     "outcome": "",
     "links": {
-      "github": "",
-      "live": ""
+      "github": "https://github.com/ArguellesMomon/MedTech-Internship-App",
+      "live": "https://medtechmate.vercel.app/landing"
     },
-    "image": null,
-    "imageAlt": "Screenshot of the WellBot app showing a conversation with Pip"
+    "image": "/projects/wellbot.jpg",
+    "imageWidth": 1440,
+    "imageHeight": 1000,
+    "imageAlt": "MedTech Mate landing page introducing internship planning and wellness modules",
+    "imageSource": "https://medtechmate.vercel.app/landing",
+    "imageSourceType": "deployment"
+  },
+  {
+    "id": "pinoy-recipe-finder",
+    "title": "Pinoy Recipe Finder",
+    "category": "Web App",
+    "shortDescription": "A Filipino recipe collection with dish search, category filters, ingredients, cooking steps, and saved favorites.",
+    "techStack": ["React", "Vite", "Tailwind CSS"],
+    "problem": "Finding a familiar Filipino dish is easier when recipes can be searched by name and filtered by category, with ingredients and steps kept together.",
+    "approach": "Built a React recipe library with searchable dish data, category filters, recipe details, and a dedicated favorites view. Photos help visitors choose what to cook.",
+    "links": {
+      "github": "https://github.com/ArguellesMomon/pinoy-recipe-finder",
+      "live": "https://pinoy-recipe-finder-blue.vercel.app"
+    },
+    "imageAlt": "Pinoy Recipe Finder homepage showing Filipino dishes, search, category filters, and recipe cards",
+    "image": "/projects/pinoy-recipe-finder.jpg",
+    "imageWidth": 1440,
+    "imageHeight": 1000,
+    "imageSource": "https://pinoy-recipe-finder-blue.vercel.app",
+    "imageSourceType": "deployment"
+  },
+  {
+    "id": "study-spot-ph",
+    "title": "StudySpot PH",
+    "category": "Web App",
+    "shortDescription": "A study-space discovery and demo booking app for cafés, coworking spaces, and study hubs across the Philippines.",
+    "techStack": ["React", "Vite", "Tailwind CSS"],
+    "problem": "Students and remote workers need to compare study spaces by location, price, and amenities before choosing where to focus.",
+    "approach": "A searchable directory presents space photos, descriptions, prices, and amenities. Sorting and filters narrow the choices, while detail pages and booking views connect discovery with a demo reservation flow.",
+    "links": {
+      "github": "https://github.com/ArguellesMomon/study-spot-ph",
+      "live": "https://midterm-project-eta-sable.vercel.app"
+    },
+    "imageAlt": "StudySpot PH homepage with space search, price filters, and café illustration",
+    "image": "/projects/study-spot-ph.jpg",
+    "imageWidth": 1440,
+    "imageHeight": 1000,
+    "imageSource": "https://midterm-project-eta-sable.vercel.app",
+    "imageSourceType": "deployment"
+  },
+  {
+    "id": "c4a-dashboard",
+    "demoNote": "The public calendar was accessible during the October 2026 review, but its event feed could not load. The screenshot shows that public view; the repository contains the implementation.",
+    "title": "C4A Hub",
+    "category": "Web App",
+    "shortDescription": "A student events dashboard for De La Salle Lipa with a calendar, upcoming events, and officer administration.",
+    "techStack": ["React", "Vite", "Supabase", "Tailwind CSS"],
+    "problem": "Seminars, workshops, and deadlines are easier to follow when students can view them in one calendar instead of searching across announcements.",
+    "approach": "Built a React dashboard with a calendar and upcoming-event views. Supabase provides data and authentication for officer administration, keeping the public student view separate from event management.",
+    "links": {
+      "github": "https://github.com/ArguellesMomon/C4A-Dashboard",
+      "live": "https://c4a-hub.vercel.app"
+    },
+    "imageAlt": "C4A Hub student dashboard showing the event calendar and upcoming events area",
+    "image": "/projects/c4a-dashboard.jpg",
+    "imageWidth": 1440,
+    "imageHeight": 1000,
+    "imageSource": "https://c4a-hub.vercel.app",
+    "imageSourceType": "deployment"
   },
   {
     "id": "eventure",
     "title": "Eventure",
     "category": "Mobile",
     "shortDescription": "A campus event booking app with multi-step form validation.",
-    "techStack": [
-      "React Native",
-      "Expo",
-      "TypeScript"
-    ],
+    "techStack": ["React Native", "Expo", "TypeScript"],
     "role": "Sole developer — built the booking flow and form validation.",
     "problem": "Booking a spot at a campus event usually means a generic form with no real validation or feedback. Eventure gives students a proper multi-step booking flow that checks their input as they go, instead of surfacing every error at the end.",
     "approach": "Built with React Native and Expo in TypeScript, with a multi-step form that validates each step before letting the user continue.",
@@ -75,10 +171,7 @@
     "category": "Embedded/Hardware",
     "badge": "Team Project",
     "shortDescription": "A Raspberry Pi facial recognition security system, built as a team project.",
-    "techStack": [
-      "Raspberry Pi",
-      "Facial Recognition"
-    ],
+    "techStack": ["Raspberry Pi", "Facial Recognition"],
     "role": "QA Tester — test case design and documentation",
     "problem": "IRIS is a Raspberry Pi–based facial recognition system built to control physical access without relying on keys or badges — the kind of system that needs to be tested thoroughly before it's trusted with an actual security decision.",
     "approach": "As QA, focused on the system's real-world behavior rather than its code — writing test cases against expected recognition scenarios (correct match, no match, poor lighting, multiple faces) and documenting results so the team could see where the system held up and where it didn't.",
@@ -97,10 +190,7 @@
     "category": "ML/Data",
     "badge": "Capstone Project",
     "shortDescription": "A data science capstone using ML-based demand forecasting for a school supply distributor, including a formal defense presentation.",
-    "techStack": [
-      "Linear Regression",
-      "Data Science"
-    ],
+    "techStack": ["Linear Regression", "Data Science"],
     "role": "",
     "problem": "King Ace Trading, a school supply distributor, had to plan inventory without a clear read on future demand — over-ordering ties up capital, under-ordering means stockouts. This capstone builds a forecasting model to give them a data-backed starting point instead of a guess.",
     "approach": "Used linear regression over the distributor's historical sales data to project future demand, then packaged the analysis and results into a formal defense presentation.",
@@ -114,35 +204,29 @@
     "imageAlt": "Chart from the King Ace Trading demand forecasting analysis"
   },
   {
-    "id": "photobooth",
-    "title": "Portable Photobooth App",
-    "category": "Web App",
-    "shortDescription": "A phone-first, installable PWA with a retro photobooth aesthetic, offline photo capture and editing, and local-first storage.",
-    "techStack": [
-      "React",
-      "Vite",
-      "PWA"
-    ],
-    "role": "Sole developer — designed and built the app, including the offline capture and editing flow.",
-    "problem": "Most quick photobooth-style tools assume a constant connection and don't work well as an installable, offline-first app. This project is a phone-first PWA that works the same with or without a connection, with a deliberately retro aesthetic.",
-    "approach": "Built as a React + Vite PWA, installable to a phone's home screen, with photo capture, in-app editing, and local-first storage so captured photos aren't lost to a dropped connection.",
+    "id": "travel-diary",
+    "title": "Travel Diary App",
+    "category": "Mobile",
+    "shortDescription": "A mobile travel journal for saving memories with photos, locations, and personal notes.",
+    "techStack": ["React Native", "Expo", "TypeScript", "AsyncStorage"],
+    "role": "Sole developer",
+    "problem": "Travel memories often end up scattered across a camera roll, maps, and notes. A journal brings the place and the story together.",
+    "approach": "Built with React Native and Expo. Entries combine photos from the camera or gallery with location details and notes, using AsyncStorage for local persistence.",
     "challenges": "",
     "outcome": "",
     "links": {
-      "github": "",
+      "github": "https://github.com/ArguellesMomon/travel-diary",
       "live": ""
     },
     "image": null,
-    "imageAlt": "Screenshot of the Portable Photobooth app's retro-style camera interface"
+    "imageAlt": "Screenshot of the Travel Diary app"
   },
   {
     "id": "node-red-dashboard",
     "title": "Node-RED Analytics Dashboard",
     "category": "Web App",
     "shortDescription": "A smaller analytics dashboard built with Node-RED.",
-    "techStack": [
-      "Node-RED"
-    ],
+    "techStack": ["Node-RED"],
     "role": "Sole developer — built the flows and dashboard.",
     "problem": "",
     "approach": "Built using Node-RED's visual flow editor to wire together data sources and a dashboard without a traditional hand-coded backend.",
@@ -154,23 +238,5 @@
     },
     "image": null,
     "imageAlt": "Screenshot of the Node-RED analytics dashboard"
-  },
-  {
-    "id": "travel-diary",
-    "title": "Travel Diary App",
-    "category": "Web App",
-    "shortDescription": "A smaller travel diary build.",
-    "techStack": [],
-    "role": "Sole developer",
-    "problem": "",
-    "approach": "",
-    "challenges": "",
-    "outcome": "",
-    "links": {
-      "github": "",
-      "live": ""
-    },
-    "image": null,
-    "imageAlt": "Screenshot of the Travel Diary app"
   }
 ]

@@ -7,13 +7,7 @@ const skills = [
   },
   {
     category: 'Backend & Data',
-    items: [
-      'Supabase',
-      'Firebase',
-      'Node-RED',
-      'Linear Regression',
-      'TinyML / 1D-CNN',
-    ],
+    items: ['Supabase', 'Firebase', 'Node-RED', 'Linear Regression', 'TinyML / 1D-CNN'],
   },
   {
     category: 'Tools & Platforms',

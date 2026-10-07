@@ -1,171 +1,144 @@
-import { useEffect, useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
+import { useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { LayoutGrid, List, Search, SlidersHorizontal, X } from 'lucide-react';
 import projects from '../data/projects.json';
-import ProjectCard from '../components/Projects/ProjectCard.jsx';
-import FilterBar from '../components/shared/FilterBar/FilterBar.jsx';
-import EmptyState from '../components/shared/EmptyState/EmptyState.jsx';
-import { CATEGORY_ICONS, CATEGORY_ORDER } from '../components/Projects/categoryIcons.js';
-import useScrollReveal from '../hooks/useScrollReveal';
-import './ProjectsPage.css';
+import ProjectCard, { categoryLabels } from '../components/portfolio/ProjectCard.jsx';
+import ProjectDialog from '../components/portfolio/ProjectDialog.jsx';
+import { ContactBanner, PageHeading } from '../components/portfolio/SiteLayout.jsx';
 
 export default function ProjectsPage() {
-  const headerRef = useScrollReveal();
-  const [searchQuery, setSearchQuery] = useState('');
-  const [activeCategory, setActiveCategory] = useState('all');
-
-  useEffect(() => {
-    document.title = 'Projects — Richmond Arguelles';
-    return () => {
-      document.title = 'Richmond Arguelles — Computer Science Portfolio';
-    };
-  }, []);
-
-  // Category chips, in the fixed CATEGORY_ORDER, each carrying a live count
-  // — a category that has zero projects simply doesn't render a chip for it.
-  const categories = useMemo(() => {
-    const counts = projects.reduce((acc, project) => {
-      acc[project.category] = (acc[project.category] || 0) + 1;
-      return acc;
-    }, {});
-
-    const ordered = CATEGORY_ORDER.filter((category) => counts[category]).map((category) => ({
-      id: category,
-      label: category,
-      count: counts[category],
-      Icon: CATEGORY_ICONS[category],
-    }));
-
-    return [{ id: 'all', label: 'All', count: projects.length }, ...ordered];
-  }, []);
-
-  const query = searchQuery.trim().toLowerCase();
-
-  const filteredProjects = useMemo(() => {
-    return projects.filter((project) => {
-      if (activeCategory !== 'all' && project.category !== activeCategory) return false;
-      if (!query) return true;
-
-      const haystack = [project.title, project.category, project.shortDescription, ...project.techStack]
-        .join(' ')
-        .toLowerCase();
-      return haystack.includes(query);
-    });
-  }, [activeCategory, query]);
-
-  // Grouped-by-category view (mirroring the reference site's sectioned
-  // layout) only makes sense as the unfiltered "browse everything" state —
-  // once someone is searching or has picked one category, a flat grid of
-  // matches is more useful than a bunch of near-empty sections.
-  const shouldGroup = activeCategory === 'all' && query === '';
-
-  const groupedProjects = useMemo(() => {
-    if (!shouldGroup) return null;
-    return CATEGORY_ORDER.filter((category) =>
-      filteredProjects.some((project) => project.category === category)
-    ).map((category) => ({
-      id: category,
-      label: category,
-      Icon: CATEGORY_ICONS[category],
-      items: filteredProjects.filter((project) => project.category === category),
-    }));
-  }, [shouldGroup, filteredProjects]);
-
-  // Remounting the results container on every filter change (via this key)
-  // retriggers its CSS entrance animation — a lightweight substitute for
-  // per-card scroll-reveal, which is a one-shot IntersectionObserver effect
-  // that can't replay itself for cards that swap in after a filter change.
-  const resultsKey = `${activeCategory}::${query}`;
-
-  const emptyMessage = query
-    ? `No projects match "${searchQuery.trim()}"${
-        activeCategory !== 'all' ? ` in ${activeCategory}` : ''
-      }.`
-    : 'No projects in this category yet.';
-
-  const handleReset = () => {
-    setSearchQuery('');
-    setActiveCategory('all');
+  const [params, setParams] = useSearchParams();
+  const [view, setView] = useState('grid');
+  const [preview, setPreview] = useState(null);
+  const query = params.get('q') || '';
+  const category = Object.keys(categoryLabels).includes(params.get('category'))
+    ? params.get('category')
+    : 'all';
+  const sort = params.get('sort') === 'name' ? 'name' : 'featured';
+  const update = (key, value) => {
+    const next = new URLSearchParams(params);
+    if (!value || value === 'all' || value === 'featured') next.delete(key);
+    else next.set(key, value);
+    setParams(next, { replace: true });
   };
-
+  const filtered = useMemo(() => {
+    const results = projects.filter(
+      (project) =>
+        (category === 'all' || category === project.category) &&
+        [
+          project.title,
+          project.shortDescription,
+          project.category,
+          categoryLabels[project.category],
+          ...project.techStack,
+        ]
+          .join(' ')
+          .toLowerCase()
+          .includes(query.trim().toLowerCase()),
+    );
+    return sort === 'name' ? results.sort((a, b) => a.title.localeCompare(b.title)) : results;
+  }, [query, category, sort]);
   return (
-    <main id="main-content" className="projects-page">
-      <div className="projects-page__inner">
-        <div ref={headerRef}>
-          <Link to="/#projects" className="reveal projects-page__back">
-            <ArrowLeft size={16} strokeWidth={1.75} aria-hidden="true" />
-            Back to Home
-          </Link>
-
-          <div className="reveal">
-            <h1 className="projects-page__title">Projects</h1>
-            <p className="projects-page__intro">
-              Eight projects spanning embedded systems, web apps, mobile,
-              and data — from a thesis-level acoustic sensing system to
-              smaller weekend builds.
-            </p>
-          </div>
+    <main id="main-content" tabIndex={-1} className="container page-content">
+      <PageHeading eyebrow="THE PROJECT COLLECTION" title="Built with purpose">
+        Web, mobile, hardware, and a little curiosity. Explore the problems, the process, and the
+        thinking behind each build.
+      </PageHeading>
+      <div className="project-toolbar">
+        <label className="search-field">
+          <Search size={19} />
+          <span className="visually-hidden">Search projects or technologies</span>
+          <input
+            type="search"
+            placeholder="Search projects or technologies…"
+            value={query}
+            onChange={(event) => update('q', event.target.value)}
+          />
+          {query && (
+            <button
+              className="icon-button"
+              aria-label="Clear search"
+              onClick={() => update('q', '')}
+            >
+              <X size={16} />
+            </button>
+          )}
+        </label>
+        <label className="sort-field">
+          <SlidersHorizontal size={16} />
+          <span className="visually-hidden">Sort projects</span>
+          <select value={sort} onChange={(event) => update('sort', event.target.value)}>
+            <option value="featured">Featured first</option>
+            <option value="name">Name: A–Z</option>
+          </select>
+        </label>
+        <div className="view-switch" aria-label="Project layout">
+          <button
+            className={view === 'grid' ? 'active' : ''}
+            aria-label="Grid view"
+            aria-pressed={view === 'grid'}
+            onClick={() => setView('grid')}
+          >
+            <LayoutGrid size={18} />
+          </button>
+          <button
+            className={view === 'list' ? 'active' : ''}
+            aria-label="List view"
+            aria-pressed={view === 'list'}
+            onClick={() => setView('list')}
+          >
+            <List size={19} />
+          </button>
         </div>
-
-        <FilterBar
-          searchValue={searchQuery}
-          onSearchChange={setSearchQuery}
-          searchPlaceholder="Search projects or tech…"
-          searchLabel="Search projects"
-          categories={categories}
-          activeCategory={activeCategory}
-          onCategoryChange={setActiveCategory}
-          resultCount={filteredProjects.length}
-          totalCount={projects.length}
-          itemLabel="projects"
-        />
-
-        {filteredProjects.length === 0 ? (
-          <EmptyState message={emptyMessage} onReset={handleReset} />
-        ) : (
-          <div key={resultsKey} className="projects-page__results">
-            {shouldGroup ? (
-              groupedProjects.map((group) => (
-                <section
-                  key={group.id}
-                  className="projects-page__group"
-                  aria-labelledby={`projects-group-${group.id}`}
-                >
-                  <div className="projects-page__group-header">
-                    {group.Icon && (
-                      <span className="projects-page__group-icon" aria-hidden="true">
-                        <group.Icon size={15} strokeWidth={1.75} />
-                      </span>
-                    )}
-                    <h2
-                      id={`projects-group-${group.id}`}
-                      className="mono-label projects-page__group-label"
-                    >
-                      {group.label}
-                    </h2>
-                    <span className="projects-page__group-rule" aria-hidden="true" />
-                    <span className="mono-label projects-page__group-count">
-                      {group.items.length}
-                    </span>
-                  </div>
-
-                  <div className="projects-page__grid">
-                    {group.items.map((project) => (
-                      <ProjectCard key={project.id} project={project} />
-                    ))}
-                  </div>
-                </section>
-              ))
-            ) : (
-              <div className="projects-page__grid">
-                {filteredProjects.map((project) => (
-                  <ProjectCard key={project.id} project={project} />
-                ))}
-              </div>
-            )}
-          </div>
+      </div>
+      <div className="category-filters" aria-label="Filter projects by category">
+        {[['all', 'All projects'], ...Object.entries(categoryLabels)].map(([key, label]) => (
+          <button
+            key={key}
+            className={category === key ? 'active' : ''}
+            onClick={() => update('category', key)}
+            aria-pressed={category === key}
+          >
+            {label}
+            <span>
+              {key === 'all'
+                ? projects.length
+                : projects.filter((project) => project.category === key).length}
+            </span>
+          </button>
+        ))}
+      </div>
+      <div className="results-heading">
+        <span role="status" aria-live="polite">
+          Showing {filtered.length} of {projects.length} projects
+        </span>
+        {(query || category !== 'all') && (
+          <button className="text-link" onClick={() => setParams({}, { replace: true })}>
+            Clear filters <X size={14} />
+          </button>
         )}
       </div>
+      {filtered.length ? (
+        <div className={`work-grid project-results ${view === 'list' ? 'list-view' : ''}`}>
+          {filtered.map((project, index) => (
+            <ProjectCard key={project.id} project={project} index={index} onPreview={setPreview} />
+          ))}
+        </div>
+      ) : (
+        <div className="empty-state">
+          <Search size={30} />
+          <h2>No projects found</h2>
+          <p>Try another technology or browse the full collection.</p>
+          <button
+            className="button button-outline"
+            onClick={() => setParams({}, { replace: true })}
+          >
+            Reset filters
+          </button>
+        </div>
+      )}
+      <ContactBanner />
+      <ProjectDialog project={preview} onClose={() => setPreview(null)} />
     </main>
   );
 }

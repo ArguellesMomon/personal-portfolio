@@ -1,54 +1,38 @@
-/* Single dark theme — no toggle, no [data-theme] attribute. Tokens named
-   --color-signal / --color-ember / --color-olive are kept as-is even though
-   "signal" and "ember" originally referred to a retired teal/amber system;
-   the names are just internal handles at this point (orange primary, rust
-   secondary, olive as the personal accent on Hero's social icons). */
 :root {
-  --color-bg: #0d0c0b;
-  /* Slightly lifted off --color-bg — used to zebra-stripe alternating
-     sections (Projects, Contact) so the page isn't one unbroken slab of
-     black once the photo backdrop has faded out after About. */
-  --color-bg-alt: #141210;
-  --color-surface: #17140f;
-  --color-text: #f5f1ea;
-  --color-text-muted: #9a9488;
-  --color-signal: #ff6b1a;
-  --color-ember: #d9540a;
-  --color-olive: #a9b87c;
-  --color-border: #2a251e;
-
-  /* Typography */
+  color-scheme: light;
+  --bg: #f7f5ee;
+  --surface: #fffef8;
+  --surface-alt: #eeece3;
+  --text: #252d28;
+  --muted: #59665d;
+  --subtle: #5c695e;
+  --accent: #2f624b;
+  --accent-hover: #244d3b;
+  --accent-soft: #e7eee4;
+  --accent-line: #c6d7bf;
+  --border: #dce2d6;
+  --green: #3e795a;
+  --green-bg: #eaf2eb;
+  --shadow: 0 14px 45px -20px rgb(25 50 35 / 19%);
   --font-display: 'Space Grotesk', sans-serif;
   --font-body: 'Inter', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
-
-  --text-h1: 3rem;
-  --text-h2: clamp(1.75rem, 1.4rem + 1.5vw, 2.25rem);
-  --text-h3: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
-  --text-body: 1rem;
-  --text-mono: 0.8rem;
-
-  /* Spacing: 8px-based scale */
-  --space-1: 8px;
-  --space-2: 16px;
-  --space-3: 24px;
-  --space-4: 32px;
-  --space-5: 48px;
-  --space-6: 64px;
-  --space-7: 96px;
-
-  --radius: 4px;
-
-  /* Breakpoints (referenced in comments; CSS media queries can't read
-     custom properties directly, so these document the values used below) */
-  --breakpoint-tablet: 640px;
-  --breakpoint-desktop: 1024px;
-
-  /* Motion timing */
-  --duration-micro: 250ms;
-  --duration-load: 700ms;
-  --easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
-
-  /* Shared layout constraint */
-  --content-max-width: 1120px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #141d18;
+  --surface: #1d2821;
+  --surface-alt: #253329;
+  --text: #f3f1e6;
+  --muted: #b1c0b1;
+  --subtle: #a9b9a8;
+  --accent: #accb9b;
+  --accent-hover: #c2daad;
+  --accent-soft: #293b2d;
+  --accent-line: #45624a;
+  --border: #344737;
+  --green: #a2cbb0;
+  --green-bg: #223028;
+  --shadow: 0 14px 45px -20px rgb(0 0 0 / 45%);
 }
