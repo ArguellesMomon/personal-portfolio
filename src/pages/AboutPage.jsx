@@ -10,6 +10,7 @@ import {
   Smartphone,
 } from 'lucide-react';
 import skills from '../data/skills.js';
+import achievements from '../data/achievements.json';
 import profile from '../data/profile.js';
 import { ContactBanner, PageHeading } from '../components/portfolio/SiteLayout.jsx';
 const practice = [
@@ -163,9 +164,11 @@ export default function AboutPage() {
             </div>
           ))}
         </div>
-        <Link className="text-link" to="/achievements">
-          Learning & achievements <ArrowUpRight size={17} />
-        </Link>
+        {achievements.some((item) => item.title.trim()) && (
+          <Link className="text-link" to="/achievements">
+            Certificates & achievements <ArrowUpRight size={17} />
+          </Link>
+        )}
       </section>
       <ContactBanner />
     </main>

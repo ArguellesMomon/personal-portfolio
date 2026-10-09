@@ -7,16 +7,63 @@ import {
   Mail,
   Send,
   CheckCircle2,
+  Trash2,
 } from 'lucide-react';
 import profile from '../data/profile.js';
 import { PageHeading } from '../components/portfolio/SiteLayout.jsx';
+const draftKey = 'portfolio-contact-draft';
+const emptyDraft = { name: '', email: '', topic: 'Collaboration', message: '' };
+const topics = ['Internship opportunity', 'Collaboration', 'Project enquiry', 'Just saying hello'];
+function restoreDraft() {
+  try {
+    const saved = JSON.parse(sessionStorage.getItem(draftKey));
+    if (!saved || typeof saved !== 'object') return emptyDraft;
+    return {
+      name: typeof saved.name === 'string' ? saved.name.slice(0, 100) : '',
+      email: typeof saved.email === 'string' ? saved.email.slice(0, 254) : '',
+      topic: topics.includes(saved.topic) ? saved.topic : 'Collaboration',
+      message: typeof saved.message === 'string' ? saved.message.slice(0, 5000) : '',
+    };
+  } catch {
+    return emptyDraft;
+  }
+}
 export default function ContactPage() {
+  const [draft, setDraft] = useState(restoreDraft);
+  const [draftSaved, setDraftSaved] = useState(false);
+  const hasDraft = Boolean(draft.name || draft.email || draft.message);
   const [status, setStatus] = useState('idle');
   const [feedback, setFeedback] = useState('');
   const pendingRequest = useRef(null);
   useEffect(() => {
     return () => pendingRequest.current?.abort();
   }, []);
+  useEffect(() => {
+    try {
+      if (hasDraft) sessionStorage.setItem(draftKey, JSON.stringify(draft));
+      else sessionStorage.removeItem(draftKey);
+      setDraftSaved(hasDraft);
+    } catch {
+      setDraftSaved(false);
+    }
+  }, [draft, hasDraft]);
+  const updateDraft = (field, value) => {
+    setDraft((previous) => ({ ...previous, [field]: value }));
+    setStatus('idle');
+    setFeedback('');
+  };
+  const clearDraft = () => {
+    setDraft(emptyDraft);
+    setStatus('idle');
+    setFeedback('');
+  };
+  const emailFallback =
+    'mailto:' +
+    profile.email +
+    '?subject=' +
+    encodeURIComponent('Portfolio enquiry: ' + draft.topic) +
+    '&body=' +
+    encodeURIComponent(draft.message + '\n\nFrom: ' + draft.name + '\nReply to: ' + draft.email);
   const sendMessage = async (event) => {
     event.preventDefault();
     if (pendingRequest.current) return;
@@ -62,6 +109,7 @@ export default function ContactPage() {
         throw new Error(/needs activation/i.test(result.message || '') ? 'activation' : 'failed');
       }
       form.reset();
+      setDraft(emptyDraft);
       setStatus('success');
       setFeedback(
         'Message submitted. Thank you for reaching out! I’ll reply to the email you provided.',
@@ -112,6 +160,8 @@ export default function ContactPage() {
                   <input
                     id="contact-name"
                     name="name"
+                    value={draft.name}
+                    onChange={(event) => updateDraft('name', event.target.value)}
                     autoComplete="name"
                     placeholder="How should I address you?"
                     required
@@ -124,6 +174,8 @@ export default function ContactPage() {
                   <input
                     id="contact-email"
                     name="email"
+                    value={draft.email}
+                    onChange={(event) => updateDraft('email', event.target.value)}
                     type="email"
                     autoComplete="email"
                     placeholder="you@example.com"
@@ -134,7 +186,12 @@ export default function ContactPage() {
               </div>
               <label htmlFor="contact-topic">
                 What’s this about?
-                <select id="contact-topic" name="topic" defaultValue="Collaboration">
+                <select
+                  id="contact-topic"
+                  name="topic"
+                  value={draft.topic}
+                  onChange={(event) => updateDraft('topic', event.target.value)}
+                >
                   <option>Internship opportunity</option>
                   <option>Collaboration</option>
                   <option>Project enquiry</option>
@@ -146,6 +203,8 @@ export default function ContactPage() {
                 <textarea
                   id="contact-message"
                   name="message"
+                  value={draft.message}
+                  onChange={(event) => updateDraft('message', event.target.value)}
                   rows={6}
                   placeholder="Share a little about the opportunity, idea, or project…"
                   required
@@ -157,6 +216,18 @@ export default function ContactPage() {
                 <label htmlFor="contact-website">Leave this field empty</label>
                 <input id="contact-website" name="_honey" tabIndex={-1} autoComplete="off" />
               </div>
+              {hasDraft && (
+                <div className="draft-toolbar">
+                  <span>
+                    {draftSaved
+                      ? 'Draft saved in this tab'
+                      : 'Your draft is kept while this page is open'}
+                  </span>
+                  <button type="button" className="text-link" onClick={clearDraft}>
+                    <Trash2 size={14} /> Clear draft
+                  </button>
+                </div>
+              )}
               <p className="form-privacy">
                 Your name, email, and message are sent to Richmond through FormSubmit. All fields
                 are required.
@@ -179,6 +250,11 @@ export default function ContactPage() {
               {status === 'success' && <CheckCircle2 size={20} />}
               <p>{feedback}</p>
             </div>
+            {status === 'error' && (
+              <a className="text-link email-fallback" href={emailFallback}>
+                <Mail size={17} /> Send with your email app <ArrowUpRight size={15} />
+              </a>
+            )}
           </form>
         </section>
         <aside className="contact-links">

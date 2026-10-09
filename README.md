@@ -20,21 +20,21 @@ npm run preview
 
 - `src/data/profile.js`: email, LinkedIn, GitHub, education, and optional résumé URL. Add the actual PDF under `public/` and set `resume: '/resume.pdf'` when available.
 - `src/data/projects.json`: project descriptions, roles, technology stacks, screenshots, repository links, and live URLs. Blank fields are omitted. Add screenshots through `image` and descriptive `imageAlt` values.
-- `src/data/achievements.json`: credentials and milestones. Only entries with a title are published; blank starter entries remain hidden.
+- `src/data/achievements.json`: 18 verified courses, seminar certificates, and academic milestones. Each entry maps to an original file under `src/Certificates/` and a lightweight thumbnail under `public/certificates/previews/`. `src/data/certificates.js` resolves production asset URLs through Vite.
 - `src/data/skills.js`: toolkit categories and skills.
 
-Seven projects use actual screenshots: AedesCapella (a committed dashboard screenshot), MedTech Mate, Momento, Pickle Batangas, Pinoy Recipe Finder, StudySpot PH, and C4A Hub (public deployments). Image sources are stored in the project data and linked on detail pages. Projects without a verified screenshot retain explicitly labeled HTML/CSS concepts.
+Seven projects use actual screenshots: AedesCapella (a committed dashboard screenshot), MedTech Mate, Momento, Pickle Batangas, Pinoy Recipe Finder, StudySpot PH, and C4A Fieldnotes (public deployments). MedTech Mate and Pickle Batangas screenshots were refreshed from their live deployments on 8 October 2026. Featured projects are AedesCapella, Pickle Batangas, and MedTech Mate; Momento remains in the full collection. Image sources are stored in the project data and linked on detail pages. Projects without a verified screenshot retain explicitly labeled HTML/CSS concepts.
 
-Public GitHub repositories and deployments were reviewed on 7 October 2026. The collection includes twelve projects; smaller course exercises and duplicate portfolio repositories are omitted. Existing project routes are preserved. Travel Diary is categorized as mobile and the AedesCapella dashboard stack reflects its React/Supabase repository.
+Public GitHub repositories were refreshed on 9 October 2026. AedesCapella now describes authenticated live monitoring and device comparison; C4A Fieldnotes describes the updated campus planner and officer workspace, with a fresh live screenshot. The main collection includes eleven projects. The smaller Node-RED experiment is archived until it has a fuller case study or a verified demo; its existing detail URL still works. Smaller course exercises and duplicate portfolio repositories are omitted. Existing project routes are preserved. Travel Diary is categorized as mobile and the AedesCapella dashboard stack reflects its React/Supabase repository.
 
 ## Pages and interactions
 
 - `/`: introduction and selected projects.
-- `/projects`: search, category filters, sorting, grid/list view, and accessible project previews. Search/filter/sort state is saved in the URL.
-- `/projects/:projectId`: individual project narrative and share-link copying.
+- `/projects`: search, category filters, sorting, grid/list view, and accessible project previews. Search, category, live-demo filter, sort, and layout state are saved in the URL; clearing filters preserves the chosen sort and layout.
+- `/projects/:projectId`: individual project narrative, prominent demo/source actions, share-link copying, and an accessible screenshot viewer with fit/actual-size controls.
 - `/about`: background, approach, areas of practice, and toolkit.
-- `/contact`: inline message submission, public email, and supplied social profile URLs.
-- `/achievements`: education and populated credentials.
+- `/contact`: inline message submission, temporary contact drafts, public email, and supplied social profile URLs.
+- `/achievements`: a personal learning archive with an editorial opening, layered certificate papers, a year-by-year index, and a sticky reading desk. Search and category controls filter all 18 records. A focused document viewer supports keyboard navigation, mobile enlargement, and original-file view/download actions. Selected records link to related project work. Accessible through the Certificates navigation link.
 - Unknown URLs: a recovery page with navigation back into the site.
 
 Theme preference persists locally and supports the OS preference. Motion respects `prefers-reduced-motion`; native dialogs support Escape, focus trapping, and an inert background.
@@ -43,7 +43,7 @@ Theme preference persists locally and supports the OS preference. Motion respect
 
 The forest and cream visual system includes paper grain, original SVG contour lines, a fine dot pattern, slowly drifting light, layered shadows, and textured contact panels. The hero has staggered text, a drawn underline, floating notes, and gently moving portrait orbits. Project and practice cards respond to a mouse with a small perspective tilt and a soft highlight; screenshots zoom slightly on hover. Lower sections reveal as they enter the viewport, and a slim bar indicates reading progress.
 
-The header’s pause/resume button saves the visitor’s motion preference in `portfolio-motion`. System reduced-motion settings take priority. Texture and depth remain visible when animations are paused. Pointer effects are disabled on touch devices; continuous hero motion pauses when the portrait leaves the viewport, and animations pause in hidden tabs. Pointer updates are batched with `requestAnimationFrame` and do not rerender React components. No animation library or remote texture is required.
+The header’s pause/resume button saves the visitor’s motion preference in `portfolio-motion`. System reduced-motion settings take priority. Texture and depth remain visible when animations are paused. Pointer effects are disabled on touch devices; continuous hero motion pauses when the portrait leaves the viewport, and animations pause in hidden tabs. Pointer updates are batched with `requestAnimationFrame` and do not rerender React components. No animation library or remote texture is required. Decorative star marks are SVG geometry so iOS cannot substitute an emoji. All three featured projects remain visible on mobile.
 
 - `src/styles/immersive.css`: material, lighting, depth, and motion.
 - `src/components/portfolio/SiteAtmosphere.jsx`: contours, reading progress, and pointer interactions.
@@ -52,7 +52,7 @@ The header’s pause/resume button saves the visitor’s motion preference in `p
 
 ## Contact delivery
 
-The form uses [FormSubmit AJAX](https://formsubmit.co/ajax-documentation) to deliver messages to `arguellesrichmond@gmail.com` without opening the visitor’s email application. The `email` field lets Richmond reply to the sender. It includes required-field/email validation, a hidden honeypot, duplicate-submit prevention, a 20-second timeout, and feedback. Failed submissions keep the visitor’s input for retry. No API key or Gmail password is needed in this repository.
+The form uses [FormSubmit AJAX](https://formsubmit.co/ajax-documentation) to deliver messages to `arguellesrichmond@gmail.com` without opening the visitor’s email application. The `email` field lets Richmond reply to the sender. It includes required-field/email validation, a hidden honeypot, duplicate-submit prevention, a 20-second timeout, and feedback. Drafts are saved in `sessionStorage` within the current browser tab, restored on reload/navigation, and removed on successful submission or by Clear draft. The form still works when storage is unavailable. Failed submissions keep the visitor’s input for retry and offer an email-app fallback with the subject and message already filled in. No API key or Gmail password is needed in this repository.
 
 FormSubmit requires the recipient to click a one-time activation email before delivery works. Check Gmail (including Spam) for the activation email after the first submission, activate the form, and submit another message to verify receipt. Service acceptance alone does not confirm delivery to Gmail. If the destination changes, activate the new address as well. An email link remains available if the third-party service is unavailable.
 

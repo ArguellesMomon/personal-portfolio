@@ -5,16 +5,25 @@
     "title": "AedesCapella",
     "category": "Embedded/Hardware",
     "badge": "Thesis Project",
-    "shortDescription": "An acoustic mosquito detection thesis connecting on-device classification with relay control and an operator monitoring dashboard.",
-    "techStack": ["ESP32-S3", "TinyML", "1D-CNN", "React", "Supabase", "Recharts"],
+    "shortDescription": "An acoustic mosquito detection thesis with an authenticated operator dashboard for sensor health, sound candidates, relay history, and device comparisons.",
+    "techStack": [
+      "ESP32-S3",
+      "TinyML",
+      "1D-CNN",
+      "React",
+      "Vite",
+      "Supabase",
+      "Recharts",
+      "Leaflet"
+    ],
     "role": "Thesis project — designed and built the acoustic sensing pipeline, on-device model, and monitoring dashboard.",
     "problem": "Mosquito-borne diseases like dengue are hard to catch early with manual monitoring, and most household mosquito control only reacts after someone notices a problem. AedesCapella tries to catch the mosquito by sound before it's noticed, and respond automatically instead of waiting on a person.",
-    "approach": "An ESP32-S3 listens for wingbeat signatures and runs a lightweight on-device 1D-CNN. Candidate events and relay evidence are surfaced in a React dashboard backed by Supabase, alongside sensor connectivity and location coverage. The interface distinguishes model candidates from biologically confirmed mosquitoes and relay activity from verified mist delivery.",
-    "challenges": "",
+    "approach": "An ESP32-S3 listens for wingbeat signatures and runs an on-device 1D-CNN. The React dashboard brings together sensor health, candidate activity, recorded relay history, device mapping, and side-by-side placement comparisons. Supabase Auth and protected database views control access; realtime updates are backed by polling and reconnect recovery. Charts use Philippine time, while model candidates remain distinct from biologically confirmed mosquitoes and relay records from verified fluid delivery.",
+    "challenges": "Keeping device health separate from dashboard connection health, recovering missed live updates, and presenting missing coordinates, stale sensors, and incomplete activity honestly.",
     "outcome": "",
     "links": {
       "github": "https://github.com/ArguellesMomon/AedesCapella-Dashboard",
-      "live": ""
+      "live": "https://aedescapella.vercel.app"
     },
     "image": "/projects/aedescapella.png",
     "imageWidth": 965,
@@ -22,7 +31,9 @@
     "imageAlt": "AedesCapella dashboard showing sensor connectivity, candidate events, and relay evidence",
     "featured": true,
     "imageSource": "https://github.com/ArguellesMomon/AedesCapella-Dashboard/blob/master/aedes-capella/live_integration_evidence/sensor_status_live_offline.png",
-    "imageSourceType": "repository"
+    "imageSourceType": "repository",
+    "imageCapturedAt": "2026-10-09",
+    "demoNote": "The dashboard requires an authorized operator account. This screenshot comes from the repository’s integration evidence."
   },
   {
     "id": "pickletayo",
@@ -37,12 +48,13 @@
       "github": "https://github.com/ArguellesMomon/Pickleball-Locator-App",
       "live": "https://pickletayo.vercel.app"
     },
-    "imageAlt": "Pickle Batangas live homepage with court finder introduction and mobile map preview",
+    "imageAlt": "Pickle Batangas live homepage with court search and an illustrated pickleball court",
     "image": "/projects/pickletayo.jpg",
     "imageWidth": 1440,
     "imageHeight": 1000,
     "imageSource": "https://pickletayo.vercel.app",
-    "imageSourceType": "deployment"
+    "imageSourceType": "deployment",
+    "imageCapturedAt": "2026-10-08"
   },
   {
     "id": "photobooth",
@@ -63,18 +75,18 @@
     "imageWidth": 1440,
     "imageHeight": 1000,
     "imageAlt": "Momento photobooth welcome screen with photo capture and gallery actions",
-    "featured": true,
+    "featured": false,
     "imageSource": "https://momento-booth.vercel.app",
     "imageSourceType": "deployment"
   },
   {
     "id": "wellbot",
-    "title": "WellBot (MedTech Mate)",
+    "title": "MedTech Mate",
     "category": "Web App",
     "shortDescription": "A medical internship companion with shift planning, exam tracking, clinical notes, wellness check-ins, and Pip, an AI study companion.",
     "techStack": ["React", "Vite", "Supabase"],
     "role": "Sole developer — designed and built the app, including Pip, the wellness chatbot.",
-    "problem": "Medical interns and students deal with a workload that leaves little room to check in on their own wellbeing, and most wellness apps aren't built around their specific schedule or stress points. WellBot gives them a low-effort way to check in through Pip, a chatbot companion, rather than another thing to actively maintain.",
+    "problem": "Medical interns and students deal with a workload that leaves little room to check in on their own wellbeing, and most wellness apps aren't built around their specific schedule or stress points. MedTech Mate gives them a low-effort way to check in through Pip, a chatbot companion, rather than another thing to actively maintain.",
     "approach": "Built with React and Vite, with Supabase for authentication and data. The app organizes rotation shifts, department exams, clinical notes, and wellness tracking. Pip provides a conversational companion for medical interns and students.",
     "challenges": "",
     "outcome": "",
@@ -85,9 +97,11 @@
     "image": "/projects/wellbot.jpg",
     "imageWidth": 1440,
     "imageHeight": 1000,
-    "imageAlt": "MedTech Mate landing page introducing internship planning and wellness modules",
+    "imageAlt": "MedTech Mate live landing page with internship planning, quota progress, rotation, and shift previews",
     "imageSource": "https://medtechmate.vercel.app/landing",
-    "imageSourceType": "deployment"
+    "imageSourceType": "deployment",
+    "featured": true,
+    "imageCapturedAt": "2026-10-08"
   },
   {
     "id": "pinoy-recipe-finder",
@@ -129,23 +143,24 @@
   },
   {
     "id": "c4a-dashboard",
-    "demoNote": "The public calendar was accessible during the October 2026 review, but its event feed could not load. The screenshot shows that public view; the repository contains the implementation.",
-    "title": "C4A Hub",
+    "title": "C4A Fieldnotes",
     "category": "Web App",
-    "shortDescription": "A student events dashboard for De La Salle Lipa with a calendar, upcoming events, and officer administration.",
+    "shortDescription": "A campus planner for De La Salle Lipa C4A students, with live events, saved bookmarks, a mobile calendar, and an officer workspace.",
     "techStack": ["React", "Vite", "Supabase", "Tailwind CSS"],
     "problem": "Seminars, workshops, and deadlines are easier to follow when students can view them in one calendar instead of searching across announcements.",
-    "approach": "Built a React dashboard with a calendar and upcoming-event views. Supabase provides data and authentication for officer administration, keeping the public student view separate from event management.",
+    "approach": "Built a responsive React planner with Overview, All events, Calendar, My saved, and Section guide views. Students can search and filter events, save bookmarks on their device, and export calendar entries in Philippine time. Supabase provides authentication, realtime updates, and event storage; officers manage events through a searchable workspace with editing, duplication, and delete confirmation. A compact weekly planner expands into a full calendar on phones, and light/dark themes follow the visitor’s preference.",
     "links": {
       "github": "https://github.com/ArguellesMomon/C4A-Dashboard",
       "live": "https://c4a-hub.vercel.app"
     },
-    "imageAlt": "C4A Hub student dashboard showing the event calendar and upcoming events area",
+    "imageAlt": "C4A Fieldnotes live overview with forest-green navigation, a section noticeboard, and a weekly event preview",
     "image": "/projects/c4a-dashboard.jpg",
     "imageWidth": 1440,
     "imageHeight": 1000,
     "imageSource": "https://c4a-hub.vercel.app",
-    "imageSourceType": "deployment"
+    "imageSourceType": "deployment",
+    "challenges": "Keeping student discovery and officer administration connected while making calendar navigation, event dialogs, and management tables usable on small screens.",
+    "imageCapturedAt": "2026-10-09"
   },
   {
     "id": "eventure",
@@ -237,6 +252,7 @@
       "live": ""
     },
     "image": null,
-    "imageAlt": "Screenshot of the Node-RED analytics dashboard"
+    "imageAlt": "Screenshot of the Node-RED analytics dashboard",
+    "archived": true
   }
 ]

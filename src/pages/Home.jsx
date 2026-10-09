@@ -12,7 +12,8 @@ import {
   MapPin,
   Smartphone,
 } from 'lucide-react';
-import projects from '../data/projects.json';
+import projects from '../data/projectCatalog.js';
+import BrandSpark from '../components/portfolio/BrandSpark.jsx';
 import profile from '../data/profile.js';
 import ProjectCard from '../components/portfolio/ProjectCard.jsx';
 import ProjectDialog from '../components/portfolio/ProjectDialog.jsx';
@@ -29,7 +30,10 @@ export default function Home() {
               <span className="live-dot" /> Open to internship opportunities
             </div>
             <p className="hero-greeting">
-              Hey, I’m Richmond <span className="wave-hand">✳</span>
+              Hey, I’m Richmond{' '}
+              <span className="wave-hand" aria-hidden="true">
+                <BrandSpark />
+              </span>
             </p>
             <h1>
               <span className="hero-line">
@@ -80,7 +84,7 @@ export default function Home() {
             <span className="portrait-orbit" aria-hidden="true" />
             <span className="portrait-orbit orbit-secondary" aria-hidden="true" />
             <span className="portrait-spark spark-one" aria-hidden="true">
-              ✳
+              <BrandSpark />
             </span>
             <span className="portrait-spark spark-two" aria-hidden="true">
               +

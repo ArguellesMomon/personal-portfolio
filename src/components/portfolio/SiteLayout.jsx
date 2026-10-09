@@ -10,6 +10,7 @@ const navigation = [
   ['/', 'Home'],
   ['/projects', 'Projects'],
   ['/about', 'About'],
+  ['/achievements', 'Certificates'],
   ['/contact', 'Contact'],
 ];
 export function RouteEffects() {
@@ -22,7 +23,7 @@ export function RouteEffects() {
       projects: 'Projects',
       about: 'About',
       contact: 'Contact',
-      achievements: 'Achievements',
+      achievements: 'Certificates & achievements',
     };
     const project = projects.find((item) => location.pathname === `/projects/${item.id}`);
     const knownPage = ['/', '/projects', '/about', '/contact', '/achievements'].includes(

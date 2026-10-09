@@ -1,105 +1,192 @@
 [
   {
-    "id": "datacamp-1",
+    "id": "pytorch-intro",
     "type": "certification",
     "issuer": "DataCamp",
     "issuerLogo": "/issuers/datacamp.png",
-    "title": "",
-    "date": "",
-    "verifyUrl": ""
+    "title": "Introduction to Deep Learning with PyTorch",
+    "date": "2026-10-03",
+    "description": "4-hour course in deep learning with PyTorch.",
+    "sourceFile": "DataCamp/SOA - Introduction to Deep Learnning with PyTorch.pdf",
+    "preview": "/certificates/previews/pytorch-intro.jpg"
   },
   {
-    "id": "jpcs-dlsl-1",
-    "type": "seminar",
-    "issuer": "JPCS - DLSL Chapter",
-    "issuerLogo": "/issuers/jpcs-dlsl.png",
-    "title": "",
-    "date": ""
-  },
-  {
-    "id": "datacamp-2",
-    "type": "certification",
-    "issuer": "DataCamp",
-    "issuerLogo": "/issuers/datacamp.png",
-    "title": "",
-    "date": "",
-    "verifyUrl": ""
-  },
-  {
-    "id": "jpcs-dlsl-2",
-    "type": "seminar",
-    "issuer": "JPCS - DLSL Chapter",
-    "issuerLogo": "/issuers/jpcs-dlsl.png",
-    "title": "",
-    "date": ""
-  },
-  {
-    "id": "datacamp-3",
-    "type": "certification",
-    "issuer": "DataCamp",
-    "issuerLogo": "/issuers/datacamp.png",
-    "title": "",
-    "date": "",
-    "verifyUrl": ""
-  },
-  {
-    "id": "jpcs-dlsl-3",
-    "type": "seminar",
-    "issuer": "JPCS - DLSL Chapter",
-    "issuerLogo": "/issuers/jpcs-dlsl.png",
-    "title": "",
-    "date": ""
-  },
-  {
-    "id": "datacamp-4",
-    "type": "certification",
-    "issuer": "DataCamp",
-    "issuerLogo": "/issuers/datacamp.png",
-    "title": "",
-    "date": "",
-    "verifyUrl": ""
-  },
-  {
-    "id": "datacamp-5",
-    "type": "certification",
-    "issuer": "DataCamp",
-    "issuerLogo": "/issuers/datacamp.png",
-    "title": "",
-    "date": "",
-    "verifyUrl": ""
-  },
-  {
-    "id": "datacamp-6",
-    "type": "certification",
-    "issuer": "DataCamp",
-    "issuerLogo": "/issuers/datacamp.png",
-    "title": "",
-    "date": "",
-    "verifyUrl": ""
-  },
-  {
-    "id": "datacamp-7",
-    "type": "certification",
-    "issuer": "DataCamp",
-    "issuerLogo": "/issuers/datacamp.png",
-    "title": "",
-    "date": "",
-    "verifyUrl": ""
-  },
-  {
-    "id": "milestone-academic-1",
+    "id": "applications-development",
     "type": "milestone",
-    "issuer": "Academic",
-    "title": "",
-    "description": "",
-    "date": ""
+    "issuer": "JPCS - DLSL Chapter",
+    "issuerLogo": "/issuers/jpcs-dlsl.png",
+    "title": "Top Student — Applications Development and Emerging Technologies",
+    "date": "2026-04-21",
+    "description": "Recognized as one of the top students in C3A for the first semester of academic year 2025–2026.",
+    "sourceFile": "Richmond Arguelles - Applications Development and Emerging Technologies - C3A.pdf",
+    "preview": "/certificates/previews/applications-development.jpg"
   },
   {
-    "id": "milestone-academic-2",
-    "type": "milestone",
-    "issuer": "Academic",
-    "title": "",
-    "description": "",
-    "date": ""
+    "id": "intermediate-r",
+    "type": "certification",
+    "issuer": "DataCamp",
+    "issuerLogo": "/issuers/datacamp.png",
+    "title": "Intermediate R",
+    "date": "2026-04-20",
+    "description": "6-hour course in R.",
+    "sourceFile": "DataCamp/SOA - Intermediate to R.pdf",
+    "preview": "/certificates/previews/intermediate-r.jpg"
+  },
+  {
+    "id": "young-innovators",
+    "type": "seminar",
+    "issuer": "De La Salle Lipa",
+    "title": "CaLaBaRZon Young Innovators’ Challenge",
+    "date": "2026-04-14",
+    "description": "Certificate of participation in the Young Innovators’ Challenge at De La Salle Lipa.",
+    "sourceFile": "2026/Richmond, L, Arguelles.pdf",
+    "preview": "/certificates/previews/young-innovators.jpg"
+  },
+  {
+    "id": "hello-real-world",
+    "type": "seminar",
+    "issuer": "De La Salle Lipa",
+    "title": "Hello World to the Real World: A Tech Industry Survival Guide",
+    "date": "2026-04-07",
+    "description": "Certificate of attendance at the tech industry seminar.",
+    "sourceFile": "2026/Hello to the real world.pdf",
+    "preview": "/certificates/previews/hello-real-world.jpg"
+  },
+  {
+    "id": "introduction-r",
+    "type": "certification",
+    "issuer": "DataCamp",
+    "issuerLogo": "/issuers/datacamp.png",
+    "title": "Introduction to R",
+    "date": "2026-03-16",
+    "description": "4-hour course in R.",
+    "sourceFile": "DataCamp/SOA - Introduction to R.pdf",
+    "preview": "/certificates/previews/introduction-r.jpg"
+  },
+  {
+    "id": "project-deepdive",
+    "type": "seminar",
+    "issuer": "ANIMO.DEV",
+    "title": "Project Deepdive Session 2",
+    "date": "2026-03-12",
+    "description": "Certificate of participation in Project Deepdive Session 2 at De La Salle Lipa.",
+    "sourceFile": "2026/RICHMOND L. ARGUELLES.pdf",
+    "preview": "/certificates/previews/project-deepdive.jpg"
+  },
+  {
+    "id": "introduction-python",
+    "type": "certification",
+    "issuer": "DataCamp",
+    "issuerLogo": "/issuers/datacamp.png",
+    "title": "Introduction to Python",
+    "date": "2026-03-09",
+    "description": "4-hour course in Python.",
+    "sourceFile": "DataCamp/SOA - Introduction to Python.pdf",
+    "preview": "/certificates/previews/introduction-python.jpg"
+  },
+  {
+    "id": "python-toolbox",
+    "type": "certification",
+    "issuer": "DataCamp",
+    "issuerLogo": "/issuers/datacamp.png",
+    "title": "Python Toolbox",
+    "date": "2026-03-09",
+    "description": "4-hour course in Python tools.",
+    "sourceFile": "DataCamp/SOA - Python Toolbox.pdf",
+    "preview": "/certificates/previews/python-toolbox.jpg"
+  },
+  {
+    "id": "intermediate-python-developers",
+    "type": "certification",
+    "issuer": "DataCamp",
+    "issuerLogo": "/issuers/datacamp.png",
+    "title": "Intermediate Python for Developers",
+    "date": "2026-02-09",
+    "description": "2-hour course for Python developers.",
+    "sourceFile": "DataCamp/SOA - Intermediate Python for Developers.pdf",
+    "preview": "/certificates/previews/intermediate-python-developers.jpg"
+  },
+  {
+    "id": "introduction-python-developers",
+    "type": "certification",
+    "issuer": "DataCamp",
+    "issuerLogo": "/issuers/datacamp.png",
+    "title": "Introduction to Python for Developers",
+    "date": "2026-02-08",
+    "description": "3-hour course for Python developers.",
+    "sourceFile": "DataCamp/SOA - Introduction to Python for Developers.pdf",
+    "preview": "/certificates/previews/introduction-python-developers.jpg"
+  },
+  {
+    "id": "research-horizons",
+    "type": "seminar",
+    "issuer": "DLSL ACES · IECEP-DLSL SC · JPCS",
+    "title": "Innovative Research Horizons",
+    "date": "2026-02-03",
+    "description": "Certificate of participation in the research seminar at the CBEAM Function Hall.",
+    "sourceFile": "2026/Innovative Research Horizons.pdf",
+    "preview": "/certificates/previews/research-horizons.jpg"
+  },
+  {
+    "id": "lets-git-it",
+    "type": "seminar",
+    "issuer": "JPCS - DLSL Chapter",
+    "issuerLogo": "/issuers/jpcs-dlsl.png",
+    "title": "Let’s GIT IT 2026",
+    "date": "2026-01-22",
+    "description": "Certificate of participation at the MB Auditorium, De La Salle Lipa.",
+    "sourceFile": "2026/Let’s GIT IT 2026.pdf",
+    "preview": "/certificates/previews/lets-git-it.jpg"
+  },
+  {
+    "id": "ethical-hacking-data",
+    "type": "seminar",
+    "issuer": "De La Salle Lipa · Swinburne University of Technology",
+    "title": "Bridging Ethical Hacking and Data Analytics: Building Smarter and Safer Systems",
+    "date": "2026-01-13",
+    "description": "Certificate of attendance at the De La Salle Lipa Amphitheater.",
+    "sourceFile": "2026/Bridging Ethical Hacking and Data.pdf",
+    "preview": "/certificates/previews/ethical-hacking-data.jpg"
+  },
+  {
+    "id": "elements-ai",
+    "type": "certification",
+    "issuer": "University of Helsinki · MinnaLearn",
+    "title": "Elements of AI",
+    "date": "2025-11-03",
+    "description": "Completed the 2 ECTS credits online course.",
+    "sourceFile": "Elements of AI.png",
+    "preview": "/certificates/previews/elements-ai.jpg"
+  },
+  {
+    "id": "career-compass",
+    "type": "seminar",
+    "issuer": "DLSL College Guidance and Counseling Center",
+    "title": "Career Compass & Power Through",
+    "date": "2025-10-09",
+    "description": "Back2Back seminars: Career 103 — Career Compass: Finding Your Direction Before The Launch; SEEDS 103 — Power Through: Strengthening Mental Toughness and A Positive Outlook.",
+    "sourceFile": "Career Compass.pdf",
+    "preview": "/certificates/previews/career-compass.jpg"
+  },
+  {
+    "id": "arduinnovation",
+    "type": "seminar",
+    "issuer": "DLSL College of Information Technology and Engineering",
+    "title": "CITE Symposium — Episode 1: ARDUINNOVATION",
+    "date": "2025-05-20",
+    "description": "Certificate of appreciation for participating in the CITE symposium.",
+    "sourceFile": "ARDUINNOVATION.pdf",
+    "preview": "/certificates/previews/arduinnovation.jpg"
+  },
+  {
+    "id": "masterclass-101",
+    "type": "seminar",
+    "issuer": "JPCS - DLSL Chapter",
+    "issuerLogo": "/issuers/jpcs-dlsl.png",
+    "title": "Masterclass 101",
+    "date": "2025-05-15",
+    "description": "Certificate of participation at the Nexus Co-Working Space, De La Salle Lipa.",
+    "sourceFile": "Masterclass 101.pdf",
+    "preview": "/certificates/previews/masterclass-101.jpg"
   }
 ]

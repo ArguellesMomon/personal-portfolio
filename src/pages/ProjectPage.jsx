@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { ArrowLeft, ArrowRight, ArrowUpRight, Check, Copy, Github } from 'lucide-react';
-import projects from '../data/projects.json';
+import { ArrowLeft, ArrowRight, ArrowUpRight, Check, Copy, Github, Maximize2 } from 'lucide-react';
+import projects, { allProjects } from '../data/projectCatalog.js';
+import ScreenshotDialog from '../components/portfolio/ScreenshotDialog.jsx';
 import ProjectArtwork from '../components/portfolio/ProjectArtwork.jsx';
 import { categoryLabels } from '../components/portfolio/ProjectCard.jsx';
 import { ContactBanner } from '../components/portfolio/SiteLayout.jsx';
@@ -13,10 +14,13 @@ export default function ProjectPage() {
   const collectionUrl = location.state?.collectionUrl?.startsWith('/projects?')
     ? location.state.collectionUrl
     : '/projects';
-  const project = projects.find((item) => item.id === projectId);
+  const project = allProjects.find((item) => item.id === projectId);
   const [copyStatus, setCopyStatus] = useState('');
+  const [screenshotOpen, setScreenshotOpen] = useState(false);
+  const screenshotButton = useRef(null);
   useEffect(() => {
     setCopyStatus('');
+    setScreenshotOpen(false);
   }, [project]);
   useEffect(() => {
     if (!copyStatus) return;
@@ -56,7 +60,35 @@ export default function ProjectPage() {
       <p className="share-status" role="status">
         {copyStatus}
       </p>
-      <ProjectArtwork project={project} large />
+      <div className="project-primary-actions">
+        {project.links.live && (
+          <a
+            className="button button-small"
+            href={project.links.live}
+            target="_blank"
+            rel="noreferrer"
+          >
+            Visit live project <ArrowUpRight size={16} />
+          </a>
+        )}
+        {project.links.github && (
+          <a className="text-link" href={project.links.github} target="_blank" rel="noreferrer">
+            <Github size={17} /> View source <ArrowUpRight size={16} />
+          </a>
+        )}
+      </div>
+      <div className="project-screenshot">
+        <ProjectArtwork project={project} large />
+        {project.image && (
+          <button
+            ref={screenshotButton}
+            className="screenshot-expand"
+            onClick={() => setScreenshotOpen(true)}
+          >
+            <Maximize2 size={17} /> Enlarge screenshot
+          </button>
+        )}
+      </div>
       {project.image && project.imageSource && (
         <p className="screenshot-note">
           {project.imageSourceType === 'repository'
@@ -93,21 +125,6 @@ export default function ProjectPage() {
               </div>
             )}
           </dl>
-          {project.links.github && (
-            <a className="text-link" href={project.links.github} target="_blank" rel="noreferrer">
-              <Github size={17} /> View source <ArrowUpRight size={16} />
-            </a>
-          )}
-          {project.links.live && (
-            <a
-              className="button button-small"
-              href={project.links.live}
-              target="_blank"
-              rel="noreferrer"
-            >
-              Visit live project <ArrowUpRight size={16} />
-            </a>
-          )}
         </aside>
         <div className="story-content">
           {[
@@ -146,6 +163,13 @@ export default function ProjectPage() {
         <ArrowRight size={30} />
       </Link>
       <ContactBanner />
+      {screenshotOpen && (
+        <ScreenshotDialog
+          project={project}
+          returnFocus={screenshotButton}
+          onClose={() => setScreenshotOpen(false)}
+        />
+      )}
     </main>
   );
 }

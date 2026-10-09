@@ -1,3 +1,4 @@
+import BrandSpark from './BrandSpark.jsx';
 import { Activity, Camera, Check, Cpu, Fingerprint, Heart, MapPin, Sparkles } from 'lucide-react';
 
 // Illustrative project concepts, not screenshots or measured results.
@@ -128,7 +129,9 @@ export default function ProjectArtwork({ project, large = false }) {
             {[0, 1, 2].map((i) => (
               <div key={i}>
                 <Camera size={26} strokeWidth={1.2} />
-                <span>✦</span>
+                <span>
+                  <BrandSpark />
+                </span>
               </div>
             ))}
             <small>little moments, kept.</small>
