@@ -2,6 +2,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { ArrowRight, X } from 'lucide-react';
 import ProjectArtwork from './ProjectArtwork.jsx';
+import { projectFocus, groupStack } from '../../data/projectPresentation.js';
 import { categoryLabels } from './ProjectCard.jsx';
 export default function ProjectDialog({ project, onClose }) {
   const dialog = useRef(null);
@@ -65,14 +66,28 @@ export default function ProjectDialog({ project, onClose }) {
           >
             <X size={20} />
           </button>
-          <ProjectArtwork project={project} />
+          <ProjectArtwork project={project} cover={location.pathname === '/projects'} />
+          {location.pathname === '/projects' && project.coverImageSource && (
+            <p className="preview-image-note">
+              {project.coverCaption} ·{' '}
+              <a href={project.coverImageSource} target="_blank" rel="noreferrer">
+                View original
+              </a>
+            </p>
+          )}
           <div className="dialog-content">
             <span className="eyebrow">{categoryLabels[project.category]}</span>
             <h2 id="dialog-title">{project.title}</h2>
+            {projectFocus[project.id] && (
+              <p className="preview-focus">{projectFocus[project.id]}</p>
+            )}
             <p>{project.shortDescription}</p>
-            <div className="tags">
-              {project.techStack.map((tech) => (
-                <span key={tech}>{tech}</span>
+            <div className="preview-stack">
+              {groupStack(project.techStack).map(({ label, items }) => (
+                <div key={label}>
+                  <span className="eyebrow">{label}</span>
+                  <p>{items.join(' / ')}</p>
+                </div>
               ))}
             </div>
             {project.role && (

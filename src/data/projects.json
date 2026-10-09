@@ -26,14 +26,20 @@
       "live": "https://aedescapella.vercel.app"
     },
     "image": "/projects/aedescapella.png",
-    "imageWidth": 965,
-    "imageHeight": 902,
-    "imageAlt": "AedesCapella dashboard showing sensor connectivity, candidate events, and relay evidence",
+    "imageWidth": 1920,
+    "imageHeight": 1080,
+    "imageAlt": "AedesCapella public sign-in screen for authorized dashboard operators",
     "featured": true,
-    "imageSource": "https://github.com/ArguellesMomon/AedesCapella-Dashboard/blob/master/aedes-capella/live_integration_evidence/sensor_status_live_offline.png",
-    "imageSourceType": "repository",
+    "imageSource": "https://aedescapella.vercel.app",
+    "imageSourceType": "live",
     "imageCapturedAt": "2026-10-09",
-    "demoNote": "The dashboard requires an authorized operator account. This screenshot comes from the repository’s integration evidence."
+    "demoNote": "The live dashboard requires an authorized operator account. Its public sign-in screen is shown here.",
+    "coverImage": "/projects/aedescapella.png",
+    "coverImageAlt": "AedesCapella public sign-in screen for authorized dashboard operators",
+    "coverImageWidth": 1920,
+    "coverImageHeight": 1080,
+    "coverCaption": "Public sign-in / live website screenshot",
+    "coverImageSource": "https://aedescapella.vercel.app"
   },
   {
     "id": "pickletayo",

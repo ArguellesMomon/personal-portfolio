@@ -4,7 +4,9 @@ import { LayoutGrid, List, Search, SlidersHorizontal, X } from 'lucide-react';
 import projects from '../data/projectCatalog.js';
 import ProjectCard, { categoryLabels } from '../components/portfolio/ProjectCard.jsx';
 import ProjectDialog from '../components/portfolio/ProjectDialog.jsx';
-import { ContactBanner, PageHeading } from '../components/portfolio/SiteLayout.jsx';
+import ProjectSpotlight from '../components/portfolio/ProjectSpotlight.jsx';
+import '../styles/projects.css';
+import { ContactBanner } from '../components/portfolio/SiteLayout.jsx';
 
 export default function ProjectsPage() {
   const [params, setParams] = useSearchParams();
@@ -27,6 +29,8 @@ export default function ProjectsPage() {
   const category = Object.keys(categoryLabels).includes(currentParams.get('category'))
     ? currentParams.get('category')
     : 'all';
+  const technology = currentParams.get('tech') || '';
+  const technologies = [...new Set(projects.flatMap((project) => project.techStack))].sort();
   const sort = currentParams.get('sort') === 'name' ? 'name' : 'featured';
   const update = (key, value) => {
     const next = new URLSearchParams(pendingParams.current);
@@ -36,7 +40,7 @@ export default function ProjectsPage() {
   };
   const resetFilters = () => {
     const next = new URLSearchParams(pendingParams.current);
-    for (const key of ['q', 'category', 'live']) next.delete(key);
+    for (const key of ['q', 'category', 'live', 'tech']) next.delete(key);
     commitParams(next);
   };
   const filtered = useMemo(() => {
@@ -44,6 +48,7 @@ export default function ProjectsPage() {
       (project) =>
         (category === 'all' || category === project.category) &&
         (!liveOnly || Boolean(project.links.live)) &&
+        (!technology || project.techStack.includes(technology)) &&
         [
           project.title,
           project.shortDescription,
@@ -56,111 +61,146 @@ export default function ProjectsPage() {
           .includes(query.trim().toLowerCase()),
     );
     return sort === 'name' ? results.sort((a, b) => a.title.localeCompare(b.title)) : results;
-  }, [query, category, sort, liveOnly]);
+  }, [query, category, sort, liveOnly, technology]);
   return (
-    <main id="main-content" tabIndex={-1} className="container page-content">
-      <PageHeading eyebrow="THE PROJECT COLLECTION" title="Built with purpose">
-        Web, mobile, hardware, and a little curiosity. Explore the problems, the process, and the
-        thinking behind each build.
-      </PageHeading>
-      <div className="project-toolbar">
-        <label className="search-field">
-          <Search size={19} />
-          <span className="visually-hidden">Search projects or technologies</span>
-          <input
-            type="search"
-            placeholder="Search projects or technologies…"
-            value={query}
-            onChange={(event) => update('q', event.target.value)}
-          />
-          {query && (
-            <button
-              className="icon-button"
-              aria-label="Clear search"
-              onClick={() => update('q', '')}
-            >
-              <X size={16} />
-            </button>
-          )}
-        </label>
-        <label className="sort-field">
-          <SlidersHorizontal size={16} />
-          <span className="visually-hidden">Sort projects</span>
-          <select value={sort} onChange={(event) => update('sort', event.target.value)}>
-            <option value="featured">Featured first</option>
-            <option value="name">Name: A–Z</option>
-          </select>
-        </label>
-        <div className="view-switch" aria-label="Project layout">
-          <button
-            className={view === 'grid' ? 'active' : ''}
-            aria-label="Grid view"
-            aria-pressed={view === 'grid'}
-            onClick={() => update('view', 'grid')}
-          >
-            <LayoutGrid size={18} />
-          </button>
-          <button
-            className={view === 'list' ? 'active' : ''}
-            aria-label="List view"
-            aria-pressed={view === 'list'}
-            onClick={() => update('view', 'list')}
-          >
-            <List size={19} />
-          </button>
+    <main id="main-content" tabIndex={-1} className="container page-content collection-page">
+      <ProjectSpotlight projects={projects.filter((project) => project.featured)} />
+      <section className="collection-index" id="project-index" aria-labelledby="collection-title">
+        <div className="collection-index-heading">
+          <div>
+            <span className="eyebrow">THE FULL COLLECTION / {projects.length} PROJECTS</span>
+            <h2 id="collection-title">Find your thread.</h2>
+          </div>
+          <p>
+            Browse by discipline, follow a technology, or open a case study to see how it came
+            together.
+          </p>
         </div>
-      </div>
-      <div className="category-filters" aria-label="Filter projects by category">
-        {[['all', 'All projects'], ...Object.entries(categoryLabels)].map(([key, label]) => (
-          <button
-            key={key}
-            className={category === key ? 'active' : ''}
-            onClick={() => update('category', key)}
-            aria-pressed={category === key}
-          >
-            {label}
-            <span>
-              {key === 'all'
-                ? projects.length
-                : projects.filter((project) => project.category === key).length}
-            </span>
-          </button>
-        ))}
-      </div>
-      <label className="live-filter">
-        <input
-          type="checkbox"
-          checked={liveOnly}
-          onChange={(event) => update('live', event.target.checked ? '1' : '')}
-        />
-        Live demos only <span>Try a project in your browser</span>
-      </label>
-      <div className="results-heading">
-        <span role="status" aria-live="polite">
-          Showing {filtered.length} of {projects.length} projects
-        </span>
-        {(query || category !== 'all' || liveOnly) && (
-          <button className="text-link" onClick={resetFilters}>
-            Clear filters <X size={14} />
-          </button>
-        )}
-      </div>
-      {filtered.length ? (
-        <div className={`work-grid project-results ${view === 'list' ? 'list-view' : ''}`}>
-          {filtered.map((project, index) => (
-            <ProjectCard key={project.id} project={project} index={index} onPreview={setPreview} />
+        <div className="project-toolbar">
+          <label className="search-field">
+            <Search size={19} />
+            <span className="visually-hidden">Search projects or technologies</span>
+            <input
+              type="search"
+              placeholder="Search projects or technologies…"
+              value={query}
+              onChange={(event) => update('q', event.target.value)}
+            />
+            {query && (
+              <button
+                className="icon-button"
+                aria-label="Clear search"
+                onClick={() => update('q', '')}
+              >
+                <X size={16} />
+              </button>
+            )}
+          </label>
+          <label className="sort-field">
+            <SlidersHorizontal size={16} />
+            <span className="visually-hidden">Sort projects</span>
+            <select value={sort} onChange={(event) => update('sort', event.target.value)}>
+              <option value="featured">Featured first</option>
+              <option value="name">Name: A–Z</option>
+            </select>
+          </label>
+          <div className="view-switch" aria-label="Project layout">
+            <button
+              className={view === 'grid' ? 'active' : ''}
+              aria-label="Grid view"
+              aria-pressed={view === 'grid'}
+              onClick={() => update('view', 'grid')}
+            >
+              <LayoutGrid size={18} />
+            </button>
+            <button
+              className={view === 'list' ? 'active' : ''}
+              aria-label="List view"
+              aria-pressed={view === 'list'}
+              onClick={() => update('view', 'list')}
+            >
+              <List size={19} />
+            </button>
+          </div>
+        </div>
+        <div className="category-filters" aria-label="Filter projects by category">
+          {[['all', 'All projects'], ...Object.entries(categoryLabels)].map(([key, label]) => (
+            <button
+              key={key}
+              className={category === key ? 'active' : ''}
+              onClick={() => update('category', key)}
+              aria-pressed={category === key}
+            >
+              {label}
+              <span>
+                {key === 'all'
+                  ? projects.length
+                  : projects.filter((project) => project.category === key).length}
+              </span>
+            </button>
           ))}
         </div>
-      ) : (
-        <div className="empty-state">
-          <Search size={30} />
-          <h2>No projects found</h2>
-          <p>Try another technology or browse the full collection.</p>
-          <button className="button button-outline" onClick={resetFilters}>
-            Reset filters
-          </button>
+        <div className="collection-refinements">
+          <label className="technology-field">
+            <span>Built with</span>
+            <select
+              aria-label="Filter by technology"
+              value={technology}
+              onChange={(event) => update('tech', event.target.value)}
+            >
+              <option value="">Any technology</option>
+              {technology && !technologies.includes(technology) && (
+                <option value={technology}>{technology}</option>
+              )}
+              {technologies.map((tech) => (
+                <option key={tech} value={tech}>
+                  {tech} ({projects.filter((project) => project.techStack.includes(tech)).length})
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className="live-filter">
+            <input
+              type="checkbox"
+              checked={liveOnly}
+              onChange={(event) => update('live', event.target.checked ? '1' : '')}
+            />
+            Live demos only <span>Try a project in your browser</span>
+          </label>
         </div>
-      )}
+        <div className="results-heading">
+          <span role="status" aria-live="polite">
+            Showing {filtered.length} of {projects.length} projects
+          </span>
+          {(query || category !== 'all' || liveOnly || technology) && (
+            <button className="text-link" onClick={resetFilters}>
+              Clear filters <X size={14} />
+            </button>
+          )}
+        </div>
+        {filtered.length ? (
+          <div className={`work-grid project-results ${view === 'list' ? 'list-view' : ''}`}>
+            {filtered.map((project, index) => (
+              <ProjectCard
+                key={project.id}
+                project={project}
+                index={index}
+                onPreview={setPreview}
+                collection
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="empty-state">
+            <Search size={30} />
+            <h2>No projects found</h2>
+            <p>Try another technology or browse the full collection.</p>
+            <button className="button button-outline" onClick={resetFilters}>
+              Reset filters
+            </button>
+          </div>
+        )}
+      </section>
       <ContactBanner />
       <ProjectDialog project={preview} onClose={() => setPreview(null)} />
     </main>

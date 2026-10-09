@@ -1,25 +1,29 @@
 import { ArrowRight, ArrowUpRight, Eye, Github } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import ProjectArtwork from './ProjectArtwork.jsx';
+import { projectFocus } from '../../data/projectPresentation.js';
 export const categoryLabels = {
   'Embedded/Hardware': 'Embedded systems',
   'Web App': 'Web development',
   Mobile: 'Mobile apps',
   'ML/Data': 'Data & ML',
 };
-export default function ProjectCard({ project, onPreview, index = 0 }) {
+export default function ProjectCard({ project, onPreview, index = 0, collection = false }) {
   const location = useLocation();
   const collectionUrl =
     location.pathname === '/projects' ? `${location.pathname}${location.search}` : '/projects';
   return (
-    <article className="work-card enter" style={{ '--delay': `${Math.min(index, 5) * 65}ms` }}>
+    <article
+      className={`work-card enter ${collection ? 'collection-card' : ''}`}
+      style={{ '--delay': `${Math.min(index, 5) * 65}ms` }}
+    >
       <div className="work-card-media">
         <Link
           to={`/projects/${project.id}`}
           state={{ collectionUrl }}
           aria-label={`View ${project.title}`}
         >
-          <ProjectArtwork project={project} />
+          <ProjectArtwork project={project} cover={collection} />
         </Link>
         {onPreview && (
           <button
@@ -34,6 +38,9 @@ export default function ProjectCard({ project, onPreview, index = 0 }) {
       </div>
       <div className="work-card-body">
         <div className="card-category">
+          {collection && (
+            <span className="project-number">{String(index + 1).padStart(2, '0')}</span>
+          )}
           <span>{categoryLabels[project.category]}</span>
           {project.badge && <span className="badge">{project.badge}</span>}
         </div>
@@ -43,6 +50,7 @@ export default function ProjectCard({ project, onPreview, index = 0 }) {
             <ArrowUpRight size={22} />
           </Link>
         </h2>
+        {collection && <p className="project-focus">{projectFocus[project.id]}</p>}
         <p>{project.shortDescription}</p>
         <div className="card-bottom">
           <div className="tags">

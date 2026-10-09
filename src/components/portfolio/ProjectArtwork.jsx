@@ -2,16 +2,19 @@ import BrandSpark from './BrandSpark.jsx';
 import { Activity, Camera, Check, Cpu, Fingerprint, Heart, MapPin, Sparkles } from 'lucide-react';
 
 // Illustrative project concepts, not screenshots or measured results.
-export default function ProjectArtwork({ project, large = false }) {
+export default function ProjectArtwork({ project, large = false, cover = false }) {
+  const useCover = cover && Boolean(project.coverImage);
   if (project.image)
     return (
-      <div className={`project-art real-art ${large ? 'art-large' : ''}`}>
+      <div
+        className={`project-art real-art ${useCover ? 'cover-art' : ''} ${large ? 'art-large' : ''}`}
+      >
         <img
-          src={project.image}
-          alt={project.imageAlt || project.title}
+          src={useCover ? project.coverImage : project.image}
+          alt={(useCover ? project.coverImageAlt : project.imageAlt) || project.title}
           loading="lazy"
-          width={project.imageWidth}
-          height={project.imageHeight}
+          width={useCover ? project.coverImageWidth : project.imageWidth}
+          height={useCover ? project.coverImageHeight : project.imageHeight}
           style={{ objectPosition: project.imagePosition || 'center' }}
         />
       </div>
