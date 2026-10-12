@@ -37,10 +37,10 @@ test('technology filtering matches exact stacks, persists, and composes with oth
   await expect(page.getByRole('heading', { name: 'No projects found' })).toBeVisible();
   await page.getByRole('button', { name: 'Reset filters' }).click();
   await expect(technology).toHaveValue('');
-  await expect(page.locator('.work-card')).toHaveCount(11);
+  await expect(page.locator('.work-card')).toHaveCount(12);
   await expect(page.getByRole('combobox', { name: 'Sort projects' })).toHaveValue('name');
   await technology.selectOption('React');
-  await expect(page.locator('.work-card')).toHaveCount(7);
+  await expect(page.locator('.work-card')).toHaveCount(8);
   await expect(page.locator('.work-card h2')).not.toContainText(['Eventure']);
 });
 

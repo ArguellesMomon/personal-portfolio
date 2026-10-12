@@ -469,7 +469,7 @@ main:focus {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 78% center;
+  object-position: 50% 12%;
   transform: scale(1.01);
 }
 .portrait-frame::after {
@@ -1813,7 +1813,7 @@ main:focus {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 79% center;
+  object-position: 50% 12%;
 }
 .about-photo > span {
   position: absolute;
@@ -2656,7 +2656,7 @@ main:focus {
   }
   .note-degree {
     right: -6px;
-    top: 26px;
+    top: -12px;
     padding: 10px 12px;
     font-size: 10px;
   }

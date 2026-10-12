@@ -6,7 +6,7 @@ test('live demos and layout survive reload, details, and filter resets', async (
   await page.getByRole('button', { name: 'List view', exact: true }).click();
   await page.getByRole('checkbox', { name: /Live demos only/ }).check();
   await page.getByRole('combobox', { name: 'Sort projects' }).selectOption('name');
-  await expect(page.locator('.work-card')).toHaveCount(7);
+  await expect(page.locator('.work-card')).toHaveCount(8);
   await expect(page.locator('.work-card h2').filter({ hasText: 'Node-RED' })).toHaveCount(0);
   await page.reload();
   await expect(page.locator('.project-results')).toHaveClass(/list-view/);
@@ -19,7 +19,7 @@ test('live demos and layout survive reload, details, and filter resets', async (
   await expect(page.getByRole('checkbox', { name: /Live demos only/ })).toBeChecked();
   await page.getByRole('searchbox').fill('not-a-project');
   await page.getByRole('button', { name: 'Reset filters' }).click();
-  await expect(page.locator('.work-card')).toHaveCount(11);
+  await expect(page.locator('.work-card')).toHaveCount(12);
   await expect(page.locator('.project-results')).toHaveClass(/list-view/);
   await expect(page.getByRole('combobox', { name: 'Sort projects' })).toHaveValue('name');
   await expect(page.getByRole('checkbox', { name: /Live demos only/ })).not.toBeChecked();

@@ -83,18 +83,19 @@
     "imageAlt": "Momento photobooth welcome screen with photo capture and gallery actions",
     "featured": false,
     "imageSource": "https://momento-booth.vercel.app",
-    "imageSourceType": "deployment"
+    "imageSourceType": "deployment",
+    "imageCapturedAt": "2026-10-12"
   },
   {
     "id": "wellbot",
     "title": "MedTech Mate",
     "category": "Web App",
-    "shortDescription": "A medical internship companion with shift planning, exam tracking, clinical notes, wellness check-ins, and Pip, an AI study companion.",
-    "techStack": ["React", "Vite", "Supabase"],
-    "role": "Sole developer — designed and built the app, including Pip, the wellness chatbot.",
-    "problem": "Medical interns and students deal with a workload that leaves little room to check in on their own wellbeing, and most wellness apps aren't built around their specific schedule or stress points. MedTech Mate gives them a low-effort way to check in through Pip, a chatbot companion, rather than another thing to actively maintain.",
-    "approach": "Built with React and Vite, with Supabase for authentication and data. The app organizes rotation shifts, department exams, clinical notes, and wellness tracking. Pip provides a conversational companion for medical interns and students.",
-    "challenges": "",
+    "shortDescription": "A personal MedTech internship workspace for rotations, procedure quotas, shifts, exams, notes, documents, wellness, and Chami, an AI study companion.",
+    "techStack": ["React", "Vite", "Supabase", "Groq"],
+    "role": "Sole developer — designed and built the internship workspace and Chami study-chat integration.",
+    "problem": "Medical technology interns have to track clinical rotations, procedure targets, shifts, exams, and reference materials while caring for their own wellbeing. A connected workspace keeps the practical details and everyday encouragement together.",
+    "approach": "Built a React workspace with a desktop sidebar and mobile bottom navigation. Supabase stores account-scoped rotations, procedure logs, quotas, schedules, notes, and documents. Shared progress rules reconcile manual and logged procedure totals without double-counting. Week/month calendars and multi-date entry support shifts and exams, while user-scoped search links directly to saved material. Chami answers study questions through a server-authenticated Groq endpoint; light, dark, and system themes carry through shared accessible dialogs.",
+    "challenges": "Keeping quota calculations consistent across the dashboard and logbook, handling local calendar dates correctly, protecting account-specific search and settings, and keeping chat and forms usable when a phone keyboard opens.",
     "outcome": "",
     "links": {
       "github": "https://github.com/ArguellesMomon/MedTech-Internship-App",
@@ -107,7 +108,34 @@
     "imageSource": "https://medtechmate.vercel.app/landing",
     "imageSourceType": "deployment",
     "featured": true,
-    "imageCapturedAt": "2026-10-08"
+    "imageCapturedAt": "2026-10-12",
+    "demoNote": "The public landing page uses labeled illustrative sample data. The internship workspace and Chami chat require an account."
+  },
+  {
+    "id": "daymargin",
+    "title": "Daymargin",
+    "category": "Web App",
+    "badge": "Latest build",
+    "featured": false,
+    "shortDescription": "A mobile-first daily organizer for notes, tasks, schedules, expenses, and Finn, an animated AI companion, with cloud saving and offline record queues.",
+    "techStack": ["React", "Vite", "Neon Auth", "Neon Postgres", "IndexedDB", "Groq", "PWA"],
+    "role": "Personal project — daily organizer, offline persistence, account integration, and Finn chat.",
+    "problem": "Daily plans, thoughts, and spending often live in separate apps. Daymargin brings them into one organizer designed around Philippine peso amounts and Asia/Manila dates.",
+    "approach": "Built a React PWA with Today, Calendar, Library, and Finn views. Notes, tasks, events, reminders, and expenses share one record model. IndexedDB keeps account-scoped records and drafts available offline; queued changes sync through authenticated Neon Postgres endpoints with version checks and explicit conflict resolution. Finn combines an animated dog companion with Groq-backed conversation, links to allowed source records, and proposed changes that require confirmation. The interface supports persistent themes and reduced-motion preferences.",
+    "challenges": "Preserving local records and unfinished drafts across reloads, reconnecting queued edits without overwriting newer cloud data, and keeping Finn chat responsive while limiting access to the records a user allows.",
+    "outcome": "",
+    "links": {
+      "github": "https://github.com/ArguellesMomon/DayMargin",
+      "live": "https://daymargin.vercel.app"
+    },
+    "image": "/projects/daymargin.jpg",
+    "imageWidth": 1440,
+    "imageHeight": 1000,
+    "imageAlt": "Daymargin public welcome page with its daily organizer illustration, Philippine peso expense, and Finn dog companion",
+    "imageSource": "https://daymargin.vercel.app/welcome",
+    "imageSourceType": "deployment",
+    "imageCapturedAt": "2026-10-12",
+    "demoNote": "The screenshot shows the public welcome page. Cloud saving and Finn chat use an account; scheduled background reminder delivery is still in progress."
   },
   {
     "id": "pinoy-recipe-finder",
@@ -166,7 +194,7 @@
     "imageSource": "https://c4a-hub.vercel.app",
     "imageSourceType": "deployment",
     "challenges": "Keeping student discovery and officer administration connected while making calendar navigation, event dialogs, and management tables usable on small screens.",
-    "imageCapturedAt": "2026-10-09"
+    "imageCapturedAt": "2026-10-12"
   },
   {
     "id": "eventure",

@@ -90,7 +90,13 @@ export default function Home() {
               +
             </span>
             <div className="portrait-frame">
-              <img src="/hero-portrait.jpg" alt="Richmond Arguelles" fetchpriority="high" />
+              <img
+                src="/profile-portrait.png"
+                alt="Richmond Arguelles"
+                width={1086}
+                height={1448}
+                fetchpriority="high"
+              />
               <div className="portrait-label">
                 <span className="live-dot" /> A curious mind. A builder at heart.
               </div>

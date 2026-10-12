@@ -3,6 +3,7 @@ import { mkdir, writeFile } from 'node:fs/promises';
 const owner = 'ArguellesMomon';
 const headers = { 'User-Agent': 'Portfolio-Project-Review', Accept: 'application/vnd.github+json' };
 const wanted = [
+  'DayMargin',
   'Pickleball-Locator-App',
   'pinoy-recipe-finder',
   'study-spot-ph',

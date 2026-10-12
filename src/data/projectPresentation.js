@@ -3,6 +3,7 @@ export const projectFocus = {
   aedescapella: 'From a sound signal to an operator’s decision.',
   pickletayo: 'Finding a court should be the easy part.',
   wellbot: 'A little structure for a demanding internship.',
+  daymargin: 'A little room for the details of a day.',
   photobooth: 'Little moments, kept. Even without a connection.',
   'pinoy-recipe-finder': 'A familiar dish, one search away.',
   'study-spot-ph': 'Making room for focused work.',
@@ -18,7 +19,7 @@ const stackGroups = [
     'Interface',
     ['React', 'React Native', 'Expo', 'Vite', 'TypeScript', 'Tailwind CSS', 'Recharts', 'Leaflet'],
   ],
-  ['Data & persistence', ['Supabase', 'IndexedDB', 'AsyncStorage']],
+  ['Data & persistence', ['Supabase', 'Neon Auth', 'Neon Postgres', 'IndexedDB', 'AsyncStorage']],
   [
     'Device & intelligence',
     [
@@ -31,6 +32,7 @@ const stackGroups = [
       'Data Science',
     ],
   ],
+  ['AI service', ['Groq']],
   ['Delivery', ['PWA']],
 ];
 

@@ -47,7 +47,13 @@ export default function AboutPage() {
       </PageHeading>
       <section className="about-intro">
         <div className="about-photo">
-          <img src="/hero-portrait.jpg" alt="Richmond Arguelles" loading="lazy" />
+          <img
+            src="/profile-portrait.png"
+            alt="Richmond Arguelles"
+            width={1086}
+            height={1448}
+            loading="lazy"
+          />
           <span>Richmond Arguelles / Software Developer</span>
         </div>
         <div className="about-intro-copy">

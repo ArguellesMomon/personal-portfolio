@@ -3,6 +3,7 @@ import { mkdir, writeFile } from 'node:fs/promises';
 
 // Capture public project interfaces; this does not sign in or request device permissions.
 const targets = [
+  { id: 'daymargin', url: 'https://daymargin.vercel.app' },
   { id: 'pickletayo', url: 'https://pickletayo.vercel.app' },
   { id: 'pinoy-recipe-finder', url: 'https://pinoy-recipe-finder-blue.vercel.app' },
   { id: 'study-spot-ph', url: 'https://midterm-project-eta-sable.vercel.app' },

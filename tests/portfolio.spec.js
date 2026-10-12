@@ -5,20 +5,20 @@ test('project library filters, search, sorting, URL state, and empty recovery', 
   page,
 }) => {
   await page.goto('/projects');
-  await expect(page.locator('.work-card')).toHaveCount(11);
+  await expect(page.locator('.work-card')).toHaveCount(12);
   await page.getByRole('button', { name: 'Mobile apps' }).click();
   await expect(page.locator('.work-card')).toHaveCount(2);
   await expect(page).toHaveURL(/category=Mobile/);
   await page.reload();
   await expect(page.locator('.work-card')).toHaveCount(2);
   await page.getByRole('button', { name: 'All projects' }).click();
-  await page.getByRole('searchbox').fill('Pip');
+  await page.getByRole('searchbox').fill('Chami');
   await expect(page.locator('.work-card')).toHaveCount(1);
   await expect(page.locator('.work-card h2')).toHaveText('MedTech Mate');
   await page.getByRole('searchbox').fill('no-such-project');
   await expect(page.getByRole('heading', { name: 'No projects found' })).toBeVisible();
   await page.getByRole('button', { name: 'Reset filters' }).click();
-  await expect(page.locator('.work-card')).toHaveCount(11);
+  await expect(page.locator('.work-card')).toHaveCount(12);
   await page.getByRole('combobox', { name: 'Sort projects' }).selectOption('name');
   await expect(page.locator('.work-card h2').first()).toHaveText('AedesCapella');
   await expect(page.locator('.work-card h2').last()).toHaveText('Travel Diary App');
@@ -177,6 +177,7 @@ test('responsive pages have no horizontal overflow or runtime errors', async ({
       '/projects/pinoy-recipe-finder',
       '/projects/study-spot-ph',
       '/projects/c4a-dashboard',
+      '/projects/daymargin',
       '/projects/travel-diary',
     ]) {
       await page.goto(route);
