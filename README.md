@@ -15,14 +15,14 @@ Use `npm.cmd` or `npx.cmd` in Windows PowerShell if script execution is restrict
 
 ## Pages
 
-- `/`: introduction and three featured projects, with direct project and contact links.
+- `/`: introduction, background and capabilities, three featured projects, two certificate highlights, and direct contact links. A portrait composition, section reveals, and hover effects add depth; the homepage motion control persists the visitor’s choice and respects system reduced motion. Continuous hero effects pause offscreen and in hidden tabs.
 - `/projects`: thirteen projects with search, category, technology, and live-demo filters. Filters persist in the URL and when returning from a case study.
 - `/projects/:id`: purpose, implementation, technical focus, contribution, technologies, and available demo/source links. Screenshots support enlargement and actual-size viewing. Previews and account requirements are labeled.
 - `/about`: background, education, and demonstrated technical skills.
 - `/achievements`: eighteen certificates and academic records with search, category filters, original documents, downloads, and a keyboard-accessible viewer.
 - `/contact`: public email/social links and a contact form with validation, draft recovery, delivery feedback, and an email-app fallback.
 
-The interface uses direct navigation and project links. It has no rotating project showcase, intermediate quick-view dialogs, decorative motion, or layout-switching controls. Keyboard focus, skip navigation, mobile menus, accessible dialogs, reduced-motion preferences, and theme persistence are supported.
+The interface uses direct navigation and project links. Homepage summaries lead to full project, about, certificate, and contact pages. Certificate highlights link to their original documents. Keyboard focus, skip navigation, mobile menus, accessible dialogs, reduced-motion preferences, and theme persistence are supported.
 
 ## Content
 
