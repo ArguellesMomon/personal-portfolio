@@ -1,19 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
-import {
-  ArrowUpRight,
-  Github,
-  Linkedin,
-  LoaderCircle,
-  Mail,
-  Send,
-  CheckCircle2,
-  Trash2,
-} from 'lucide-react';
+import { ArrowUpRight, LoaderCircle, Mail, Send, CheckCircle2, Trash2 } from 'lucide-react';
 import profile from '../data/profile.js';
 import { PageHeading } from '../components/portfolio/SiteLayout.jsx';
 const draftKey = 'portfolio-contact-draft';
 const emptyDraft = { name: '', email: '', topic: 'Collaboration', message: '' };
-const topics = ['Internship opportunity', 'Collaboration', 'Project enquiry', 'Just saying hello'];
+const topics = ['Internship opportunity', 'Collaboration', 'Project enquiry', 'General enquiry'];
 function restoreDraft() {
   try {
     const saved = JSON.parse(sessionStorage.getItem(draftKey));
@@ -130,22 +121,27 @@ export default function ContactPage() {
   };
   return (
     <main id="main-content" tabIndex={-1} className="container page-content contact-page">
-      <PageHeading eyebrow="LET’S MAKE SOMETHING GOOD" title="Start a conversation">
-        An internship, a collaboration, or a problem worth solving. I’d love to hear what you’re
-        working on.
+      <PageHeading title="Contact">
+        Open to internships and software development opportunities.
       </PageHeading>
       <div className="contact-layout">
-        <section className="contact-primary">
-          <div className="availability">
-            <span className="live-dot" /> Open to internship opportunities
+        <aside className="contact-links">
+          <h2>Contact details</h2>
+          <a className="contact-email" href={`mailto:${profile.email}`}>
+            {profile.email}
+          </a>
+          <p>Philippines · Asia/Manila</p>
+          <div className="inline-links">
+            <a className="text-link" href={profile.github} target="_blank" rel="noreferrer">
+              GitHub <ArrowUpRight size={16} />
+            </a>
+            <a className="text-link" href={profile.linkedin} target="_blank" rel="noreferrer">
+              LinkedIn <ArrowUpRight size={16} />
+            </a>
           </div>
-          <h2>
-            A simple hello<span className="accent">.</span>
-          </h2>
-          <p>
-            Tell me a little about yourself and what you have in mind. Your message goes straight to
-            my inbox.
-          </p>
+        </aside>
+        <section className="contact-primary">
+          <h2>Send a message</h2>
           <form
             className="contact-form"
             onSubmit={sendMessage}
@@ -163,7 +159,7 @@ export default function ContactPage() {
                     value={draft.name}
                     onChange={(event) => updateDraft('name', event.target.value)}
                     autoComplete="name"
-                    placeholder="How should I address you?"
+                    placeholder="Your full name"
                     required
                     minLength={2}
                     maxLength={100}
@@ -185,7 +181,7 @@ export default function ContactPage() {
                 </label>
               </div>
               <label htmlFor="contact-topic">
-                What’s this about?
+                Topic
                 <select
                   id="contact-topic"
                   name="topic"
@@ -195,7 +191,7 @@ export default function ContactPage() {
                   <option>Internship opportunity</option>
                   <option>Collaboration</option>
                   <option>Project enquiry</option>
-                  <option>Just saying hello</option>
+                  <option>General enquiry</option>
                 </select>
               </label>
               <label htmlFor="contact-message">
@@ -206,7 +202,7 @@ export default function ContactPage() {
                   value={draft.message}
                   onChange={(event) => updateDraft('message', event.target.value)}
                   rows={6}
-                  placeholder="Share a little about the opportunity, idea, or project…"
+                  placeholder="Describe the role, project, or question."
                   required
                   minLength={20}
                   maxLength={5000}
@@ -229,8 +225,7 @@ export default function ContactPage() {
                 </div>
               )}
               <p className="form-privacy">
-                Your name, email, and message are sent to Richmond through FormSubmit. All fields
-                are required.
+                Your name, email, and message are delivered via FormSubmit. All fields are required.
               </p>
               <button className="button" type="submit">
                 {status === 'sending' ? (
@@ -257,58 +252,6 @@ export default function ContactPage() {
             )}
           </form>
         </section>
-        <aside className="contact-links">
-          <span className="eyebrow">ELSEWHERE ON THE INTERNET</span>
-          <a className="contact-link-card" href={profile.github} target="_blank" rel="noreferrer">
-            <span className="contact-link-icon">
-              <Github size={25} />
-            </span>
-            <div>
-              <h3>GitHub</h3>
-              <p>Code, projects, and experiments.</p>
-              <span>@ArguellesMomon</span>
-            </div>
-            <ArrowUpRight size={21} />
-          </a>
-          {profile.linkedin && (
-            <a
-              className="contact-link-card"
-              href={profile.linkedin}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <span className="contact-link-icon">
-                <Linkedin size={25} />
-              </span>
-              <div>
-                <h3>LinkedIn</h3>
-                <p>Let’s connect professionally.</p>
-              </div>
-              <ArrowUpRight size={21} />
-            </a>
-          )}
-          {profile.email && (
-            <a className="contact-link-card" href={`mailto:${profile.email}`}>
-              <span className="contact-link-icon">
-                <Mail size={25} />
-              </span>
-              <div>
-                <h3>Email</h3>
-                <p>{profile.email}</p>
-              </div>
-              <ArrowUpRight size={21} />
-            </a>
-          )}
-          <div className="contact-note">
-            <span className="eyebrow">A GOOD FIT</span>
-            <h3>Useful ideas. Thoughtful people.</h3>
-            <p>
-              I enjoy projects with a clear purpose and teams that care about both how a product
-              works and how it feels.
-            </p>
-            <span className="location-note">Philippines · Asia/Manila</span>
-          </div>
-        </aside>
       </div>
     </main>
   );

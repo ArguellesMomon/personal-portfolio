@@ -1,27 +1,11 @@
-// Editorial labels describe the work; they are not claims about measured results.
-export const projectFocus = {
-  aedescapella: 'From a sound signal to an operator’s decision.',
-  pickletayo: 'Finding a court should be the easy part.',
-  wellbot: 'A little structure for a demanding internship.',
-  daymargin: 'A little room for the details of a day.',
-  photobooth: 'Little moments, kept. Even without a connection.',
-  'pinoy-recipe-finder': 'A familiar dish, one search away.',
-  'study-spot-ph': 'Making room for focused work.',
-  'c4a-dashboard': 'Campus activity, with the context attached.',
-  eventure: 'A clearer path from discovery to booking.',
-  iris: 'Testing the moments a recognition system can miss.',
-  'king-ace-trading': 'Looking ahead through historical sales.',
-  'travel-diary': 'A place for the details of a journey.',
-};
-
 const stackGroups = [
   [
     'Interface',
     ['React', 'React Native', 'Expo', 'Vite', 'TypeScript', 'Tailwind CSS', 'Recharts', 'Leaflet'],
   ],
-  ['Data & persistence', ['Supabase', 'Neon Auth', 'Neon Postgres', 'IndexedDB', 'AsyncStorage']],
+  ['Data & storage', ['Supabase', 'Neon Auth', 'Neon Postgres', 'IndexedDB', 'AsyncStorage']],
   [
-    'Device & intelligence',
+    'Embedded & data',
     [
       'ESP32-S3',
       'TinyML',
@@ -33,7 +17,7 @@ const stackGroups = [
     ],
   ],
   ['AI service', ['Groq']],
-  ['Delivery', ['PWA']],
+  ['Platform', ['PWA']],
 ];
 
 export function groupStack(technologies) {

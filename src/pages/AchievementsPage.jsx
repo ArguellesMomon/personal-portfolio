@@ -1,13 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowDown, ArrowRight, ArrowUpRight, Download, Maximize2, Search, X } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Download, Maximize2, Search, X } from 'lucide-react';
 import certificates from '../data/certificates.js';
+import { PageHeading } from '../components/portfolio/SiteLayout.jsx';
 import '../styles/learning.css';
 
 const categories = [
-  ['all', 'Everything'],
+  ['all', 'All'],
   ['certification', 'Courses'],
-  ['seminar', 'Rooms I showed up in'],
+  ['seminar', 'Seminars'],
   ['milestone', 'Recognition'],
 ];
 const types = {
@@ -25,8 +26,6 @@ const formatDate = (date) => dateFormat.format(new Date(date + 'T00:00:00Z'));
 const published = certificates
   .filter((item) => item.title.trim())
   .sort((a, b) => b.date.localeCompare(a.date));
-const recognition = published.find((item) => item.id === 'applications-development');
-const foundations = published.find((item) => item.id === 'elements-ai');
 const relatedWork = {
   'pytorch-intro': ['AedesCapella', '/projects/aedescapella'],
   'elements-ai': ['AedesCapella', '/projects/aedescapella'],
@@ -107,7 +106,7 @@ function CertificateViewer({ item, onClose, opener }) {
     >
       <header className="archive-viewer-header">
         <div>
-          <span className="archive-label">THE ORIGINAL RECORD</span>
+          <span className="archive-label">Certificate</span>
           <h2 id="archive-viewer-title">{item.title}</h2>
         </div>
         <button autoFocus className="icon-button" onClick={onClose} aria-label="Close certificate">
@@ -159,82 +158,11 @@ export default function AchievementsPage() {
   return (
     <main id="main-content" tabIndex={-1} className="learning-page">
       <div className="container">
-        <header className="learning-masthead">
-          <span>RICHMOND ARGUELLES / LEARNING ARCHIVE</span>
-          <span>
-            VOL. 01 <span aria-hidden="true">—</span> 2025–2026
-          </span>
-        </header>
-        <section className="learning-opening" aria-labelledby="learning-title">
-          <div className="learning-opening-copy">
-            <span className="archive-label">CERTIFICATES & ACHIEVEMENTS</span>
-            <h1 id="learning-title">
-              An unfinished
-              <br />
-              <em>education.</em>
-            </h1>
-            <p>
-              The courses I finish. The rooms I show up in.
-              <br className="archive-desktop-break" /> The things I bring back to my work.
-            </p>
-            <a className="archive-browse" href="#learning-index">
-              Explore the archive <ArrowDown size={18} aria-hidden="true" />
-            </a>
-            <span className="learning-margin-note">There’s always another page.</span>
-          </div>
-          <div className="learning-paper-scene">
-            <span className="archive-scene-index" aria-hidden="true">
-              A FEW PAGES FROM THE JOURNEY
-            </span>
-            <button
-              className="archive-paper archive-paper-back"
-              onClick={(event) => openViewer(foundations, event.currentTarget)}
-              aria-label="Explore Elements of AI certificate"
-            >
-              <img
-                src={foundations.preview}
-                alt="Elements of AI course certificate"
-                width="1000"
-                height="750"
-              />
-              <span>01 / A foundation in AI</span>
-            </button>
-            <button
-              className="archive-paper archive-paper-front"
-              onClick={(event) => openViewer(recognition, event.currentTarget)}
-              aria-label="Explore academic recognition certificate"
-            >
-              <img
-                src={recognition.preview}
-                alt="Academic recognition for Applications Development and Emerging Technologies"
-                width="1000"
-                height="750"
-              />
-              <span>
-                02 / A moment of recognition <ArrowUpRight size={17} aria-hidden="true" />
-              </span>
-            </button>
-          </div>
-        </section>
-        <div className="learning-colophon">
-          <p>
-            <span className="archive-colophon-dot" aria-hidden="true" />
-            Computer Science <span className="colophon-divider">/</span> De La Salle Lipa
-          </p>
-          <span>{published.length} records, and counting</span>
-        </div>
-        <section id="learning-index" className="learning-index" aria-labelledby="archive-title">
-          <div className="archive-section-heading">
-            <div>
-              <span className="archive-label">THE COLLECTION</span>
-              <h2 id="archive-title">Follow the curiosity.</h2>
-            </div>
-            <p>
-              Choose a record to look inside.
-              <br />
-              Every entry has its original document.
-            </p>
-          </div>
+        <PageHeading title="Certificates & achievements">
+          Courses, seminars, and academic recognition, with original documents available to view or
+          download.
+        </PageHeading>
+        <section id="learning-index" className="learning-index" aria-label="Certificate collection">
           <div className="archive-controls">
             <div className="archive-categories" role="group" aria-label="Certificate category">
               {categories.map(([value, label]) => (
@@ -257,7 +185,7 @@ export default function AchievementsPage() {
               <input
                 type="search"
                 aria-label="Search certificates"
-                placeholder="Find something…"
+                placeholder="Search certificates…"
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
               />
@@ -278,10 +206,10 @@ export default function AchievementsPage() {
                     key={year}
                     aria-labelledby={'archive-year-' + year}
                   >
-                    <h3 id={'archive-year-' + year}>
+                    <h2 id={'archive-year-' + year}>
                       {year}
                       <span>{records.length} records</span>
-                    </h3>
+                    </h2>
                     <ol>
                       {records.map((item) => (
                         <li key={item.id} className="learning-entry">
@@ -293,9 +221,6 @@ export default function AchievementsPage() {
                             aria-label={'Explore certificate: ' + item.title}
                             onClick={(event) => selectEntry(item, event)}
                           >
-                            <span className="archive-entry-number" aria-hidden="true">
-                              {String(published.indexOf(item) + 1).padStart(2, '0')}
-                            </span>
                             <span className="archive-entry-copy">
                               <span className="archive-entry-title">{item.title}</span>
                               <span className="archive-entry-meta">
@@ -317,8 +242,8 @@ export default function AchievementsPage() {
               })}
               {!visible.length && (
                 <div className="archive-empty">
-                  <h3>No records on this page.</h3>
-                  <p>Try another search, or start fresh.</p>
+                  <h3>No certificates found</h3>
+                  <p>Try another search or clear the filters.</p>
                   <button
                     className="text-link"
                     onClick={() => {
@@ -334,7 +259,7 @@ export default function AchievementsPage() {
             {selected && (
               <aside className="archive-inspector" aria-label="Selected certificate">
                 <div className="archive-inspector-heading">
-                  <span className="archive-label">ON THE READING DESK</span>
+                  <span className="archive-label">Selected certificate</span>
                   <span>
                     {String(published.indexOf(selected) + 1).padStart(2, '0')} / {published.length}
                   </span>
@@ -352,12 +277,12 @@ export default function AchievementsPage() {
                     height="750"
                   />
                   <span>
-                    <Maximize2 size={14} aria-hidden="true" /> A closer look
+                    <Maximize2 size={14} aria-hidden="true" /> Enlarge preview
                   </span>
                 </button>
                 <div className="archive-inspector-copy" key={selected.id}>
                   <span className="archive-label">{types[selected.type]}</span>
-                  <h3>{selected.title}</h3>
+                  <h2>{selected.title}</h2>
                   <p className="archive-inspector-issuer">
                     {selected.issuer}
                     <time dateTime={selected.date}>{formatDate(selected.date)}</time>
@@ -384,25 +309,6 @@ export default function AchievementsPage() {
               </aside>
             )}
           </div>
-        </section>
-        <section className="learning-next" aria-labelledby="learning-next-title">
-          <span className="archive-label">THE NEXT CHAPTER</span>
-          <h2 id="learning-next-title">
-            Good learning
-            <br />
-            finds its way <em>into the work.</em>
-          </h2>
-          <div>
-            <p>
-              The certificates are one part of the story.
-              <br />
-              The projects are where the ideas meet practice.
-            </p>
-            <Link to="/projects">
-              See what I’m building <ArrowUpRight size={23} aria-hidden="true" />
-            </Link>
-          </div>
-          <span className="learning-endnote">Curiosity continues.</span>
         </section>
       </div>
       {viewing && (

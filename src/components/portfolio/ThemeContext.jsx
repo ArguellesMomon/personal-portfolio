@@ -23,7 +23,7 @@ export function ThemeProvider({ children }) {
     document.documentElement.dataset.theme = theme;
     document
       .querySelector('meta[name="theme-color"]')
-      ?.setAttribute('content', theme === 'dark' ? '#141d18' : '#f7f5ee');
+      ?.setAttribute('content', theme === 'dark' ? '#141b18' : '#fafbf9');
     try {
       localStorage.setItem('portfolio-theme', preference);
     } catch {

@@ -6,9 +6,7 @@ async function fillMessage(page) {
   await page
     .getByRole('textbox', { name: 'Email address', exact: true })
     .fill('visitor@example.com');
-  await page
-    .getByRole('combobox', { name: 'What’s this about?' })
-    .selectOption('Internship opportunity');
+  await page.getByRole('combobox', { name: 'Topic' }).selectOption('Internship opportunity');
   await page
     .getByRole('textbox', { name: 'Your message', exact: true })
     .fill('I would like to discuss an internship opportunity with you.');

@@ -53,18 +53,20 @@ test('archive filters, search recovery, and mobile entry navigation work', async
     .getByRole('navigation', { name: 'Main navigation' })
     .getByRole('link', { name: 'Certificates' })
     .click();
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('An unfinished');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText(
+    'Certificates & achievements',
+  );
   const categories = page.getByRole('group', { name: 'Certificate category' });
   await categories.getByRole('button', { name: /Courses/ }).click();
   await expect(page.locator('.learning-entry')).toHaveCount(8);
   await page.getByRole('searchbox', { name: 'Search certificates' }).fill('PyTorch');
   await expect(page.locator('.learning-entry')).toHaveCount(1);
   await page.getByRole('searchbox').fill('no match');
-  await expect(page.getByText('No records on this page.')).toBeVisible();
+  await expect(page.getByText('No certificates found')).toBeVisible();
   await page.getByRole('button', { name: 'Clear search & filters' }).click();
   await expect(page.locator('.learning-entry')).toHaveCount(18);
   await expect(page.getByRole('searchbox')).toHaveValue('');
-  await categories.getByRole('button', { name: /Rooms I showed up in/ }).click();
+  await categories.getByRole('button', { name: /Seminars/ }).click();
   await expect(page.locator('.learning-entry')).toHaveCount(9);
   await categories.getByRole('button', { name: /Recognition/ }).click();
   await expect(page.locator('.learning-entry')).toHaveCount(1);
@@ -83,7 +85,12 @@ for (const theme of ['light', 'dark']) {
       await page.addInitScript((value) => localStorage.setItem('portfolio-theme', value), theme);
       await page.setViewportSize({ width: 390, height: 844 });
       await page.goto('/achievements');
-      const opener = page.getByRole('button', { name: 'Explore academic recognition certificate' });
+      const opener = page.getByRole('button', {
+        name:
+          'Explore certificate: ' +
+          certificates.find((item) => item.id === 'applications-development').title,
+        exact: true,
+      });
       await opener.click();
       const dialog = page.getByRole('dialog');
       await expect(dialog).toBeVisible();

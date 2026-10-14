@@ -1,74 +1,49 @@
-import { ArrowRight, ArrowUpRight, Eye, Github } from 'lucide-react';
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import ProjectArtwork from './ProjectArtwork.jsx';
-import { projectFocus } from '../../data/projectPresentation.js';
+
 export const categoryLabels = {
   'Embedded/Hardware': 'Embedded systems',
-  'Web App': 'Web development',
+  'Web App': 'Web apps',
   Mobile: 'Mobile apps',
   'ML/Data': 'Data & ML',
 };
-export default function ProjectCard({ project, onPreview, index = 0, collection = false }) {
+
+export default function ProjectCard({ project, headingLevel: Heading = 'h2' }) {
   const location = useLocation();
   const collectionUrl =
     location.pathname === '/projects' ? `${location.pathname}${location.search}` : '/projects';
+  const destination = `/projects/${project.id}`;
   return (
-    <article
-      className={`work-card enter ${collection ? 'collection-card' : ''}`}
-      style={{ '--delay': `${Math.min(index, 5) * 65}ms` }}
-    >
-      <div className="work-card-media">
-        <Link
-          to={`/projects/${project.id}`}
-          state={{ collectionUrl }}
-          aria-label={`View ${project.title}`}
-        >
-          <ProjectArtwork project={project} cover={collection} />
-        </Link>
-        {onPreview && (
-          <button
-            className="preview-button"
-            onClick={() => onPreview(project)}
-            aria-label={`Quick view ${project.title}`}
-          >
-            <Eye size={16} />
-            <span>Quick view</span>
-          </button>
-        )}
-      </div>
+    <article className="work-card">
+      <Link
+        className="work-card-media"
+        to={destination}
+        state={{ collectionUrl }}
+        aria-label={`View ${project.title}`}
+      >
+        <ProjectArtwork project={project} cover />
+      </Link>
       <div className="work-card-body">
         <div className="card-category">
-          {collection && (
-            <span className="project-number">{String(index + 1).padStart(2, '0')}</span>
-          )}
           <span>{categoryLabels[project.category]}</span>
           {project.badge && <span className="badge">{project.badge}</span>}
         </div>
-        <h2>
-          <Link to={`/projects/${project.id}`} state={{ collectionUrl }}>
+        <Heading>
+          <Link to={destination} state={{ collectionUrl }}>
             {project.title}
-            <ArrowUpRight size={22} />
           </Link>
-        </h2>
-        {collection && <p className="project-focus">{projectFocus[project.id]}</p>}
+        </Heading>
         <p>{project.shortDescription}</p>
-        <div className="card-bottom">
-          <div className="tags">
-            {project.techStack.slice(0, 3).map((tech) => (
-              <span key={tech}>{tech}</span>
-            ))}
-            {project.techStack.length > 3 && <span>+{project.techStack.length - 3}</span>}
-          </div>
-          <Link
-            className="card-arrow"
-            to={`/projects/${project.id}`}
-            state={{ collectionUrl }}
-            aria-label={`Read ${project.title} project details`}
-          >
-            <ArrowRight size={18} />
+        <ul className="tags" aria-label={`${project.title} technologies`}>
+          {project.techStack.slice(0, 3).map((tech) => (
+            <li key={tech}>{tech}</li>
+          ))}
+        </ul>
+        <div className="card-actions">
+          <Link className="text-link" to={destination} state={{ collectionUrl }}>
+            View project <ArrowRight size={16} />
           </Link>
-        </div>
-        <div className="card-external-links">
           {project.links.live && (
             <a
               className="text-link"
@@ -77,18 +52,7 @@ export default function ProjectCard({ project, onPreview, index = 0, collection 
               rel="noreferrer"
               aria-label={`Open ${project.title} live demo`}
             >
-              Live demo <ArrowUpRight size={14} />
-            </a>
-          )}
-          {project.links.github && (
-            <a
-              className="text-link"
-              href={project.links.github}
-              target="_blank"
-              rel="noreferrer"
-              aria-label={`View ${project.title} source code`}
-            >
-              <Github size={14} /> Source
+              Live demo <ArrowUpRight size={15} />
             </a>
           )}
         </div>

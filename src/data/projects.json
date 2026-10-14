@@ -5,7 +5,7 @@
     "title": "AedesCapella",
     "category": "Embedded/Hardware",
     "badge": "Thesis Project",
-    "shortDescription": "An acoustic mosquito detection thesis with an authenticated operator dashboard for sensor health, sound candidates, relay history, and device comparisons.",
+    "shortDescription": "An acoustic mosquito detection thesis with on-device machine learning and an operator dashboard for sensor status, candidate activity, and relay logs.",
     "techStack": [
       "ESP32-S3",
       "TinyML",
@@ -16,11 +16,10 @@
       "Recharts",
       "Leaflet"
     ],
-    "role": "Thesis project — designed and built the acoustic sensing pipeline, on-device model, and monitoring dashboard.",
-    "problem": "Mosquito-borne diseases like dengue are hard to catch early with manual monitoring, and most household mosquito control only reacts after someone notices a problem. AedesCapella tries to catch the mosquito by sound before it's noticed, and respond automatically instead of waiting on a person.",
-    "approach": "An ESP32-S3 listens for wingbeat signatures and runs an on-device 1D-CNN. The React dashboard brings together sensor health, candidate activity, recorded relay history, device mapping, and side-by-side placement comparisons. Supabase Auth and protected database views control access; realtime updates are backed by polling and reconnect recovery. Charts use Philippine time, while model candidates remain distinct from biologically confirmed mosquitoes and relay records from verified fluid delivery.",
-    "challenges": "Keeping device health separate from dashboard connection health, recovering missed live updates, and presenting missing coordinates, stale sensors, and incomplete activity honestly.",
-    "outcome": "",
+    "role": "Thesis development: acoustic sensing, on-device model, and monitoring dashboard.",
+    "problem": "Manual mosquito monitoring provides limited visibility into activity around a device. AedesCapella explores acoustic sensing and automatic response as an alternative.",
+    "approach": "An ESP32-S3 processes wingbeat audio with an on-device 1D-CNN. A React dashboard displays sensor health, activity charts, mapped devices, and placement comparisons. Supabase provides operator authentication and live data, with polling to recover missed updates.",
+    "challenges": "Separating device health from dashboard connectivity and showing stale or incomplete data clearly. Model candidates are not biologically confirmed detections, and recorded relay commands do not verify fluid delivery.",
     "links": {
       "github": "https://github.com/ArguellesMomon/AedesCapella-Dashboard",
       "live": "https://aedescapella.vercel.app"
@@ -33,7 +32,7 @@
     "imageSource": "https://aedescapella.vercel.app",
     "imageSourceType": "live",
     "imageCapturedAt": "2026-10-09",
-    "demoNote": "The live dashboard requires an authorized operator account. Its public sign-in screen is shown here.",
+    "demoNote": "An operator account is required. The screenshot shows the public sign-in page.",
     "coverImage": "/projects/aedescapella.png",
     "coverImageAlt": "AedesCapella public sign-in screen for authorized dashboard operators",
     "coverImageWidth": 1920,
@@ -46,10 +45,12 @@
     "title": "Pickle Batangas",
     "featured": true,
     "category": "Web App",
-    "shortDescription": "A pickleball court finder for Batangas with map exploration, opening hours, saved courts, and game planning.",
+    "shortDescription": "A Batangas pickleball court finder with map search, venue comparisons, saved shortlists, and shareable game plans.",
     "techStack": ["React", "Vite", "Leaflet", "PWA"],
-    "problem": "Planning a game means comparing scattered court details, checking hours, and coordinating with friends. A local directory puts those decisions in one place.",
-    "approach": "A React app combines a searchable court directory with a Leaflet map. Players can review court details, save favorites, and plan a game with a shareable invitation.",
+    "problem": "Players need to compare court locations, hours, and amenities before organizing a game.",
+    "approach": "Built a React PWA with a searchable directory and synchronized Leaflet map. Players can compare three venues, share saved shortlists, and create game invitations with calendar export. Plans validate future times against court opening hours; favorites persist across browser tabs.",
+    "challenges": "Keeping map and directory filters consistent, validating opening windows, and making search and map controls usable on phones.",
+    "demoNote": "Invitations do not reserve courts or take payment. Venue illustrations are labeled; maps and live weather require a connection.",
     "links": {
       "github": "https://github.com/ArguellesMomon/Pickleball-Locator-App",
       "live": "https://pickletayo.vercel.app"
@@ -60,19 +61,18 @@
     "imageHeight": 1000,
     "imageSource": "https://pickletayo.vercel.app",
     "imageSourceType": "deployment",
-    "imageCapturedAt": "2026-10-08"
+    "imageCapturedAt": "2026-10-14"
   },
   {
     "id": "photobooth",
-    "title": "Momento — Portable Photobooth",
+    "title": "Momento",
     "category": "Web App",
-    "shortDescription": "A phone-first, installable PWA with a retro photobooth aesthetic, offline photo capture and editing, and local-first storage.",
+    "shortDescription": "An installable photobooth app for single photos and photo strips, with editing, export, and a gallery stored on the device.",
     "techStack": ["React", "Vite", "PWA", "IndexedDB"],
-    "role": "Sole developer — designed and built the app, including the offline capture and editing flow.",
-    "problem": "Most quick photobooth-style tools assume a constant connection and don't work well as an installable, offline-first app. This project is a phone-first PWA that works the same with or without a connection, with a deliberately retro aesthetic.",
-    "approach": "Built as a React + Vite PWA, installable to a phone's home screen, with photo capture, in-app editing, and local-first storage so captured photos aren't lost to a dropped connection.",
-    "challenges": "",
-    "outcome": "",
+    "role": "Sole developer: interface, camera flow, photo editor, and offline storage.",
+    "problem": "A portable photobooth needs to capture, edit, and keep photos without depending on a continuous connection.",
+    "approach": "Built a React PWA with timed capture, per-shot retakes, filters, stickers, and frames. Photos can be downloaded or shared, while IndexedDB keeps a local gallery with pinning, sorting, and deletion controls.",
+    "challenges": "Managing camera permissions and device storage while preserving the capture and editing flow offline.",
     "links": {
       "github": "https://github.com/ArguellesMomon/Photobooth-app",
       "live": "https://momento-booth.vercel.app"
@@ -84,19 +84,18 @@
     "featured": false,
     "imageSource": "https://momento-booth.vercel.app",
     "imageSourceType": "deployment",
-    "imageCapturedAt": "2026-10-12"
+    "imageCapturedAt": "2026-10-14"
   },
   {
     "id": "wellbot",
     "title": "MedTech Mate",
     "category": "Web App",
-    "shortDescription": "A personal MedTech internship workspace for rotations, procedure quotas, shifts, exams, notes, documents, wellness, and Chami, an AI study companion.",
+    "shortDescription": "A MedTech internship workspace for rotations, procedure quotas, shifts, notes, and documents, with Chami as an AI study companion.",
     "techStack": ["React", "Vite", "Supabase", "Groq"],
-    "role": "Sole developer — designed and built the internship workspace and Chami study-chat integration.",
-    "problem": "Medical technology interns have to track clinical rotations, procedure targets, shifts, exams, and reference materials while caring for their own wellbeing. A connected workspace keeps the practical details and everyday encouragement together.",
-    "approach": "Built a React workspace with a desktop sidebar and mobile bottom navigation. Supabase stores account-scoped rotations, procedure logs, quotas, schedules, notes, and documents. Shared progress rules reconcile manual and logged procedure totals without double-counting. Week/month calendars and multi-date entry support shifts and exams, while user-scoped search links directly to saved material. Chami answers study questions through a server-authenticated Groq endpoint; light, dark, and system themes carry through shared accessible dialogs.",
-    "challenges": "Keeping quota calculations consistent across the dashboard and logbook, handling local calendar dates correctly, protecting account-specific search and settings, and keeping chat and forms usable when a phone keyboard opens.",
-    "outcome": "",
+    "role": "Sole developer: internship workspace, data integration, and Chami study chat.",
+    "problem": "Medical technology interns need one place to track clinical requirements, schedules, and reference materials.",
+    "approach": "Built a responsive React workspace backed by account-scoped Supabase records. Procedure logs update quota progress, calendars organize shifts and exams, and search connects saved notes and documents. Chami answers study questions through an authenticated Groq endpoint.",
+    "challenges": "Preventing duplicate quota counts, handling local calendar dates, and keeping account data and mobile forms consistent across the app.",
     "links": {
       "github": "https://github.com/ArguellesMomon/MedTech-Internship-App",
       "live": "https://medtechmate.vercel.app/landing"
@@ -108,22 +107,20 @@
     "imageSource": "https://medtechmate.vercel.app/landing",
     "imageSourceType": "deployment",
     "featured": true,
-    "imageCapturedAt": "2026-10-12",
-    "demoNote": "The public landing page uses labeled illustrative sample data. The internship workspace and Chami chat require an account."
+    "imageCapturedAt": "2026-10-14",
+    "demoNote": "The screenshot shows illustrative sample data on the public landing page. The workspace and study chat require an account."
   },
   {
     "id": "daymargin",
     "title": "Daymargin",
     "category": "Web App",
-    "badge": "Latest build",
     "featured": false,
-    "shortDescription": "A mobile-first daily organizer for notes, tasks, schedules, expenses, and Finn, an animated AI companion, with cloud saving and offline record queues.",
+    "shortDescription": "A daily organizer for notes, tasks, schedules, and expenses, with cloud sync, offline access, and Finn as an AI companion.",
     "techStack": ["React", "Vite", "Neon Auth", "Neon Postgres", "IndexedDB", "Groq", "PWA"],
-    "role": "Personal project — daily organizer, offline persistence, account integration, and Finn chat.",
-    "problem": "Daily plans, thoughts, and spending often live in separate apps. Daymargin brings them into one organizer designed around Philippine peso amounts and Asia/Manila dates.",
-    "approach": "Built a React PWA with Today, Calendar, Library, and Finn views. Notes, tasks, events, reminders, and expenses share one record model. IndexedDB keeps account-scoped records and drafts available offline; queued changes sync through authenticated Neon Postgres endpoints with version checks and explicit conflict resolution. Finn combines an animated dog companion with Groq-backed conversation, links to allowed source records, and proposed changes that require confirmation. The interface supports persistent themes and reduced-motion preferences.",
-    "challenges": "Preserving local records and unfinished drafts across reloads, reconnecting queued edits without overwriting newer cloud data, and keeping Finn chat responsive while limiting access to the records a user allows.",
-    "outcome": "",
+    "role": "Personal project: application development, offline sync, account integration, and Finn chat.",
+    "problem": "Daily plans, notes, and spending often live in separate apps. Daymargin combines them with Philippine peso amounts and Manila calendar dates.",
+    "approach": "Built a React PWA with Today, Calendar, Library, and Finn views. IndexedDB preserves account records and drafts offline; authenticated Neon Postgres endpoints synchronize queued edits with conflict review. Finn can reference permitted records and propose changes for the user to confirm.",
+    "challenges": "Keeping drafts safe across reloads, resolving offline edits without overwriting newer cloud records, and limiting AI access to permitted data.",
     "links": {
       "github": "https://github.com/ArguellesMomon/DayMargin",
       "live": "https://daymargin.vercel.app"
@@ -134,17 +131,42 @@
     "imageAlt": "Daymargin public welcome page with its daily organizer illustration, Philippine peso expense, and Finn dog companion",
     "imageSource": "https://daymargin.vercel.app/welcome",
     "imageSourceType": "deployment",
-    "imageCapturedAt": "2026-10-12",
-    "demoNote": "The screenshot shows the public welcome page. Cloud saving and Finn chat use an account; scheduled background reminder delivery is still in progress."
+    "imageCapturedAt": "2026-10-14",
+    "demoNote": "The screenshot shows the public welcome page. Cloud sync and Finn chat use an account. Scheduled background reminders are still in progress."
+  },
+  {
+    "id": "pocket-quest",
+    "title": "Pocket Quest",
+    "category": "Web App",
+    "badge": "Latest build",
+    "featured": false,
+    "shortDescription": "A task journal that turns completed work into coins and XP, with animated companions, a customizable habitat, focus timers, and AI chat.",
+    "techStack": ["React", "Vite", "Neon Auth", "Neon Postgres", "Groq", "PWA"],
+    "role": "Personal project: task and reward system, companion interactions, cloud saves, and chat.",
+    "problem": "Task lists can make small daily achievements easy to overlook. Pocket Quest connects completed tasks with visible progress and companion care.",
+    "approach": "Built a React PWA with recurring tasks, effort-based rewards, six animated companions, and a habitat shop. Neon Auth and Postgres save account progress. An ordered offline queue retries changes safely and rolls back rejected actions. Groq provides separate conversations and memory for each companion.",
+    "challenges": "Keeping rewards and purchases consistent during rapid or offline actions, preserving queued saves across reloads, and supporting accessible phone layouts and reduced motion.",
+    "links": {
+      "github": "https://github.com/ArguellesMomon/Pocket_Quest_App",
+      "live": "https://pocketquest-lime.vercel.app"
+    },
+    "image": "/projects/pocket-quest.png",
+    "imageWidth": 1440,
+    "imageHeight": 1000,
+    "imageAlt": "Pocket Quest repository preview of the dark Today screen with Finn, a pixel habitat, task rewards, and focus controls",
+    "imageSource": "https://github.com/ArguellesMomon/Pocket_Quest_App/blob/main/docs/previews/today-play-desktop.png",
+    "imageSourceType": "repository",
+    "imageCapturedAt": "2026-10-14",
+    "demoNote": "The repository preview uses sample progress. An account is required. Cached progress works offline; companion chat requires a connection."
   },
   {
     "id": "pinoy-recipe-finder",
     "title": "Pinoy Recipe Finder",
     "category": "Web App",
-    "shortDescription": "A Filipino recipe collection with dish search, category filters, ingredients, cooking steps, and saved favorites.",
+    "shortDescription": "A Filipino recipe library with dish search, category filters, cooking instructions, and saved favorites.",
     "techStack": ["React", "Vite", "Tailwind CSS"],
-    "problem": "Finding a familiar Filipino dish is easier when recipes can be searched by name and filtered by category, with ingredients and steps kept together.",
-    "approach": "Built a React recipe library with searchable dish data, category filters, recipe details, and a dedicated favorites view. Photos help visitors choose what to cook.",
+    "problem": "Home cooks need ingredients and cooking steps in one place, with a quick way to find familiar Filipino dishes.",
+    "approach": "Built a React recipe library with photo cards, name and category search, detailed ingredients and instructions, and a dedicated favorites view.",
     "links": {
       "github": "https://github.com/ArguellesMomon/pinoy-recipe-finder",
       "live": "https://pinoy-recipe-finder-blue.vercel.app"
@@ -154,16 +176,17 @@
     "imageWidth": 1440,
     "imageHeight": 1000,
     "imageSource": "https://pinoy-recipe-finder-blue.vercel.app",
-    "imageSourceType": "deployment"
+    "imageSourceType": "deployment",
+    "imageCapturedAt": "2026-10-14"
   },
   {
     "id": "study-spot-ph",
     "title": "StudySpot PH",
     "category": "Web App",
-    "shortDescription": "A study-space discovery and demo booking app for cafés, coworking spaces, and study hubs across the Philippines.",
+    "shortDescription": "A Philippine study-space directory with location and price filters, venue details, and a demo booking flow.",
     "techStack": ["React", "Vite", "Tailwind CSS"],
-    "problem": "Students and remote workers need to compare study spaces by location, price, and amenities before choosing where to focus.",
-    "approach": "A searchable directory presents space photos, descriptions, prices, and amenities. Sorting and filters narrow the choices, while detail pages and booking views connect discovery with a demo reservation flow.",
+    "problem": "Students and remote workers need to compare study spaces by location, price, and amenities.",
+    "approach": "Built a React directory for cafés, coworking spaces, and study hubs. Search, sorting, and price filters narrow the options; detail pages connect venue information to a demo reservation flow.",
     "links": {
       "github": "https://github.com/ArguellesMomon/study-spot-ph",
       "live": "https://midterm-project-eta-sable.vercel.app"
@@ -173,16 +196,17 @@
     "imageWidth": 1440,
     "imageHeight": 1000,
     "imageSource": "https://midterm-project-eta-sable.vercel.app",
-    "imageSourceType": "deployment"
+    "imageSourceType": "deployment",
+    "imageCapturedAt": "2026-10-14"
   },
   {
     "id": "c4a-dashboard",
     "title": "C4A Fieldnotes",
     "category": "Web App",
-    "shortDescription": "A campus planner for De La Salle Lipa C4A students, with live events, saved bookmarks, a mobile calendar, and an officer workspace.",
+    "shortDescription": "A campus event planner for De La Salle Lipa C4A students, with live updates, saved events, a calendar, and officer administration.",
     "techStack": ["React", "Vite", "Supabase", "Tailwind CSS"],
-    "problem": "Seminars, workshops, and deadlines are easier to follow when students can view them in one calendar instead of searching across announcements.",
-    "approach": "Built a responsive React planner with Overview, All events, Calendar, My saved, and Section guide views. Students can search and filter events, save bookmarks on their device, and export calendar entries in Philippine time. Supabase provides authentication, realtime updates, and event storage; officers manage events through a searchable workspace with editing, duplication, and delete confirmation. A compact weekly planner expands into a full calendar on phones, and light/dark themes follow the visitor’s preference.",
+    "problem": "Students need a shared view of section events and deadlines. Officers need a controlled way to keep those details current.",
+    "approach": "Built a React planner with searchable events, local bookmarks, and Manila-time calendar exports. Supabase manages authentication, event storage, and live updates. Officers can create, edit, duplicate, and delete events through a responsive administration workspace.",
     "links": {
       "github": "https://github.com/ArguellesMomon/C4A-Dashboard",
       "live": "https://c4a-hub.vercel.app"
@@ -193,82 +217,69 @@
     "imageHeight": 1000,
     "imageSource": "https://c4a-hub.vercel.app",
     "imageSourceType": "deployment",
-    "challenges": "Keeping student discovery and officer administration connected while making calendar navigation, event dialogs, and management tables usable on small screens.",
-    "imageCapturedAt": "2026-10-12"
+    "challenges": "Keeping student views current after officer edits and making calendars, event dialogs, and management tables work on small screens.",
+    "imageCapturedAt": "2026-10-14"
   },
   {
     "id": "eventure",
     "title": "Eventure",
     "category": "Mobile",
-    "shortDescription": "A campus event booking app with multi-step form validation.",
+    "shortDescription": "A React Native campus event booking app with a step-by-step form and input validation.",
     "techStack": ["React Native", "Expo", "TypeScript"],
-    "role": "Sole developer — built the booking flow and form validation.",
-    "problem": "Booking a spot at a campus event usually means a generic form with no real validation or feedback. Eventure gives students a proper multi-step booking flow that checks their input as they go, instead of surfacing every error at the end.",
-    "approach": "Built with React Native and Expo in TypeScript, with a multi-step form that validates each step before letting the user continue.",
-    "challenges": "",
-    "outcome": "",
+    "role": "Sole developer: booking flow and form validation.",
+    "problem": "Students need clear feedback while entering event booking details, before reaching the final submission step.",
+    "approach": "Built a multi-step booking flow with React Native, Expo, and TypeScript. Each step validates its inputs before the user continues.",
     "links": {
       "github": "",
       "live": ""
     },
-    "image": null,
-    "imageAlt": "Screenshot of the Eventure event booking flow on mobile"
+    "image": null
   },
   {
     "id": "iris",
     "title": "IRIS",
     "category": "Embedded/Hardware",
     "badge": "Team Project",
-    "shortDescription": "A Raspberry Pi facial recognition security system, built as a team project.",
+    "shortDescription": "A Raspberry Pi facial recognition access-control project. My contribution focused on test cases and QA documentation.",
     "techStack": ["Raspberry Pi", "Facial Recognition"],
-    "role": "QA Tester — test case design and documentation",
-    "problem": "IRIS is a Raspberry Pi–based facial recognition system built to control physical access without relying on keys or badges — the kind of system that needs to be tested thoroughly before it's trusted with an actual security decision.",
-    "approach": "As QA, focused on the system's real-world behavior rather than its code — writing test cases against expected recognition scenarios (correct match, no match, poor lighting, multiple faces) and documenting results so the team could see where the system held up and where it didn't.",
-    "challenges": "",
-    "outcome": "",
+    "role": "QA tester: test case design and documentation.",
+    "problem": "Facial recognition access control must handle both expected matches and conditions where recognition can fail.",
+    "approach": "Designed test cases for correct matches, unknown faces, poor lighting, and multiple faces. Documented observed behavior and issues for the development team.",
     "links": {
       "github": "",
       "live": ""
     },
-    "image": null,
-    "imageAlt": "Screenshot of the IRIS facial recognition interface"
+    "image": null
   },
   {
     "id": "king-ace-trading",
-    "title": "King Ace Trading Capstone",
+    "title": "King Ace Trading",
     "category": "ML/Data",
     "badge": "Capstone Project",
-    "shortDescription": "A data science capstone using ML-based demand forecasting for a school supply distributor, including a formal defense presentation.",
+    "shortDescription": "A demand forecasting capstone using historical sales and linear regression for a school supply distributor.",
     "techStack": ["Linear Regression", "Data Science"],
-    "role": "",
-    "problem": "King Ace Trading, a school supply distributor, had to plan inventory without a clear read on future demand — over-ordering ties up capital, under-ordering means stockouts. This capstone builds a forecasting model to give them a data-backed starting point instead of a guess.",
-    "approach": "Used linear regression over the distributor's historical sales data to project future demand, then packaged the analysis and results into a formal defense presentation.",
-    "challenges": "",
-    "outcome": "",
+    "problem": "King Ace Trading needed a clearer basis for inventory planning, balancing excess stock against shortages.",
+    "approach": "Used linear regression on historical sales to estimate future demand. Presented the analysis, method, and forecasts in a formal capstone defense.",
     "links": {
       "github": "",
       "live": ""
     },
-    "image": null,
-    "imageAlt": "Chart from the King Ace Trading demand forecasting analysis"
+    "image": null
   },
   {
     "id": "travel-diary",
-    "title": "Travel Diary App",
+    "title": "Travel Diary",
     "category": "Mobile",
-    "shortDescription": "A mobile travel journal for saving memories with photos, locations, and personal notes.",
+    "shortDescription": "An Expo travel journal that saves photos, locations, and personal notes locally on the device.",
     "techStack": ["React Native", "Expo", "TypeScript", "AsyncStorage"],
-    "role": "Sole developer",
-    "problem": "Travel memories often end up scattered across a camera roll, maps, and notes. A journal brings the place and the story together.",
-    "approach": "Built with React Native and Expo. Entries combine photos from the camera or gallery with location details and notes, using AsyncStorage for local persistence.",
-    "challenges": "",
-    "outcome": "",
+    "role": "Sole developer: mobile interface and local entry storage.",
+    "problem": "Travel photos and notes often lose the context of where they were taken. A journal keeps the place and story together.",
+    "approach": "Built with React Native, Expo, and TypeScript. Entries combine camera or gallery photos, location details, and notes, with AsyncStorage for local persistence.",
     "links": {
       "github": "https://github.com/ArguellesMomon/travel-diary",
       "live": ""
     },
-    "image": null,
-    "imageAlt": "Screenshot of the Travel Diary app"
+    "image": null
   },
   {
     "id": "node-red-dashboard",
@@ -279,14 +290,11 @@
     "role": "Sole developer — built the flows and dashboard.",
     "problem": "",
     "approach": "Built using Node-RED's visual flow editor to wire together data sources and a dashboard without a traditional hand-coded backend.",
-    "challenges": "",
-    "outcome": "",
     "links": {
       "github": "",
       "live": ""
     },
     "image": null,
-    "imageAlt": "Screenshot of the Node-RED analytics dashboard",
     "archived": true
   }
 ]

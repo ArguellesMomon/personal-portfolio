@@ -1,22 +1,12 @@
-// Skills grouped by category. Edit this file to update the Skills section —
-// nothing here is hardcoded into the component.
-const skills = [
+export default [
   {
-    category: 'Languages & Frameworks',
-    items: ['React', 'Vite', 'JavaScript', 'TypeScript', 'React Native (Expo)'],
+    category: 'Web & mobile',
+    items: ['JavaScript', 'TypeScript', 'React', 'React Native', 'Expo', 'Vite', 'Tailwind CSS'],
   },
+  { category: 'Backend & storage', items: ['Supabase', 'Neon Postgres', 'Neon Auth', 'IndexedDB'] },
   {
-    category: 'Backend & Data',
-    items: ['Supabase', 'Firebase', 'Node-RED', 'Linear Regression', 'TinyML / 1D-CNN'],
+    category: 'Embedded & data',
+    items: ['ESP32-S3', 'Raspberry Pi', 'TinyML', '1D-CNN', 'Linear Regression'],
   },
-  {
-    category: 'Tools & Platforms',
-    items: ['Vercel', 'GitHub', 'Cisco Packet Tracer'],
-  },
-  {
-    category: 'Other',
-    items: ['UI/UX Design Sensibility', 'Mobile-First Responsive Design'],
-  },
+  { category: 'Tools & services', items: ['Git', 'GitHub', 'Vercel', 'Groq', 'Leaflet'] },
 ];
-
-export default skills;

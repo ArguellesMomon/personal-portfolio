@@ -1,61 +1,47 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
-test('project library filters, search, sorting, URL state, and empty recovery', async ({
-  page,
-}) => {
+test('project search, category filters, URL state, and empty recovery', async ({ page }) => {
   await page.goto('/projects');
-  await expect(page.locator('.work-card')).toHaveCount(12);
-  await page.getByRole('button', { name: 'Mobile apps' }).click();
+  await expect(page.locator('.work-card')).toHaveCount(13);
+  await page.getByRole('button', { name: 'Mobile apps', exact: true }).click();
   await expect(page.locator('.work-card')).toHaveCount(2);
   await expect(page).toHaveURL(/category=Mobile/);
   await page.reload();
   await expect(page.locator('.work-card')).toHaveCount(2);
-  await page.getByRole('button', { name: 'All projects' }).click();
+  await page.getByRole('button', { name: 'All projects', exact: true }).click();
   await page.getByRole('searchbox').fill('Chami');
-  await expect(page.locator('.work-card')).toHaveCount(1);
   await expect(page.locator('.work-card h2')).toHaveText('MedTech Mate');
   await page.getByRole('searchbox').fill('no-such-project');
   await expect(page.getByRole('heading', { name: 'No projects found' })).toBeVisible();
   await page.getByRole('button', { name: 'Reset filters' }).click();
-  await expect(page.locator('.work-card')).toHaveCount(12);
-  await page.getByRole('combobox', { name: 'Sort projects' }).selectOption('name');
-  await expect(page.locator('.work-card h2').first()).toHaveText('AedesCapella');
-  await expect(page.locator('.work-card h2').last()).toHaveText('Travel Diary App');
-  await page.getByRole('button', { name: 'List view', exact: true }).click();
-  await expect(page.locator('.project-results')).toHaveClass(/list-view/);
-  await page.getByRole('button', { name: 'Grid view', exact: true }).click();
-  await expect(page.locator('.project-results')).not.toHaveClass(/list-view/);
-  await page.getByRole('button', { name: 'Mobile apps' }).click();
-  await page.getByRole('heading', { name: 'Eventure', exact: true }).getByRole('link').click();
-  await page.getByRole('link', { name: 'Project collection' }).click();
+  await expect(page.locator('.work-card')).toHaveCount(13);
+  await page.getByRole('button', { name: 'Mobile apps', exact: true }).click();
+  await page.getByRole('heading', { name: 'Travel Diary', exact: true }).getByRole('link').click();
+  await page.getByRole('link', { name: 'Back to projects', exact: true }).click();
   await expect(page).toHaveURL(/category=Mobile/);
   await expect(page.locator('.work-card')).toHaveCount(2);
 });
 
-test('quick view traps focus, closes with Escape, restores focus, and opens details', async ({
-  page,
-}) => {
-  await page.goto('/projects');
-  const opener = page.getByRole('button', { name: 'Quick view AedesCapella', exact: true });
-  await opener.focus();
-  await opener.click();
-  const dialog = page.getByRole('dialog');
-  await expect(dialog).toBeVisible();
-  await expect(page.getByRole('button', { name: 'Close project preview' })).toBeFocused();
-  await page.keyboard.press('Shift+Tab');
-  await expect(dialog.getByRole('link', { name: 'Explore the project' })).toBeFocused();
-  await page.keyboard.press('Tab');
-  await expect(page.getByRole('button', { name: 'Close project preview' })).toBeFocused();
-  await page.keyboard.press('Escape');
-  await expect(dialog).not.toBeVisible();
-  await expect(opener).toBeFocused();
-  await opener.click();
-  await dialog.getByRole('link', { name: 'Explore the project' }).click();
-  await expect(page).toHaveURL('/projects/aedescapella');
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('AedesCapella');
-  expect(await page.evaluate(() => document.body.style.overflow)).not.toBe('hidden');
-  await expect(page).toHaveTitle('AedesCapella — Richmond Arguelles');
+test('project cards lead directly to details, demo, and source', async ({ page }) => {
+  await page.goto('/projects?q=Pocket');
+  const card = page.locator('.work-card');
+  await expect(card).toHaveCount(1);
+  await expect(card.getByRole('link', { name: 'Open Pocket Quest live demo' })).toHaveAttribute(
+    'href',
+    'https://pocketquest-lime.vercel.app',
+  );
+  await card.getByRole('link', { name: 'View project', exact: true }).click();
+  await expect(page).toHaveURL('/projects/pocket-quest');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Pocket Quest');
+  await expect(page.locator('main')).toBeFocused();
+  await expect(page.getByRole('link', { name: 'View source' })).toHaveAttribute(
+    'href',
+    'https://github.com/ArguellesMomon/Pocket_Quest_App',
+  );
+  await expect(page).toHaveTitle('Pocket Quest — Richmond Arguelles');
+  await page.getByRole('link', { name: 'Back to projects', exact: true }).click();
+  await expect(page.getByRole('searchbox')).toHaveValue('Pocket');
 });
 
 test('themes persist, follow system settings, and respect reduced motion', async ({ page }) => {
@@ -104,7 +90,7 @@ test('mobile navigation, active links, route focus, contact links, and 404 recov
   ).toHaveCount(1);
   await expect(page.getByRole('link', { name: /résumé/i })).toHaveCount(0);
   await page.goto('/projects/invalid');
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('off the beaten path');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Page not found');
   await page.getByRole('link', { name: 'Back home', exact: true }).click();
   await expect(page).toHaveURL('/');
 });
@@ -112,7 +98,7 @@ test('mobile navigation, active links, route focus, contact links, and 404 recov
 test('share action copies a direct project URL', async ({ page, context }) => {
   await context.grantPermissions(['clipboard-read', 'clipboard-write']);
   await page.goto('/projects/wellbot');
-  await page.getByRole('button', { name: 'Share project' }).click();
+  await page.getByRole('button', { name: 'Copy project link' }).click();
   await expect(page.getByRole('status')).toHaveText('Link copied');
   expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(
     'http://127.0.0.1:5173/projects/wellbot',
@@ -141,9 +127,8 @@ for (const theme of ['light', 'dark']) {
         `${route}: ${JSON.stringify(results.violations.map(({ id, nodes }) => ({ id, targets: nodes.map((node) => node.target) })))}`,
       ).toEqual([]);
     }
-    await page.goto('/projects');
-    await page.getByRole('button', { name: 'Quick view AedesCapella', exact: true }).focus();
-    await page.getByRole('button', { name: 'Quick view AedesCapella', exact: true }).click();
+    await page.goto('/projects/aedescapella');
+    await page.getByRole('button', { name: 'Enlarge screenshot' }).click();
     const results = await new AxeBuilder({ page })
       .withTags(['wcag2a', 'wcag2aa', 'wcag21aa'])
       .analyze();
@@ -178,6 +163,7 @@ test('responsive pages have no horizontal overflow or runtime errors', async ({
       '/projects/study-spot-ph',
       '/projects/c4a-dashboard',
       '/projects/daymargin',
+      '/projects/pocket-quest',
       '/projects/travel-diary',
     ]) {
       await page.goto(route);

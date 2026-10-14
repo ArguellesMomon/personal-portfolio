@@ -1,27 +1,22 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
-test('live demos and layout survive reload, details, and filter resets', async ({ page }) => {
+test('live-demo filtering survives reload, details, and filter resets', async ({ page }) => {
   await page.goto('/projects');
-  await page.getByRole('button', { name: 'List view', exact: true }).click();
   await page.getByRole('checkbox', { name: /Live demos only/ }).check();
-  await page.getByRole('combobox', { name: 'Sort projects' }).selectOption('name');
-  await expect(page.locator('.work-card')).toHaveCount(8);
+  await expect(page.locator('.work-card')).toHaveCount(9);
   await expect(page.locator('.work-card h2').filter({ hasText: 'Node-RED' })).toHaveCount(0);
   await page.reload();
-  await expect(page.locator('.project-results')).toHaveClass(/list-view/);
   await expect(page.getByRole('checkbox', { name: /Live demos only/ })).toBeChecked();
   await page
     .getByRole('heading', { name: 'C4A Fieldnotes', exact: true })
     .getByRole('link')
     .click();
-  await page.getByRole('link', { name: 'Project collection' }).click();
+  await page.getByRole('link', { name: 'Back to projects', exact: true }).click();
   await expect(page.getByRole('checkbox', { name: /Live demos only/ })).toBeChecked();
   await page.getByRole('searchbox').fill('not-a-project');
   await page.getByRole('button', { name: 'Reset filters' }).click();
-  await expect(page.locator('.work-card')).toHaveCount(12);
-  await expect(page.locator('.project-results')).toHaveClass(/list-view/);
-  await expect(page.getByRole('combobox', { name: 'Sort projects' })).toHaveValue('name');
+  await expect(page.locator('.work-card')).toHaveCount(13);
   await expect(page.getByRole('checkbox', { name: /Live demos only/ })).not.toBeChecked();
   await page.goto('/projects/node-red-dashboard');
   await expect(page.getByRole('heading', { level: 1 })).toContainText('Node-RED');
@@ -143,7 +138,7 @@ test('contact still submits when browser storage is unavailable', async ({ page 
   await expect(page.getByRole('status')).toContainText('Message submitted');
 });
 
-test('mobile brand marks use SVG and every featured project stays visible', async ({ browser }) => {
+test('mobile visitors can open every featured project directly', async ({ browser }) => {
   const context = await browser.newContext({
     viewport: { width: 390, height: 844 },
     isMobile: true,
@@ -152,11 +147,17 @@ test('mobile brand marks use SVG and every featured project stays visible', asyn
   });
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:5173/');
-  await expect(page.locator('.wave-hand svg')).toHaveCount(1);
-  await expect(page.locator('.spark-one svg')).toHaveCount(1);
-  expect(await page.locator('.hero-section').innerText()).not.toContain('✳');
+  await expect(page.getByRole('link', { name: 'View projects', exact: true })).toHaveAttribute(
+    'href',
+    '/projects',
+  );
   await expect(page.locator('.selected-work .work-card')).toHaveCount(3);
-  for (const card of await page.locator('.selected-work .work-card').all())
+  for (const card of await page.locator('.selected-work .work-card').all()) {
     await expect(card).toBeVisible();
+    await expect(card.getByRole('link', { name: 'View project', exact: true })).toHaveAttribute(
+      'href',
+      /^\/projects\//,
+    );
+  }
   await context.close();
 });

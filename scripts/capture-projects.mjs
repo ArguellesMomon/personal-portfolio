@@ -1,16 +1,22 @@
 import { chromium } from '@playwright/test';
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 
 // Capture public project interfaces; this does not sign in or request device permissions.
-const targets = [
-  { id: 'daymargin', url: 'https://daymargin.vercel.app' },
-  { id: 'pickletayo', url: 'https://pickletayo.vercel.app' },
-  { id: 'pinoy-recipe-finder', url: 'https://pinoy-recipe-finder-blue.vercel.app' },
-  { id: 'study-spot-ph', url: 'https://midterm-project-eta-sable.vercel.app' },
-  { id: 'c4a-dashboard', url: 'https://c4a-dashboard.vercel.app' },
-  { id: 'photobooth', url: 'https://photo-booth-two-iota.vercel.app' },
-  { id: 'wellbot', url: 'https://futurermt.vercel.app' },
-];
+const projects = JSON.parse(
+  await readFile(new URL('../src/data/projects.json', import.meta.url), 'utf8'),
+);
+// Use the reviewed source URL rather than stale aliases hard-coded in this script.
+// Repository previews stay intact; their public deployment is checked separately.
+const targets = projects
+  .filter((project) => project.image && project.links.live && project.imageSourceType !== 'live')
+  .map((project) => ({
+    id: project.id,
+    url: project.imageSourceType === 'repository' ? project.links.live : project.imageSource,
+    path:
+      project.imageSourceType === 'repository'
+        ? `.cache/project-review/${project.id}-public.jpg`
+        : `public${project.image}`,
+  }));
 await mkdir('public/projects', { recursive: true });
 await mkdir('.cache/project-review', { recursive: true });
 const channel =
@@ -33,6 +39,7 @@ try {
         waitUntil: 'domcontentloaded',
         timeout: 25000,
       });
+      if (!response?.ok()) throw new Error(`Deployment returned HTTP ${response?.status()}`);
       await page.locator('body').waitFor();
       await page.waitForFunction(() => document.body.innerText.trim().length > 40, null, {
         timeout: 10000,
@@ -51,7 +58,7 @@ try {
       if (target.id === 'c4a-dashboard') await page.waitForTimeout(15000);
       const text = await page.locator('body').innerText();
       await page.screenshot({
-        path: `public/projects/${target.id}.jpg`,
+        path: target.path,
         type: 'jpeg',
         quality: 90,
       });

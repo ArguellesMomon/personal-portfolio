@@ -6,9 +6,9 @@
     <title>Richmond Arguelles — Software Developer</title>
     <meta
       name="description"
-      content="Richmond Arguelles is a Computer Science student at De La Salle Lipa building thoughtful web, mobile, and embedded machine learning experiences."
+      content="Richmond Arguelles, Computer Science student at De La Salle Lipa. Web applications, mobile apps, and embedded machine learning projects."
     />
-    <meta name="theme-color" content="#f7f5ee" />
+    <meta name="theme-color" content="#fafbf9" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="alternate icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -16,7 +16,7 @@
     <meta property="og:title" content="Richmond Arguelles — Software Developer" />
     <meta
       property="og:description"
-      content="Built to work. Designed to feel right. Explore my projects across web, mobile, embedded systems, and data."
+      content="Web applications, mobile apps, and embedded machine learning projects by Richmond Arguelles."
     />
     <meta property="og:image" content="/og-card.png" />
     <meta property="og:image:width" content="1200" />
@@ -25,7 +25,7 @@
     <meta name="twitter:title" content="Richmond Arguelles — Software Developer" />
     <meta
       name="twitter:description"
-      content="Built to work. Designed to feel right. Web, mobile, embedded systems, and data."
+      content="Web applications, mobile apps, and embedded machine learning projects by Richmond Arguelles."
     />
     <meta name="twitter:image" content="/og-card.png" />
     <script>
@@ -40,26 +40,11 @@
               : 'light';
         document.documentElement.dataset.theme = theme;
         document.querySelector('meta[name="theme-color"]').content =
-          theme === 'dark' ? '#141d18' : '#f7f5ee';
+          theme === 'dark' ? '#141b18' : '#fafbf9';
       } catch (_) {
         document.documentElement.dataset.theme = matchMedia('(prefers-color-scheme: dark)').matches
           ? 'dark'
           : 'light';
-      }
-    </script>
-    <script>
-      // Keep a paused or reduced-motion visit still from the first paint.
-      try {
-        document.documentElement.dataset.motion =
-          localStorage.getItem('portfolio-motion') === 'paused' ||
-          matchMedia('(prefers-reduced-motion: reduce)').matches
-            ? 'reduced'
-            : 'full';
-      } catch (_) {
-        document.documentElement.dataset.motion = matchMedia('(prefers-reduced-motion: reduce)')
-          .matches
-          ? 'reduced'
-          : 'full';
       }
     </script>
   </head>
