@@ -298,7 +298,10 @@ export default function AchievementsPage() {
                           <ArrowUpRight size={17} aria-hidden="true" />
                         </a>
                       ) : (
-                        <Link to={relatedWork[selected.id][1]}>
+                        <Link
+                          to={relatedWork[selected.id][1]}
+                          state={{ returnTo: '/achievements' }}
+                        >
                           {relatedWork[selected.id][0]}
                           <ArrowUpRight size={17} aria-hidden="true" />
                         </Link>

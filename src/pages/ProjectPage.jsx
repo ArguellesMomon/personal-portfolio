@@ -12,9 +12,19 @@ import NotFoundPage from './NotFoundPage.jsx';
 export default function ProjectPage() {
   const { projectId } = useParams();
   const location = useLocation();
-  const collectionUrl = location.state?.collectionUrl?.startsWith('/projects?')
-    ? location.state.collectionUrl
-    : '/projects';
+  const sourceUrl = location.state?.returnTo ?? location.state?.collectionUrl;
+  const sourcePath = typeof sourceUrl === 'string' ? sourceUrl.split(/[?#]/)[0] : '';
+  const sourceLabels = {
+    '/': 'home',
+    '/projects': 'projects',
+    '/about': 'about',
+    '/achievements': 'certificates',
+    '/contact': 'contact',
+  };
+  const sourceLabel =
+    sourceLabels[sourcePath] ||
+    allProjects.find((item) => sourcePath === `/projects/${item.id}`)?.title;
+  const returnTo = sourceLabel ? sourceUrl : '/projects';
   const project = allProjects.find((item) => item.id === projectId);
   const [copyStatus, setCopyStatus] = useState('');
   const [screenshotOpen, setScreenshotOpen] = useState(false);
@@ -52,8 +62,8 @@ export default function ProjectPage() {
       tabIndex={-1}
       className="container page-content detail-page case-study-page"
     >
-      <Link className="text-link back-link" to={collectionUrl}>
-        <ArrowLeft size={16} /> Back to projects
+      <Link className="text-link back-link" to={returnTo} state={location.state?.returnState}>
+        <ArrowLeft size={16} /> Back to {sourceLabel || 'projects'}
       </Link>
       <header className="project-heading">
         <span className="eyebrow">
@@ -160,7 +170,14 @@ export default function ProjectPage() {
           ))}
         </div>
       </div>
-      <Link className="next-project" to={`/projects/${next.id}`} state={{ collectionUrl }}>
+      <Link
+        className="next-project"
+        to={`/projects/${next.id}`}
+        state={{
+          returnTo: `${location.pathname}${location.search}${location.hash}`,
+          returnState: location.state,
+        }}
+      >
         <div>
           <span className="eyebrow">Next project</span>
           <h2>{next.title}</h2>

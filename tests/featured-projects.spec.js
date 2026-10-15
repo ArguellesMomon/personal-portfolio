@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test('phone projects scroll horizontally with working buttons and project links', async ({
+test('phone projects stay compact with native scrolling and return to the homepage', async ({
   page,
 }) => {
   await page.setViewportSize({ width: 390, height: 844 });
@@ -9,24 +9,28 @@ test('phone projects scroll horizontally with working buttons and project links'
   const track = page.getByRole('region', { name: 'Featured projects', exact: true });
   await track.scrollIntoViewIfNeeded();
   const cards = track.locator('.work-card');
-  const previous = page.getByRole('button', { name: 'Previous featured project' });
-  const next = page.getByRole('button', { name: 'Next featured project' });
-  await expect(previous).toBeDisabled();
+  await expect(page.getByText('Swipe to explore', { exact: true })).toHaveCount(0);
+  await expect(page.getByRole('button', { name: /featured project/ })).toHaveCount(0);
+  await expect(cards.first().locator('.work-card-body > p')).toBeHidden();
   await expect(cards.first()).toBeInViewport();
-  expect((await cards.first().boundingBox()).height).toBeLessThan(500);
+  expect((await cards.first().boundingBox()).height).toBeLessThan(400);
   expect(await track.evaluate((el) => el.scrollWidth > el.clientWidth)).toBe(true);
+  await track.focus();
   for (let index = 1; index < 3; index++) {
-    await next.click();
-    await expect(page.locator('.featured-project-position')).toHaveText(`${index + 1} of 3`);
+    await page.keyboard.press('ArrowRight');
     await expect(cards.nth(index)).toBeInViewport({ ratio: 0.95 });
   }
-  await expect(next).toBeDisabled();
-  await previous.click();
-  await expect(page.locator('.featured-project-position')).toHaveText('2 of 3');
+  await page.keyboard.press('ArrowLeft');
+  await expect(cards.nth(1)).toBeInViewport({ ratio: 0.95 });
   const link = cards.nth(1).getByRole('link', { name: 'View project', exact: true });
   const href = await link.getAttribute('href');
   await link.click();
   await expect(page).toHaveURL(href);
+  await expect(page.locator('.project-heading > p')).toBeVisible();
+  await page.reload();
+  await page.getByRole('link', { name: 'Back to home', exact: true }).click();
+  await expect(page).toHaveURL('/#home-projects');
+  await expect(page.getByRole('heading', { name: 'Built from the ground up.' })).toBeInViewport();
 });
 
 test('swiping moves the native row while vertical page scrolling remains available', async ({
@@ -55,7 +59,6 @@ test('swiping moves the native row while vertical page scrolling remains availab
   }
   await session.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
   await expect.poll(() => track.evaluate((el) => el.scrollLeft)).toBeGreaterThan(100);
-  await expect(page.locator('.featured-project-position')).not.toHaveText('1 of 3');
   await page.locator('#home-certificates').scrollIntoViewIfNeeded();
   await expect(page.getByRole('heading', { name: 'The work behind the work.' })).toBeInViewport();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
@@ -69,15 +72,46 @@ test('keyboard navigation, phone widths, and desktop grid remain accessible', as
     const track = page.locator('#featured-projects');
     await track.focus();
     await page.keyboard.press('ArrowRight');
-    await expect(page.locator('.featured-project-position')).toHaveText('2 of 3');
+    await expect(track.locator('.work-card').nth(1)).toBeInViewport({ ratio: 0.95 });
     await page.keyboard.press('ArrowLeft');
-    await expect(page.locator('.featured-project-position')).toHaveText('1 of 3');
+    await expect(track.locator('.work-card').first()).toBeInViewport({ ratio: 0.95 });
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
       true,
     );
   }
   await page.setViewportSize({ width: 1440, height: 1000 });
-  await expect(page.locator('.featured-project-controls')).toBeHidden();
   await expect(page.locator('#featured-projects')).toHaveCSS('display', 'grid');
   await expect(page.locator('#featured-projects')).not.toHaveAttribute('tabindex');
+  await expect(page.locator('#featured-projects .work-card-body > p').first()).toBeVisible();
+});
+
+test('all homepage project links and next-project links preserve the return path', async ({
+  page,
+}) => {
+  await page.goto('/');
+  for (const selector of ['.work-card-media', 'h3 a', '.card-actions a:first-child']) {
+    await page.locator('#featured-projects .work-card').first().locator(selector).click();
+    await expect(page.getByRole('link', { name: 'Back to home', exact: true })).toHaveAttribute(
+      'href',
+      '/#home-projects',
+    );
+    await page.getByRole('link', { name: 'Back to home', exact: true }).click();
+    await expect(page).toHaveURL('/#home-projects');
+  }
+  await page.locator('#featured-projects .work-card h3 a').first().click();
+  const firstProject = page.url();
+  const firstTitle = await page.locator('h1').textContent();
+  await page.locator('.next-project').click();
+  await page.getByRole('link', { name: `Back to ${firstTitle}`, exact: true }).click();
+  await expect(page).toHaveURL(firstProject);
+  await page.getByRole('link', { name: 'Back to home', exact: true }).click();
+  await expect(page).toHaveURL('/#home-projects');
+  await page.goto('/projects/wellbot');
+  await expect(page.getByRole('link', { name: 'Back to projects', exact: true })).toHaveAttribute(
+    'href',
+    '/projects',
+  );
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/projects?q=Pocket');
+  await expect(page.locator('.work-card-body > p')).toBeVisible();
 });

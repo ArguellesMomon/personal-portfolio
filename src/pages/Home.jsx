@@ -236,6 +236,7 @@ export default function Home() {
             <Link
               className="home-capability"
               to={to}
+              state={{ returnTo: '/#home-about' }}
               key={title}
               data-reveal
               style={{ '--reveal-delay': `${index * 85}ms` }}

@@ -12,8 +12,10 @@ export const categoryLabels = {
 
 export default function ProjectCard({ project, headingLevel: Heading = 'h2' }) {
   const location = useLocation();
-  const collectionUrl =
-    location.pathname === '/projects' ? `${location.pathname}${location.search}` : '/projects';
+  const returnTo =
+    location.pathname === '/'
+      ? `/${location.search}#home-projects`
+      : `${location.pathname}${location.search}${location.hash}`;
   const destination = `/projects/${project.id}`;
   return (
     <DepthSurface className="work-card-depth">
@@ -21,7 +23,7 @@ export default function ProjectCard({ project, headingLevel: Heading = 'h2' }) {
         <Link
           className="work-card-media"
           to={destination}
-          state={{ collectionUrl }}
+          state={{ returnTo }}
           aria-label={`View ${project.title}`}
         >
           <ProjectArtwork project={project} cover />
@@ -32,7 +34,7 @@ export default function ProjectCard({ project, headingLevel: Heading = 'h2' }) {
             {project.badge && <span className="badge">{project.badge}</span>}
           </div>
           <Heading>
-            <Link to={destination} state={{ collectionUrl }}>
+            <Link to={destination} state={{ returnTo }}>
               {project.title}
             </Link>
           </Heading>
@@ -43,7 +45,7 @@ export default function ProjectCard({ project, headingLevel: Heading = 'h2' }) {
             ))}
           </ul>
           <div className="card-actions">
-            <Link className="text-link" to={destination} state={{ collectionUrl }}>
+            <Link className="text-link" to={destination} state={{ returnTo }}>
               View project <ArrowRight size={16} />
             </Link>
             {project.links.live && (
