@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
 import './styles/global.css';
 import './styles/depth.css';
+import './styles/backgrounds.css';
 
 // Browsers (mainly Chrome) try to restore the previous scroll position on a
 // manual reload. Opting out and forcing scroll-to-top makes reload always

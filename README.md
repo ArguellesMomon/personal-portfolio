@@ -2,6 +2,8 @@
 
 A React portfolio for web, mobile, and embedded systems work. The site uses self-hosted Inter typography, a restrained green palette, and light/dark/system themes.
 
+Static paper grain, fading drafting grids, and a small certificate-section hatch add texture to the background. Patterns adapt to each theme, stay behind content, and disappear in forced-colors and print modes. The grain is a small local SVG; no external assets or animation are needed.
+
 ## Run
 
 ```sh

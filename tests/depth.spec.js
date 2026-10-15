@@ -2,6 +2,10 @@ import { test, expect } from '@playwright/test';
 
 async function tilt(page, surface) {
   await surface.scrollIntoViewIfNeeded();
+  // Flush the scroll event before moving the pointer: scrolling intentionally resets tilt.
+  await page.evaluate(
+    () => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))),
+  );
   const box = await surface.boundingBox();
   await page.mouse.move(box.x + box.width * 0.75, box.y + box.height * 0.3);
   await expect(surface).toHaveAttribute('data-depth-active', 'true');
