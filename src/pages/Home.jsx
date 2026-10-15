@@ -14,7 +14,7 @@ import {
 import projects from '../data/projectCatalog.js';
 import certificates from '../data/certificates.js';
 import profile from '../data/profile.js';
-import ProjectCard from '../components/portfolio/ProjectCard.jsx';
+import FeaturedProjects from '../components/portfolio/FeaturedProjects.jsx';
 import DepthSurface from '../components/portfolio/DepthSurface.jsx';
 import { useMotion } from '../components/portfolio/MotionContext.jsx';
 import '../styles/home.css';
@@ -266,21 +266,7 @@ export default function Home() {
             All {projects.length} projects <ArrowRight size={17} />
           </Link>
         </div>
-        <div className="work-grid">
-          {projects
-            .filter((project) => project.featured)
-            .slice(0, 3)
-            .map((project, index) => (
-              <div
-                className="home-project-reveal"
-                key={project.id}
-                data-reveal
-                style={{ '--reveal-delay': `${index * 100}ms` }}
-              >
-                <ProjectCard project={project} headingLevel="h3" />
-              </div>
-            ))}
-        </div>
+        <FeaturedProjects projects={projects.filter((project) => project.featured).slice(0, 3)} />
       </section>
       <section
         id="home-certificates"

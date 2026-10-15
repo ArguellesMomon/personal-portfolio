@@ -1,0 +1,79 @@
+.featured-project-controls {
+  display: none;
+}
+
+@media (max-width: 560px) {
+  .home-page .selected-work .work-grid.featured-project-track {
+    display: flex;
+    gap: 14px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 4px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-line) transparent;
+    padding: 4px 4px 12px;
+    margin: -4px;
+  }
+  .featured-project-track > .home-project-reveal {
+    flex: 0 0 calc(100% - 44px);
+    scroll-snap-align: start;
+  }
+  /* End padding lets the last card line up with the first card. */
+  .featured-project-track::after {
+    content: '';
+    flex: 0 0 30px;
+  }
+  .home-page .selected-work .featured-project-track .work-card .project-art {
+    height: 155px;
+    min-height: 0;
+  }
+  .home-page .selected-work .featured-project-track .work-card-body {
+    padding: 18px;
+  }
+  .home-page .selected-work .featured-project-track h3 {
+    font-size: 21px;
+    margin-top: 10px;
+  }
+  .home-page .selected-work .featured-project-track .work-card-body > p {
+    font-size: 13px;
+    line-height: 1.65;
+    margin-top: 10px;
+  }
+  .home-page .selected-work .featured-project-track .tags {
+    margin-block: 14px 16px;
+  }
+  .featured-project-track .card-category {
+    font-size: 10px;
+  }
+  .featured-project-track .card-actions .text-link {
+    min-height: 44px;
+    font-size: 12px;
+  }
+  .featured-project-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 12px;
+    color: var(--muted);
+    font-size: 11px;
+  }
+  .featured-project-navigation {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .featured-project-position {
+    min-width: 44px;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+  }
+  .featured-project-navigation .icon-button {
+    border-color: var(--border);
+  }
+  .featured-project-navigation .icon-button:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+}

@@ -100,9 +100,7 @@ test('share action copies a direct project URL', async ({ page, context }) => {
   await page.goto('/projects/wellbot');
   await page.getByRole('button', { name: 'Copy project link' }).click();
   await expect(page.getByRole('status')).toHaveText('Link copied');
-  expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(
-    'http://127.0.0.1:5173/projects/wellbot',
-  );
+  expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(page.url());
 });
 
 for (const theme of ['light', 'dark']) {

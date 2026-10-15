@@ -26,6 +26,8 @@ Use `npm.cmd` or `npx.cmd` in Windows PowerShell if script execution is restrict
 
 The interface uses direct navigation and project links. Homepage summaries lead to full project, about, certificate, and contact pages. Certificate highlights link to their original documents. Keyboard focus, skip navigation, mobile menus, accessible dialogs, reduced-motion preferences, and theme persistence are supported.
 
+On phones (up to 560px), featured projects use a compact native horizontal scroll row with snap points, a next-card preview, previous/next buttons, and a position indicator. Visitors can swipe or use the keyboard arrows while the row is focused. Desktop and tablet layouts keep their project grid. Button scrolling follows the shared motion preference; the row never advances automatically.
+
 The portrait, project cards, and homepage certificate previews gently tilt toward a mouse pointer. Foreground layers and a moving highlight create depth through CSS perspective, without a rendering dependency. Touch screens keep stable surfaces, and keyboard focus settles tilted cards. The homepage and footer motion controls share one saved preference across routes; system reduced motion takes priority. Tilt resets when scrolling, changing routes, or leaving the window. Pointer updates share one event listener and only schedule a frame when needed.
 
 ## Content
