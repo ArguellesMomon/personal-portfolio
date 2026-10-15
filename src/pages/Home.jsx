@@ -348,9 +348,6 @@ export default function Home() {
         <Link className="button" to="/contact">
           Start a conversation <ArrowUpRight size={18} />
         </Link>
-        <svg className="home-contact-lines" viewBox="0 0 420 300" fill="none" aria-hidden="true">
-          <path d="M100 300V180Q100 140 140 140H380M180 300V220Q180 180 220 180H420M20 300V140Q20 60 100 60H420" />
-        </svg>
       </section>
     </main>
   );

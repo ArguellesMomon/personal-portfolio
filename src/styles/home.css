@@ -435,30 +435,23 @@
   font-weight: 550;
 }
 .home-contact {
-  position: relative;
-  isolation: isolate;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 35px;
-  padding: 48px;
-  margin-bottom: 80px;
-  overflow: hidden;
-  border: 1px solid #235b42;
-  border-radius: 10px;
-  background: #194d37;
-  color: #f3faf5;
+  padding: 64px 0 80px;
+  border-top: 1px solid var(--border);
 }
 .home-contact .eyebrow {
-  color: #c3dcca;
-  margin-bottom: 17px;
+  margin-bottom: 15px;
 }
 .home-contact h2 {
-  font-size: clamp(32px, 3.5vw, 44px);
+  font-size: clamp(30px, 3.4vw, 42px);
   letter-spacing: -0.045em;
+  line-height: 1.16;
 }
 .home-contact p {
-  color: #d3e5d9;
+  color: var(--muted);
   margin-top: 16px;
   font-size: 14px;
 }
@@ -470,36 +463,14 @@
   min-height: 44px;
   margin-top: 18px;
   font-size: 13px;
+  color: var(--accent);
 }
 .home-contact-email:hover {
   text-decoration: underline;
   text-underline-offset: 4px;
 }
 .home-page .home-contact > .button {
-  color: #194d37;
-  background: #f3faf5;
-  border-color: #f3faf5;
   flex-shrink: 0;
-}
-.home-page .home-contact > .button:hover {
-  background: #d4ecdd;
-  border-color: #d4ecdd;
-}
-.home-contact-lines {
-  position: absolute;
-  width: 460px;
-  height: 350px;
-  right: -45px;
-  top: -10px;
-  z-index: -1;
-  opacity: 0.17;
-  stroke: #c3e7cc;
-  stroke-width: 1;
-  pointer-events: none;
-}
-:root[data-theme='dark'] .home-contact {
-  background: #203b2a;
-  border-color: #385943;
 }
 
 /* Elements remain visible until a reveal starts, including when observers are unavailable. */
@@ -662,9 +633,6 @@
   .home-certificate-copy h3 {
     font-size: 16px;
   }
-  .home-contact {
-    padding: 35px;
-  }
   .home-contact p {
     max-width: 370px;
   }
@@ -738,8 +706,8 @@
   .home-contact {
     align-items: start;
     flex-direction: column;
-    gap: 25px;
-    margin-bottom: 55px;
+    gap: 20px;
+    padding-block: 45px 55px;
   }
 }
 @media (max-width: 560px) {
@@ -884,9 +852,6 @@
   .home-document-action {
     font-size: 10px;
   }
-  .home-contact {
-    padding: 29px 23px;
-  }
   .home-contact h2 {
     font-size: 33px;
   }
@@ -896,11 +861,6 @@
   .home-contact-email {
     font-size: 12px;
     overflow-wrap: anywhere;
-  }
-  .home-contact-lines {
-    width: 320px;
-    right: -90px;
-    top: 80px;
   }
 }
 @media (max-width: 360px) {
