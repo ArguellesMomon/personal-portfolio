@@ -341,7 +341,6 @@
 }
 @media (hover: hover) and (pointer: fine) {
   .home-page[data-home-motion='on'] .work-card:hover {
-    transform: translateY(-5px);
     box-shadow: 0 20px 30px -25px #193b2a66;
   }
   .home-page[data-home-motion='on'] .work-card:hover .work-card-media img {
@@ -374,8 +373,7 @@
     transform 250ms ease,
     border-color 250ms;
 }
-.home-certificate:nth-child(2) {
-  margin-top: 38px;
+.home-certificate-reveal:nth-child(2) .home-certificate {
   transform: rotate(1.3deg);
 }
 .home-certificate:hover,
@@ -929,9 +927,6 @@
     grid-template-columns: 1fr;
     gap: 20px;
     padding-inline: 6px;
-  }
-  .home-certificate:nth-child(2) {
-    margin-top: 0;
   }
   .home-certificate-copy h3 {
     font-size: 15px;

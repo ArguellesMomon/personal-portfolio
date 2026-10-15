@@ -15,7 +15,7 @@ Use `npm.cmd` or `npx.cmd` in Windows PowerShell if script execution is restrict
 
 ## Pages
 
-- `/`: introduction, background and capabilities, three featured projects, two certificate highlights, and direct contact links. A portrait composition, section reveals, and hover effects add depth; the homepage motion control persists the visitor’s choice and respects system reduced motion. Continuous hero effects pause offscreen and in hidden tabs.
+- `/`: introduction, background and capabilities, three featured projects, two certificate highlights, and direct contact links. A layered portrait, floating cube, section reveals, and interactive perspective add depth. Continuous hero effects pause offscreen and in hidden tabs.
 - `/projects`: thirteen projects with search, category, technology, and live-demo filters. Filters persist in the URL and when returning from a case study.
 - `/projects/:id`: purpose, implementation, technical focus, contribution, technologies, and available demo/source links. Screenshots support enlargement and actual-size viewing. Previews and account requirements are labeled.
 - `/about`: background, education, and demonstrated technical skills.
@@ -23,6 +23,8 @@ Use `npm.cmd` or `npx.cmd` in Windows PowerShell if script execution is restrict
 - `/contact`: public email/social links and a contact form with validation, draft recovery, delivery feedback, and an email-app fallback.
 
 The interface uses direct navigation and project links. Homepage summaries lead to full project, about, certificate, and contact pages. Certificate highlights link to their original documents. Keyboard focus, skip navigation, mobile menus, accessible dialogs, reduced-motion preferences, and theme persistence are supported.
+
+The portrait, project cards, and homepage certificate previews gently tilt toward a mouse pointer. Foreground layers and a moving highlight create depth through CSS perspective, without a rendering dependency. Touch screens keep stable surfaces, and keyboard focus settles tilted cards. The homepage and footer motion controls share one saved preference across routes; system reduced motion takes priority. Tilt resets when scrolling, changing routes, or leaving the window. Pointer updates share one event listener and only schedule a frame when needed.
 
 ## Content
 
@@ -45,7 +47,7 @@ node scripts/review-github.mjs
 node scripts/capture-projects.mjs
 ```
 
-Tests cover project discovery and filters, direct navigation, every screenshot and original certificate, keyboard dialogs, accessibility in both themes, mobile layouts from 320 pixels, theme persistence, and contact success/failure/retry. Contact delivery is mocked in tests; no visitor emails are sent.
+Tests cover project discovery and filters, direct navigation, every screenshot and original certificate, keyboard dialogs, accessibility in both themes, mobile layouts from 320 pixels, theme persistence, pointer depth, keyboard and touch behavior, saved motion preferences, and contact success/failure/retry. Contact delivery is mocked in tests; no visitor emails are sent.
 
 Browser tests and asset generation use Microsoft Edge on Windows. Elsewhere, install Chromium with `npx playwright install chromium`, or set `PLAYWRIGHT_CHANNEL` to an installed supported browser. Vite 8 requires Node 20.19+ or 22.12+.
 

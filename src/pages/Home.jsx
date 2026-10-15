@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ArrowDown,
@@ -15,6 +15,8 @@ import projects from '../data/projectCatalog.js';
 import certificates from '../data/certificates.js';
 import profile from '../data/profile.js';
 import ProjectCard from '../components/portfolio/ProjectCard.jsx';
+import DepthSurface from '../components/portfolio/DepthSurface.jsx';
+import { useMotion } from '../components/portfolio/MotionContext.jsx';
 import '../styles/home.css';
 
 const highlights = ['applications-development', 'pytorch-intro'].map((id) =>
@@ -42,30 +44,8 @@ const capabilities = [
 ];
 
 function useHomeMotion(root) {
-  const [paused, setPaused] = useState(() => {
-    try {
-      return localStorage.getItem('portfolio-home-motion') === 'paused';
-    } catch {
-      return false;
-    }
-  });
-  const [systemReduced, setSystemReduced] = useState(
-    () => window.matchMedia('(prefers-reduced-motion: reduce)').matches,
-  );
-  const enabled = !paused && !systemReduced;
-  useEffect(() => {
-    const media = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const update = (event) => setSystemReduced(event.matches);
-    media.addEventListener('change', update);
-    return () => media.removeEventListener('change', update);
-  }, []);
-  useEffect(() => {
-    try {
-      localStorage.setItem('portfolio-home-motion', paused ? 'paused' : 'on');
-    } catch {
-      /* Motion controls also work without storage. */
-    }
-  }, [paused]);
+  const motion = useMotion();
+  const { enabled } = motion;
   useEffect(() => {
     const element = root.current;
     if (!enabled || !('IntersectionObserver' in window)) return;
@@ -97,7 +77,7 @@ function useHomeMotion(root) {
       document.removeEventListener('visibilitychange', updateVisibility);
     };
   }, [enabled, root]);
-  return { enabled, paused, systemReduced, toggle: () => setPaused((value) => !value) };
+  return motion;
 }
 
 export default function Home() {
@@ -137,42 +117,54 @@ export default function Home() {
             Get to know my work <ArrowDown size={15} />
           </a>
         </div>
-        <div className="home-hero-visual">
-          <div className="home-visual-grid" aria-hidden="true" />
-          <div className="home-ambient-orb" aria-hidden="true" />
-          <svg className="home-connections" viewBox="0 0 440 510" fill="none" aria-hidden="true">
-            <path
-              d="M30 100H135Q155 100 155 120V180M410 405H315Q295 405 295 385V330"
-              pathLength="1"
-            />
-            <circle cx="30" cy="100" r="4" />
-            <circle cx="410" cy="405" r="4" />
-          </svg>
-          <figure className="hero-portrait">
-            <img
-              src="/profile-portrait.png"
-              alt="Richmond Arguelles"
-              width={1086}
-              height={1448}
-              fetchpriority="high"
-            />
-            <figcaption>
-              <strong>Richmond Arguelles</strong>
-              <span>Computer Science · De La Salle Lipa</span>
-            </figcaption>
-          </figure>
-          <div className="home-skill-note home-note-web">
-            <Code2 size={19} />
-            <div>
-              <strong>Web & mobile</strong>
-              <span>React · React Native</span>
+        <div
+          className="home-hero-visual depth-scene depth-portrait"
+          data-depth="portrait"
+          data-depth-strength="6"
+        >
+          <div className="home-depth-stage depth-surface">
+            <div className="home-visual-grid" aria-hidden="true" />
+            <div className="home-ambient-orb" aria-hidden="true" />
+            <div className="home-depth-backplate" aria-hidden="true" />
+            <div className="home-depth-cube" aria-hidden="true">
+              {['front', 'back', 'left', 'right', 'top', 'bottom'].map((face) => (
+                <span className={`cube-${face}`} key={face} />
+              ))}
             </div>
-          </div>
-          <div className="home-skill-note home-note-device">
-            <Cpu size={19} />
-            <div>
-              <strong>Embedded ML</strong>
-              <span>ESP32-S3 · TinyML</span>
+            <svg className="home-connections" viewBox="0 0 440 510" fill="none" aria-hidden="true">
+              <path
+                d="M30 100H135Q155 100 155 120V180M410 405H315Q295 405 295 385V330"
+                pathLength="1"
+              />
+              <circle cx="30" cy="100" r="4" />
+              <circle cx="410" cy="405" r="4" />
+            </svg>
+            <figure className="hero-portrait">
+              <img
+                src="/profile-portrait.png"
+                alt="Richmond Arguelles"
+                width={1086}
+                height={1448}
+                fetchpriority="high"
+              />
+              <figcaption>
+                <strong>Richmond Arguelles</strong>
+                <span>Computer Science · De La Salle Lipa</span>
+              </figcaption>
+            </figure>
+            <div className="home-skill-note home-note-web">
+              <Code2 size={19} />
+              <div>
+                <strong>Web & mobile</strong>
+                <span>React · React Native</span>
+              </div>
+            </div>
+            <div className="home-skill-note home-note-device">
+              <Cpu size={19} />
+              <div>
+                <strong>Embedded ML</strong>
+                <span>ESP32-S3 · TinyML</span>
+              </div>
             </div>
           </div>
           <button
@@ -308,41 +300,47 @@ export default function Home() {
         </div>
         <div className="home-certificate-grid">
           {highlights.map((item, index) => (
-            <a
-              className="home-certificate"
-              href={item.documentUrl}
-              target="_blank"
-              rel="noreferrer"
+            <div
+              className="home-certificate-reveal"
               key={item.id}
               data-reveal
               style={{ '--reveal-delay': `${index * 120}ms` }}
-              aria-label={`View original certificate: ${item.title}`}
             >
-              <div className="home-certificate-image">
-                <img
-                  src={item.preview}
-                  alt={`${item.title} certificate awarded to Richmond Arguelles`}
-                  width={1000}
-                  height={750}
-                  loading="lazy"
-                />
-                <span>
-                  <ArrowUpRight size={16} />
-                </span>
-              </div>
-              <div className="home-certificate-copy">
-                <span className="eyebrow">
-                  {item.type === 'milestone' ? 'Academic recognition' : 'Course completed'}
-                </span>
-                <h3>{item.title}</h3>
-                <p>
-                  {item.issuer} · {new Date(item.date + 'T00:00:00Z').getUTCFullYear()}
-                </p>
-                <span className="home-document-action">
-                  View certificate <ArrowUpRight size={14} />
-                </span>
-              </div>
-            </a>
+              <DepthSurface variant="certificate" strength={5}>
+                <a
+                  className="home-certificate depth-surface"
+                  href={item.documentUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={`View original certificate: ${item.title}`}
+                >
+                  <div className="home-certificate-image">
+                    <img
+                      src={item.preview}
+                      alt={`${item.title} certificate awarded to Richmond Arguelles`}
+                      width={1000}
+                      height={750}
+                      loading="lazy"
+                    />
+                    <span>
+                      <ArrowUpRight size={16} />
+                    </span>
+                  </div>
+                  <div className="home-certificate-copy">
+                    <span className="eyebrow">
+                      {item.type === 'milestone' ? 'Academic recognition' : 'Course completed'}
+                    </span>
+                    <h3>{item.title}</h3>
+                    <p>
+                      {item.issuer} · {new Date(item.date + 'T00:00:00Z').getUTCFullYear()}
+                    </p>
+                    <span className="home-document-action">
+                      View certificate <ArrowUpRight size={14} />
+                    </span>
+                  </div>
+                </a>
+              </DepthSurface>
+            </div>
           ))}
         </div>
       </section>

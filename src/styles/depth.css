@@ -1,0 +1,248 @@
+/* CSS perspective and compositor transforms; no canvas, WebGL, or render loop. */
+.depth-scene {
+  position: relative;
+  min-width: 0;
+  perspective: 1100px;
+  perspective-origin: 50% 45%;
+}
+.work-card-depth {
+  display: flex;
+  width: 100%;
+}
+.work-card-depth > .work-card {
+  width: 100%;
+}
+.home-depth-stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: inherit;
+  transform-style: preserve-3d;
+}
+.home-depth-backplate {
+  position: absolute;
+  width: 69%;
+  height: 75%;
+  border: 1px solid var(--accent-line);
+  border-radius: 18px;
+  background: var(--accent-soft);
+  opacity: 0.65;
+  transform: translateZ(-28px) rotate(6deg);
+  pointer-events: none;
+  z-index: -1;
+}
+.home-depth-cube {
+  position: absolute;
+  top: 22px;
+  right: 16px;
+  width: 44px;
+  height: 44px;
+  transform-style: preserve-3d;
+  transform: rotateX(-18deg) rotateY(32deg);
+  color: color-mix(in srgb, var(--accent) 45%, transparent);
+  pointer-events: none;
+}
+.home-depth-cube > span {
+  position: absolute;
+  inset: 0;
+  border: 1px solid currentColor;
+  background: color-mix(in srgb, var(--accent-soft) 18%, transparent);
+}
+.cube-front {
+  transform: translateZ(22px);
+}
+.cube-back {
+  transform: rotateY(180deg) translateZ(22px);
+}
+.cube-left {
+  transform: rotateY(-90deg) translateZ(22px);
+}
+.cube-right {
+  transform: rotateY(90deg) translateZ(22px);
+}
+.cube-top {
+  transform: rotateX(90deg) translateZ(22px);
+}
+.cube-bottom {
+  transform: rotateX(-90deg) translateZ(22px);
+}
+.home-page[data-home-motion='on'] .home-depth-cube {
+  animation: depth-cube-drift 12s ease-in-out infinite alternate;
+}
+.home-page[data-hero-visible='false'] .home-depth-cube {
+  animation-play-state: paused;
+}
+.home-certificate-reveal {
+  min-width: 0;
+}
+.home-certificate-reveal:nth-child(2) {
+  margin-top: 38px;
+}
+.depth-certificate {
+  --depth-rest-z: -1deg;
+  display: flex;
+}
+.home-certificate-reveal:nth-child(2) .depth-certificate {
+  --depth-rest-z: 1.3deg;
+}
+.depth-certificate > .home-certificate {
+  display: block;
+  width: 100%;
+}
+.footer-preferences {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 22px;
+  max-width: 100%;
+}
+.footer-motion-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 36px;
+  padding: 0 4px;
+  background: transparent;
+  border: 0;
+  border-radius: 4px;
+  color: var(--muted);
+  font-size: 11px;
+}
+.footer-motion-toggle:not(:disabled):hover {
+  color: var(--accent);
+}
+.footer-motion-toggle:disabled {
+  cursor: default;
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  :root[data-motion='full'] .depth-scene > .depth-surface {
+    transform-style: preserve-3d;
+    transform: rotateX(var(--depth-rx, 0deg)) rotateY(var(--depth-ry, 0deg))
+      rotateZ(var(--depth-rest-z, 0deg));
+    transition:
+      transform 450ms cubic-bezier(0.2, 0.7, 0.25, 1),
+      box-shadow 300ms,
+      border-color 250ms;
+  }
+  :root[data-motion='full'] .depth-scene[data-depth-active='true'] > .depth-surface {
+    transition:
+      transform 100ms linear,
+      box-shadow 300ms,
+      border-color 250ms;
+    will-change: transform;
+  }
+  :root[data-motion='full'] .depth-scene:focus-within > .depth-surface {
+    /* A visible keyboard focus ring takes priority over pointer decoration. */
+    transition-duration: 200ms;
+  }
+  :root[data-motion='full'] .home-depth-stage > .hero-portrait {
+    translate: 0 0 42px;
+  }
+  :root[data-motion='full'] .home-depth-stage > .home-note-web {
+    translate: 0 0 84px;
+  }
+  :root[data-motion='full'] .home-depth-stage > .home-note-device {
+    translate: 0 0 112px;
+  }
+  :root[data-motion='full'] .home-depth-stage > .home-visual-grid {
+    translate: 0 0 -48px;
+  }
+  :root[data-motion='full'] .home-depth-stage > .home-ambient-orb {
+    translate: 0 0 -65px;
+  }
+  :root[data-motion='full'] .home-depth-stage > .home-connections {
+    translate: 0 0 -12px;
+  }
+  :root[data-motion='full'] .home-depth-stage > .home-depth-cube {
+    translate: 0 0 70px;
+  }
+  :root[data-motion='full'] .depth-card > .work-card,
+  :root[data-motion='full'] .depth-certificate > .home-certificate {
+    overflow: visible;
+    isolation: auto;
+  }
+  :root[data-motion='full'] .depth-card[data-depth-active='true'] > .work-card,
+  :root[data-motion='full'] .depth-certificate[data-depth-active='true'] > .home-certificate {
+    box-shadow: calc(var(--depth-shift-x, 0px) * -1) 23px 42px -27px #173d2b66;
+    border-color: var(--accent-line);
+  }
+  :root[data-motion='full'] .depth-card .work-card-media {
+    overflow: hidden;
+    border-radius: 7px 7px 0 0;
+    translate: 0 0 10px;
+  }
+  :root[data-motion='full'] .depth-card .work-card-body {
+    transform-style: preserve-3d;
+    translate: 0 0 15px;
+  }
+  :root[data-motion='full'] .depth-card .card-actions {
+    translate: 0 0 12px;
+  }
+  :root[data-motion='full'] .depth-certificate .home-certificate-image {
+    overflow: hidden;
+    border-radius: 6px 6px 0 0;
+    translate: 0 0 8px;
+  }
+  :root[data-motion='full'] .depth-certificate .home-certificate-copy {
+    translate: 0 0 15px;
+  }
+  :root[data-motion='full'] .depth-card > .depth-surface::after,
+  :root[data-motion='full'] .depth-certificate > .depth-surface::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+      circle at var(--depth-light-x, 50%) var(--depth-light-y, 50%),
+      rgb(255 255 255 / 13%),
+      transparent 62%
+    );
+    opacity: 0;
+    pointer-events: none;
+    translate: 0 0 40px;
+    transition: opacity 250ms;
+  }
+  :root[data-motion='full'] .depth-scene[data-depth-active='true'] > .depth-surface::after {
+    opacity: 1;
+  }
+}
+@keyframes depth-cube-drift {
+  from {
+    transform: rotateX(-18deg) rotateY(25deg) rotateZ(-6deg);
+  }
+  to {
+    transform: rotateX(20deg) rotateY(65deg) rotateZ(6deg);
+  }
+}
+@media (max-width: 560px) {
+  .home-depth-cube {
+    width: 34px;
+    height: 34px;
+    right: 8px;
+    top: 4px;
+    scale: 0.8;
+  }
+  .home-depth-backplate {
+    width: 74%;
+    height: 77%;
+  }
+  .footer-preferences {
+    gap: 10px 16px;
+  }
+}
+@media (max-width: 360px) {
+  .home-certificate-reveal:nth-child(2) {
+    margin-top: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .depth-surface {
+    transition: none !important;
+  }
+  .home-depth-cube {
+    animation: none !important;
+  }
+}

@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import { ArrowUpRight, Menu, Moon, Sun, X } from 'lucide-react';
+import { ArrowUpRight, Menu, Moon, Sun, X, Pause, Play } from 'lucide-react';
 import { useTheme } from './ThemeContext.jsx';
+import { useMotion } from './MotionContext.jsx';
 import profile from '../../data/profile.js';
 import projects from '../../data/projects.json';
 
@@ -112,6 +113,7 @@ export function SiteHeader() {
 
 export function SiteFooter() {
   const { preference, setPreference } = useTheme();
+  const { enabled, paused, systemReduced, toggle } = useMotion();
   return (
     <footer className="site-footer">
       <div className="container">
@@ -134,18 +136,36 @@ export function SiteFooter() {
         </div>
         <div className="footer-bottom">
           <span>© {new Date().getFullYear()} Richmond Arguelles</span>
-          <label className="theme-select">
-            Appearance
-            <select
-              aria-label="Theme preference"
-              value={preference}
-              onChange={(event) => setPreference(event.target.value)}
+          <div className="footer-preferences">
+            <button
+              className="footer-motion-toggle"
+              onClick={toggle}
+              disabled={systemReduced}
+              aria-pressed={paused}
+              aria-label={
+                systemReduced
+                  ? 'Visual effects reduced by system settings'
+                  : enabled
+                    ? 'Pause visual effects'
+                    : 'Resume visual effects'
+              }
             >
-              <option value="system">System</option>
-              <option value="light">Light</option>
-              <option value="dark">Dark</option>
-            </select>
-          </label>
+              {enabled ? <Pause size={13} /> : <Play size={13} />}
+              {systemReduced ? 'Reduced motion' : enabled ? 'Pause effects' : 'Resume effects'}
+            </button>
+            <label className="theme-select">
+              Appearance
+              <select
+                aria-label="Theme preference"
+                value={preference}
+                onChange={(event) => setPreference(event.target.value)}
+              >
+                <option value="system">System</option>
+                <option value="light">Light</option>
+                <option value="dark">Dark</option>
+              </select>
+            </label>
+          </div>
         </div>
       </div>
     </footer>
