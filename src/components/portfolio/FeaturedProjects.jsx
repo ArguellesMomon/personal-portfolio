@@ -17,17 +17,21 @@ export default function FeaturedProjects({ projects }) {
 
   const move = (direction) => {
     const element = track.current;
+    const bounds = element.getBoundingClientRect();
+    const center = bounds.left + bounds.width / 2;
     const distances = [...element.children].map((child) =>
-      Math.abs(child.getBoundingClientRect().left - element.getBoundingClientRect().left - 4),
+      Math.abs(
+        child.getBoundingClientRect().left + child.getBoundingClientRect().width / 2 - center,
+      ),
     );
     const index = distances.indexOf(Math.min(...distances)) + direction;
     const child = element.children[Math.max(0, Math.min(projects.length - 1, index))];
     element.scrollTo({
       left:
         element.scrollLeft +
-        child.getBoundingClientRect().left -
-        element.getBoundingClientRect().left -
-        4,
+        child.getBoundingClientRect().left +
+        child.getBoundingClientRect().width / 2 -
+        center,
       behavior: enabled ? 'smooth' : 'instant',
     });
   };

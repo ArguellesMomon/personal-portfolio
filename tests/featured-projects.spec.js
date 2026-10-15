@@ -66,18 +66,41 @@ test('swiping moves the native row while vertical page scrolling remains availab
 });
 
 test('keyboard navigation, phone widths, and desktop grid remain accessible', async ({ page }) => {
-  for (const width of [320, 390, 560]) {
+  for (const width of [320, 393, 560]) {
     await page.setViewportSize({ width, height: 900 });
-    await page.goto('/');
-    const track = page.locator('#featured-projects');
-    await track.focus();
-    await page.keyboard.press('ArrowRight');
-    await expect(track.locator('.work-card').nth(1)).toBeInViewport({ ratio: 0.95 });
-    await page.keyboard.press('ArrowLeft');
-    await expect(track.locator('.work-card').first()).toBeInViewport({ ratio: 0.95 });
-    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
-      true,
-    );
+    for (const colorScheme of ['light', 'dark']) {
+      await page.emulateMedia({ colorScheme });
+      await page.goto('/');
+      const track = page.locator('#featured-projects');
+      await track.focus();
+      const cards = track.locator('.work-card');
+      const expectCentered = async (index) => {
+        await expect
+          .poll(() =>
+            cards.nth(index).evaluate((el) => {
+              const box = el.getBoundingClientRect();
+              return Math.abs(box.left + box.width / 2 - innerWidth / 2);
+            }),
+          )
+          .toBeLessThan(1);
+      };
+      await expectCentered(0);
+      for (const index of [1, 2]) {
+        await page.keyboard.press('ArrowRight');
+        await expectCentered(index);
+        await expect(cards.nth(index)).toBeInViewport({ ratio: 0.95 });
+      }
+      // A swipe to the very end must still leave the final card centered.
+      await track.evaluate((el) => el.scrollTo({ left: el.scrollWidth, behavior: 'instant' }));
+      await expectCentered(2);
+      await page.keyboard.press('ArrowLeft');
+      await expectCentered(1);
+      await page.keyboard.press('ArrowLeft');
+      await expectCentered(0);
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
+        true,
+      );
+    }
   }
   await page.setViewportSize({ width: 1440, height: 1000 });
   await expect(page.locator('#featured-projects')).toHaveCSS('display', 'grid');

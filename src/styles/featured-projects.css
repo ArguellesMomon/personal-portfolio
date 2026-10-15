@@ -5,20 +5,15 @@
     overflow-x: auto;
     overscroll-behavior-x: contain;
     scroll-snap-type: x mandatory;
-    scroll-padding-inline: 4px;
+    scroll-padding-inline: 26px;
     scrollbar-width: thin;
     scrollbar-color: var(--accent-line) transparent;
-    padding: 4px 4px 12px;
+    padding: 4px 26px 12px;
     margin: -4px;
   }
   .featured-project-track > .home-project-reveal {
-    flex: 0 0 calc(100% - 44px);
-    scroll-snap-align: start;
-  }
-  /* End padding lets the last card line up with the first card. */
-  .featured-project-track::after {
-    content: '';
-    flex: 0 0 30px;
+    flex: 0 0 100%;
+    scroll-snap-align: center;
   }
   .home-page .selected-work .featured-project-track .work-card .project-art {
     height: 155px;
