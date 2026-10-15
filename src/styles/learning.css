@@ -1,7 +1,4 @@
 /* Certificates share the same type, spacing, and controls as the rest of the site. */
-.learning-page {
-  padding-block: 58px 80px;
-}
 .archive-label {
   display: block;
   font-size: 10px;
@@ -356,9 +353,6 @@
   }
 }
 @media (max-width: 560px) {
-  .learning-page {
-    padding-block: 40px 60px;
-  }
   .learning-page h1 {
     font-size: 35px;
   }

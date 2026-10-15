@@ -157,7 +157,7 @@ export default function AchievementsPage() {
   };
   return (
     <main id="main-content" tabIndex={-1} className="learning-page">
-      <div className="container">
+      <div className="container page-content">
         <PageHeading title="Certificates & achievements">
           Courses, seminars, and academic recognition, with original documents available to view or
           download.
