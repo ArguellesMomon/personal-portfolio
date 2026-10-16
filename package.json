@@ -8,6 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "playwright test",
+    "test:webkit": "playwright test --config playwright.webkit.config.js",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "assets": "node scripts/generate-brand-assets.mjs"

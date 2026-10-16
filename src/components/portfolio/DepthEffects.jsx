@@ -19,7 +19,9 @@ export default function DepthEffects() {
   const { pathname, search } = useLocation();
   useEffect(() => {
     if (!enabled) return;
-    const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+    const finePointer = window.matchMedia(
+      '(min-width: 561px) and (hover: hover) and (pointer: fine)',
+    );
     let active = null;
     let frame = 0;
     let point = null;

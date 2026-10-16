@@ -53,35 +53,32 @@ test('keyboard focus settles a tilted card and its links still open', async ({ p
   await expect(page).toHaveURL(destination);
 });
 
-test('site-wide motion preference persists across routes and system changes stop tilt', async ({
+test('system reduced motion stops tilt across routes and restores it when disabled', async ({
   page,
 }) => {
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.goto('/projects');
   const card = page.locator('.work-card-depth').first();
   await tilt(page, card);
-  await page.getByRole('button', { name: 'Pause visual effects' }).click();
+  await page.emulateMedia({ reducedMotion: 'reduce' });
   await expect(page.locator('html')).toHaveAttribute('data-motion', 'reduced');
   await expect(card).not.toHaveAttribute('data-depth-active');
   await page.getByRole('link', { name: 'Home', exact: true }).first().click();
-  await expect(page.getByRole('button', { name: 'Resume homepage animations' })).toBeVisible();
+  await expect(page.getByRole('button', { name: /pause|resume|reduced motion/i })).toHaveCount(0);
   await page.reload();
   await expect(page.locator('html')).toHaveAttribute('data-motion', 'reduced');
-  await page.getByRole('button', { name: 'Resume homepage animations' }).click();
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
   await tilt(page, page.locator('[data-depth="portrait"]'));
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await expect(page.locator('[data-depth-active]')).toHaveCount(0);
-  await expect(
-    page.getByRole('button', { name: 'Animations reduced by system settings' }),
-  ).toBeDisabled();
   await expect(page.locator('.home-depth-cube')).toHaveCSS('animation-name', 'none');
 });
 
 test('touch layouts stay flat and certificate links remain directly accessible', async ({
   browser,
-}) => {
+}, testInfo) => {
   const context = await browser.newContext({
-    baseURL: 'http://127.0.0.1:5173',
+    baseURL: testInfo.project.use.baseURL,
     viewport: { width: 390, height: 844 },
     isMobile: true,
     hasTouch: true,

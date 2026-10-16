@@ -2,8 +2,6 @@
 .depth-scene {
   position: relative;
   min-width: 0;
-  perspective: 1100px;
-  perspective-origin: 50% 45%;
 }
 .work-card-depth {
   display: flex;
@@ -18,7 +16,18 @@
   place-items: center;
   width: 100%;
   min-height: inherit;
-  transform-style: preserve-3d;
+  /* Keep touch layouts in one 2D stacking context, including in mobile Safari. */
+  isolation: isolate;
+  transform-style: flat;
+}
+.home-depth-stage > :is(.home-visual-grid, .home-ambient-orb, .home-connections) {
+  z-index: 0;
+}
+.home-depth-stage > .hero-portrait {
+  z-index: 1;
+}
+.home-depth-stage > .home-skill-note {
+  z-index: 2;
 }
 .home-depth-backplate {
   position: absolute;
@@ -28,9 +37,9 @@
   border-radius: 18px;
   background: var(--accent-soft);
   opacity: 0.65;
-  transform: translateZ(-28px) rotate(6deg);
+  transform: rotate(6deg);
   pointer-events: none;
-  z-index: -1;
+  z-index: 0;
 }
 .home-depth-cube {
   position: absolute;
@@ -38,16 +47,21 @@
   right: 16px;
   width: 44px;
   height: 44px;
-  transform-style: preserve-3d;
-  transform: rotateX(-18deg) rotateY(32deg);
   color: color-mix(in srgb, var(--accent) 45%, transparent);
   pointer-events: none;
+  z-index: 0;
 }
 .home-depth-cube > span {
+  display: none;
   position: absolute;
   inset: 0;
   border: 1px solid currentColor;
   background: color-mix(in srgb, var(--accent-soft) 18%, transparent);
+}
+.home-cube-outline {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 .cube-front {
   transform: translateZ(22px);
@@ -66,9 +80,6 @@
 }
 .cube-bottom {
   transform: rotateX(-90deg) translateZ(22px);
-}
-.home-page[data-home-motion='on'] .home-depth-cube {
-  animation: depth-cube-drift 12s ease-in-out infinite alternate;
 }
 .home-page[data-hero-visible='false'] .home-depth-cube {
   animation-play-state: paused;
@@ -90,34 +101,30 @@
   display: block;
   width: 100%;
 }
-.footer-preferences {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 12px 22px;
-  max-width: 100%;
-}
-.footer-motion-toggle {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
-  min-height: 36px;
-  padding: 0 4px;
-  background: transparent;
-  border: 0;
-  border-radius: 4px;
-  color: var(--muted);
-  font-size: 11px;
-}
-.footer-motion-toggle:not(:disabled):hover {
-  color: var(--accent);
-}
-.footer-motion-toggle:disabled {
-  cursor: default;
-}
-
-@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+@media (min-width: 561px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .home-depth-cube {
+    transform-style: preserve-3d;
+    transform: rotateX(-18deg) rotateY(32deg);
+  }
+  .home-depth-cube > span {
+    display: block;
+  }
+  .home-cube-outline {
+    display: none;
+  }
+  .home-page[data-home-motion='on'] .home-depth-cube {
+    animation: depth-cube-drift 4200ms ease-in-out both;
+  }
+  :root[data-motion='full'] .depth-scene {
+    perspective: 1100px;
+    perspective-origin: 50% 45%;
+  }
+  :root[data-motion='full'] .home-depth-stage {
+    isolation: auto;
+  }
+  :root[data-motion='full'] .home-depth-backplate {
+    transform: translateZ(-28px) rotate(6deg);
+  }
   :root[data-motion='full'] .depth-scene > .depth-surface {
     transform-style: preserve-3d;
     transform: rotateX(var(--depth-rx, 0deg)) rotateY(var(--depth-ry, 0deg))
@@ -228,9 +235,6 @@
   .home-depth-backplate {
     width: 74%;
     height: 77%;
-  }
-  .footer-preferences {
-    gap: 10px 16px;
   }
 }
 @media (max-width: 360px) {

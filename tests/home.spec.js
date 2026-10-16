@@ -36,36 +36,35 @@ test('homepage connects background, projects, credentials, and contact with real
   expect((await page.locator('#home-about').boundingBox()).y).toBeGreaterThan(75);
 });
 
-test('homepage motion can pause, persist, and follow system reduced motion', async ({ page }) => {
+test('homepage motion follows the system without pause controls or a saved override', async ({
+  page,
+}) => {
+  await page.addInitScript(() => localStorage.setItem('portfolio-home-motion', 'paused'));
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.goto('/');
   const home = page.locator('main');
   const orb = page.locator('.home-ambient-orb');
   await expect(home).toHaveAttribute('data-home-motion', 'on');
   await expect(orb).toHaveCSS('animation-name', 'home-light-drift');
-  await page.getByRole('button', { name: 'Pause homepage animations' }).click();
-  await expect(home).toHaveAttribute('data-home-motion', 'off');
-  await expect(orb).toHaveCSS('animation-name', 'none');
-  await page.reload();
-  await expect(page.getByRole('button', { name: 'Resume homepage animations' })).toBeVisible();
-  await page.getByRole('button', { name: 'Resume homepage animations' }).click();
+  await expect(page.getByRole('button', { name: /pause|resume|reduced motion/i })).toHaveCount(0);
+  await expect(orb).toHaveCSS('animation-iteration-count', '1');
+  await expect(page.locator('.hero-portrait')).toHaveCSS('opacity', '1');
   await page.locator('#home-contact').scrollIntoViewIfNeeded();
   await expect(home).toHaveAttribute('data-hero-visible', 'false');
   await expect(orb).toHaveCSS('animation-play-state', 'paused');
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await expect(home).toHaveAttribute('data-home-motion', 'off');
   await page.locator('.hero-section').scrollIntoViewIfNeeded();
-  await expect(
-    page.getByRole('button', { name: 'Animations reduced by system settings' }),
-  ).toBeDisabled();
   await expect(orb).toHaveCSS('animation-name', 'none');
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await expect(home).toHaveAttribute('data-home-motion', 'on');
 });
 
 test('homepage sections remain available on touch screens with motion enabled', async ({
   browser,
-}) => {
+}, testInfo) => {
   const context = await browser.newContext({
-    baseURL: 'http://127.0.0.1:5173',
+    baseURL: testInfo.project.use.baseURL,
     viewport: { width: 390, height: 844 },
     isMobile: true,
     hasTouch: true,
@@ -73,7 +72,7 @@ test('homepage sections remain available on touch screens with motion enabled', 
   });
   const page = await context.newPage();
   await page.goto('/');
-  await page.getByRole('button', { name: 'Pause homepage animations' }).tap();
+  await expect(page.getByRole('button', { name: /pause|resume|reduced motion/i })).toHaveCount(0);
   for (const id of ['home-about', 'home-projects', 'home-certificates', 'home-contact']) {
     const section = page.locator('#' + id);
     await section.scrollIntoViewIfNeeded();

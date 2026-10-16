@@ -7,8 +7,6 @@ import {
   Code2,
   Cpu,
   GraduationCap,
-  Pause,
-  Play,
   Smartphone,
 } from 'lucide-react';
 import projects from '../data/projectCatalog.js';
@@ -82,7 +80,7 @@ function useHomeMotion(root) {
 
 export default function Home() {
   const root = useRef(null);
-  const { enabled, paused, systemReduced, toggle } = useHomeMotion(root);
+  const { enabled } = useHomeMotion(root);
   return (
     <main
       ref={root}
@@ -127,6 +125,15 @@ export default function Home() {
             <div className="home-ambient-orb" aria-hidden="true" />
             <div className="home-depth-backplate" aria-hidden="true" />
             <div className="home-depth-cube" aria-hidden="true">
+              <svg
+                className="home-cube-outline"
+                viewBox="0 0 48 48"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1"
+              >
+                <path d="M24 3 44 13v22L24 45 4 35V13L24 3ZM4 13l20 11 20-11M24 24v21" />
+              </svg>
               {['front', 'back', 'left', 'right', 'top', 'bottom'].map((face) => (
                 <span className={`cube-${face}`} key={face} />
               ))}
@@ -167,22 +174,6 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <button
-            className="home-motion-toggle"
-            onClick={toggle}
-            disabled={systemReduced}
-            aria-pressed={paused}
-            aria-label={
-              systemReduced
-                ? 'Animations reduced by system settings'
-                : enabled
-                  ? 'Pause homepage animations'
-                  : 'Resume homepage animations'
-            }
-          >
-            {enabled ? <Pause size={13} /> : <Play size={13} />}
-            {systemReduced ? 'Reduced motion' : enabled ? 'Pause motion' : 'Resume motion'}
-          </button>
         </div>
       </section>
       <div className="home-proof-strip" role="group" aria-label="Portfolio at a glance" data-reveal>

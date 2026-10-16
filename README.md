@@ -17,7 +17,7 @@ Use `npm.cmd` or `npx.cmd` in Windows PowerShell if script execution is restrict
 
 ## Pages
 
-- `/`: introduction, background and capabilities, three featured projects, two certificate highlights, and direct contact links. A layered portrait, floating cube, section reveals, and interactive perspective add depth. Continuous hero effects pause offscreen and in hidden tabs.
+- `/`: introduction, background and capabilities, three featured projects, two certificate highlights, and direct contact links. A layered portrait, floating cube, section reveals, and interactive perspective add depth. Hero animations settle within five seconds and suspend while offscreen or in hidden tabs.
 - `/projects`: thirteen projects with search, category, technology, and live-demo filters. Filters persist in the URL and when returning from a case study.
 - `/projects/:id`: purpose, implementation, technical focus, contribution, technologies, and available demo/source links. Screenshots support enlargement and actual-size viewing. Previews and account requirements are labeled.
 - `/about`: background, education, and demonstrated technical skills.
@@ -28,7 +28,7 @@ The interface uses direct navigation and project links. Homepage summaries lead 
 
 On phones (up to 560px), featured projects use a compact native horizontal scroll row with snap points and a next-card preview. Descriptions stay on the project collection and detail pages, while homepage phone cards show the image, title, technologies, and links. Visitors can swipe or use the keyboard arrows while the row is focused. Desktop and tablet layouts retain their grid and descriptions. Keyboard scrolling follows the shared motion preference; the row never advances automatically. Project back links return to the referring page, preserving collection filters or the homepage section; directly opened projects fall back to the collection.
 
-The portrait, project cards, and homepage certificate previews gently tilt toward a mouse pointer. Foreground layers and a moving highlight create depth through CSS perspective, without a rendering dependency. Touch screens keep stable surfaces, and keyboard focus settles tilted cards. The homepage and footer motion controls share one saved preference across routes; system reduced motion takes priority. Tilt resets when scrolling, changing routes, or leaving the window. Pointer updates share one event listener and only schedule a frame when needed.
+The portrait, project cards, and homepage certificate previews gently tilt toward a mouse pointer on larger screens. Foreground layers and a moving highlight create depth through CSS perspective, without a rendering dependency. Touch screens use an isolated, flat portrait stage with explicit layer order so decorations stay behind the photo and labels, including in mobile Safari. Keyboard focus settles tilted cards. Motion follows the system reduced-motion setting automatically, with no manual controls or saved override. Tilt resets when scrolling, changing routes, or leaving the window. Pointer updates share one event listener and only schedule a frame when needed.
 
 ## Content
 
@@ -51,9 +51,11 @@ node scripts/review-github.mjs
 node scripts/capture-projects.mjs
 ```
 
-Tests cover project discovery and filters, direct navigation, every screenshot and original certificate, keyboard dialogs, accessibility in both themes, mobile layouts from 320 pixels, theme persistence, pointer depth, keyboard and touch behavior, saved motion preferences, and contact success/failure/retry. Contact delivery is mocked in tests; no visitor emails are sent.
+Tests cover project discovery and filters, direct navigation, every screenshot and original certificate, keyboard dialogs, accessibility in both themes, mobile layouts from 320 pixels, theme persistence, pointer depth, keyboard and touch behavior, system reduced motion, portrait layering, and contact success/failure/retry. Contact delivery is mocked in tests; no visitor emails are sent.
 
 Browser tests and asset generation use Microsoft Edge on Windows. Elsewhere, install Chromium with `npx playwright install chromium`, or set `PLAYWRIGHT_CHANNEL` to an installed supported browser. Vite 8 requires Node 20.19+ or 22.12+.
+
+For the mobile Safari rendering regression, install the WebKit test browser with `npx playwright install webkit`, then run `npm run test:webkit`. These checks cover portrait and landscape layouts, photo and label stacking during motion, and both themes. WebKit testing complements verification on a physical iPhone.
 
 The repository review script discovers all public repositories with pagination, including nested apps. It saves review evidence under ignored `.cache/project-review/`. The screenshot script reads the reviewed URLs from the project data. Set `CAPTURE_PROJECT` to refresh one project; inspect captures before committing. The scripts do not sign in or request camera/location access.
 

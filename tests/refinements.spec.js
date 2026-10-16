@@ -138,15 +138,16 @@ test('contact still submits when browser storage is unavailable', async ({ page 
   await expect(page.getByRole('status')).toContainText('Message submitted');
 });
 
-test('mobile visitors can open every featured project directly', async ({ browser }) => {
+test('mobile visitors can open every featured project directly', async ({ browser }, testInfo) => {
   const context = await browser.newContext({
+    baseURL: testInfo.project.use.baseURL,
     viewport: { width: 390, height: 844 },
     isMobile: true,
     hasTouch: true,
     reducedMotion: 'reduce',
   });
   const page = await context.newPage();
-  await page.goto('http://127.0.0.1:5173/');
+  await page.goto('/');
   await expect(page.getByRole('link', { name: 'View projects', exact: true })).toHaveAttribute(
     'href',
     '/projects',
