@@ -4,6 +4,8 @@ The initial review on 14 October 2026 covered 25 public repositories returned by
 
 ## Follow-up — 16 October 2026
 
+IRIS was reclassified as Software QA based on Richmond's clarification that the team evaluated an existing system. The [public QA workbook](https://docs.google.com/spreadsheets/d/1rzdius28Hi_dUCvXH4OV7QybftI3SypZpTQPfyOspOg/htmlview#gid=1280056387) was checked anonymously. It contains UI references, scenarios, test cases, and a summary covering 30 unit, 21 integration, and 108 system cases. Its recorded results are 157 passed and 2 failed cases. The portfolio attributes these figures to the team workbook and links to its read-only view; no permissions or spreadsheet data were changed. Raspberry Pi and facial recognition were removed from IRIS's claimed skills.
+
 Reviewed the public package metadata and implementation for the supplied repositories:
 
 - [Job Finder](https://github.com/ArguellesMomon/job-finder-app): added the Empllo listing integration, search and filters, per-user saved jobs, and local application tracking. The case study identifies sign-in and application submission as local demo flows.

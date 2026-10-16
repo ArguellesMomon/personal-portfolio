@@ -382,6 +382,26 @@ main:focus {
   border: 1px solid var(--border);
   border-radius: 6px;
 }
+.qa-art {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  color: var(--accent);
+}
+.qa-art .eyebrow {
+  margin: 14px 0 5px;
+}
+.qa-art strong {
+  font-size: 17px;
+  font-weight: 550;
+}
+.qa-art small {
+  margin-top: 7px;
+  font-size: 11px;
+  color: var(--muted);
+}
 .project-placeholder {
   display: flex;
   flex-direction: column;

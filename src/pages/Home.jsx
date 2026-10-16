@@ -189,7 +189,7 @@ export default function Home() {
           <strong className="home-proof-number">{projects.length}</strong>
           <span>
             <strong>Projects</strong>
-            <small>Web, mobile, and embedded</small>
+            <small>Development & software QA</small>
           </span>
           <ArrowDown size={15} />
         </a>

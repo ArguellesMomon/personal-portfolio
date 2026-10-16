@@ -1,7 +1,16 @@
-import { Code2, Cpu, BarChart3, Smartphone } from 'lucide-react';
+import { Code2, Cpu, BarChart3, Smartphone, ClipboardCheck } from 'lucide-react';
 
 export default function ProjectArtwork({ project, large = false, cover = false }) {
   const useCover = cover && Boolean(project.coverImage);
+  if (project.evidence)
+    return (
+      <div className={`project-art qa-art ${large ? 'art-large' : ''}`}>
+        <ClipboardCheck size={32} strokeWidth={1.4} aria-hidden="true" />
+        <span className="eyebrow">QA workbook</span>
+        <strong>Test cases & results</strong>
+        <small>Unit · Integration · System</small>
+      </div>
+    );
   if (project.image)
     return (
       <div

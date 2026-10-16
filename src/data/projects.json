@@ -9,7 +9,7 @@
     "techStack": [
       "ESP32-S3",
       "TinyML",
-      "1D-CNN",
+      "2D-CNN",
       "React",
       "Vite",
       "Supabase",
@@ -289,17 +289,37 @@
   },
   {
     "id": "iris",
-    "title": "IRIS",
-    "category": "Embedded/Hardware",
+    "title": "IRIS QA Testing",
+    "category": "QA",
     "badge": "Team Project",
-    "shortDescription": "A Raspberry Pi facial recognition access-control project. My contribution focused on test cases and QA documentation.",
-    "techStack": ["Raspberry Pi", "Facial Recognition"],
-    "role": "QA tester: test case design and documentation.",
-    "problem": "Facial recognition access control must handle both expected matches and conditions where recognition can fail.",
-    "approach": "Designed test cases for correct matches, unknown faces, poor lighting, and multiple faces. Documented observed behavior and issues for the development team.",
+    "shortDescription": "Team-based quality assurance for the IRIS intrusion-recognition application, with test scenarios, execution results, and documented findings.",
+    "techStack": [
+      "Manual Testing",
+      "Test Case Design",
+      "Boundary Value Analysis",
+      "Equivalence Partitioning",
+      "Google Sheets"
+    ],
+    "role": "QA tester on the evaluation team: test design, execution, and results documentation.",
+    "problem": "The IRIS application needed evaluation across account access, device pairing, monitoring, recognition, and administrative workflows.",
+    "approach": "Designed manual test cases using boundary values, valid and invalid input classes, and positive and negative scenarios. The team workbook records unit, integration, and system tests with steps, expected results, actual results, status, and comments.",
+    "challenges": "Covering role permissions, unavailable devices and camera feeds, failed requests, recognition conditions, and complete user workflows across the mobile app and web administration screens.",
+    "outcome": "Delivered a shared QA workbook with traceable test scenarios and recorded findings for review by the development team.",
     "links": {
       "github": "",
-      "live": ""
+      "live": "",
+      "documentation": "https://docs.google.com/spreadsheets/d/1rzdius28Hi_dUCvXH4OV7QybftI3SypZpTQPfyOspOg/htmlview#gid=1280056387"
+    },
+    "evidence": {
+      "title": "IRIS QA workbook",
+      "description": "Shared scenarios, test steps, expected and actual results, and findings for the IRIS application.",
+      "coverage": [
+        { "label": "Unit cases", "count": 30 },
+        { "label": "Integration cases", "count": 21 },
+        { "label": "System cases", "count": 108 }
+      ],
+      "summary": "Team workbook: 157 passed and 2 failed cases.",
+      "reviewedAt": "2026-10-16"
     },
     "image": null
   },

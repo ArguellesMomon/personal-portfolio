@@ -57,8 +57,8 @@ export default function ProjectsPage() {
   return (
     <main id="main-content" tabIndex={-1} className="container page-content collection-page">
       <PageHeading title="Projects">
-        Web applications, mobile apps, and embedded systems. Each project includes its purpose,
-        implementation, and available demo or source.
+        Web, mobile, embedded systems, and software QA. Explore each project's purpose,
+        contribution, and available demos, source, or documentation.
       </PageHeading>
       <section className="collection-index" id="project-index" aria-label="Project collection">
         <div className="project-filters">

@@ -1,6 +1,6 @@
 # Richmond Arguelles — portfolio
 
-A React portfolio for web, mobile, and embedded systems work. The site uses self-hosted Inter typography, a restrained green palette, and light/dark/system themes.
+A React portfolio for web, mobile, embedded systems, and software QA work. The site uses self-hosted Inter typography, a restrained green palette, and light/dark/system themes.
 
 Static paper grain, fading drafting grids, and a small certificate-section hatch add texture to the background. Patterns adapt to each theme, stay behind content, and disappear in forced-colors and print modes. The grain is a small local SVG; no external assets or animation are needed.
 
@@ -36,6 +36,8 @@ The portrait, project cards, and homepage certificate previews gently tilt towar
 - `src/data/projects.json`: project descriptions, contributions, technologies, screenshots, source attribution, and live URLs. Preserve IDs to keep shared project links working.
 - `src/data/skills.js`: technologies demonstrated in the project collection.
 - `src/data/achievements.json`: supplied certificate metadata. Original files live in `src/Certificates/`; previews live in `public/certificates/previews/`.
+
+IRIS is a Software QA case study. Its methods, role, and evidence describe the evaluation team's work. The shared Google Sheets workbook opens in a read-only view; the displayed unit, integration, and system counts are team-reported workbook figures reviewed on 16 October 2026. Update the evidence summary when that workbook changes. IRIS does not contribute hardware-development tools to the skills list.
 
 The initial public GitHub review was completed on 14 October 2026. Job Finder and Online Ordering System were added in a source-code review on 16 October, alongside the supplied Eventure repository and updated Travel Diary screenshots. Smaller coursework, personal gift pages, and duplicate portfolios remain outside the curated collection. See [repository coverage](docs/github-review.md).
 

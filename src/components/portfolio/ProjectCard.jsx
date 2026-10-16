@@ -8,6 +8,7 @@ export const categoryLabels = {
   'Web App': 'Web apps',
   Mobile: 'Mobile apps',
   'ML/Data': 'Data & ML',
+  QA: 'Software QA',
 };
 
 export default function ProjectCard({ project, headingLevel: Heading = 'h2' }) {
@@ -39,7 +40,10 @@ export default function ProjectCard({ project, headingLevel: Heading = 'h2' }) {
             </Link>
           </Heading>
           <p>{project.shortDescription}</p>
-          <ul className="tags" aria-label={`${project.title} technologies`}>
+          <ul
+            className="tags"
+            aria-label={`${project.title} ${project.category === 'QA' ? 'methods and tools' : 'technologies'}`}
+          >
             {project.techStack.slice(0, 3).map((tech) => (
               <li key={tech}>{tech}</li>
             ))}
@@ -57,6 +61,17 @@ export default function ProjectCard({ project, headingLevel: Heading = 'h2' }) {
                 aria-label={`Open ${project.title} live demo`}
               >
                 Live demo <ArrowUpRight size={15} />
+              </a>
+            )}
+            {project.links.documentation && (
+              <a
+                className="text-link"
+                href={project.links.documentation}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`View ${project.title} QA workbook`}
+              >
+                QA workbook <ArrowUpRight size={15} />
               </a>
             )}
           </div>

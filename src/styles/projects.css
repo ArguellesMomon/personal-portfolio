@@ -82,6 +82,70 @@
 }
 
 /* Case studies. */
+.qa-evidence {
+  padding: 28px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+}
+.qa-evidence-heading {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.qa-evidence-heading > svg {
+  color: var(--accent);
+}
+.qa-evidence-heading .eyebrow {
+  margin-bottom: 5px;
+}
+.qa-evidence h2 {
+  font-size: 23px;
+}
+.qa-evidence > p {
+  margin-top: 17px;
+  color: var(--muted);
+  font-size: 14px;
+}
+.qa-coverage {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin: 24px 0 0;
+  padding-block: 20px;
+  border-block: 1px solid var(--border);
+}
+.qa-coverage dt {
+  font-size: 12px;
+  color: var(--muted);
+}
+.qa-coverage dd {
+  margin: 5px 0 0;
+  font-size: 32px;
+  font-weight: 550;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+.qa-evidence-source span {
+  display: block;
+  margin-top: 4px;
+  font-size: 11px;
+}
+@media (max-width: 560px) {
+  .qa-evidence {
+    padding: 20px;
+  }
+  .qa-evidence h2 {
+    font-size: 20px;
+  }
+  .qa-coverage dt {
+    font-size: 11px;
+    min-height: 36px;
+  }
+  .qa-coverage dd {
+    font-size: 28px;
+  }
+}
 .back-link {
   margin-bottom: 25px;
   font-size: 13px;

@@ -1,6 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { ArrowLeft, ArrowRight, ArrowUpRight, Check, Copy, Github, Maximize2 } from 'lucide-react';
+import {
+  ArrowLeft,
+  ArrowRight,
+  ArrowUpRight,
+  Check,
+  Copy,
+  Github,
+  Maximize2,
+  ClipboardCheck,
+} from 'lucide-react';
 import projects, { allProjects } from '../data/projectCatalog.js';
 import ScreenshotDialog from '../components/portfolio/ScreenshotDialog.jsx';
 import ProjectArtwork from '../components/portfolio/ProjectArtwork.jsx';
@@ -44,8 +53,8 @@ export default function ProjectPage() {
     projects.find((item) => item.id !== project.id);
   const chapters = [
     ['problem', 'Purpose'],
-    ['approach', 'Implementation'],
-    ['challenges', 'Technical focus'],
+    ['approach', project.category === 'QA' ? 'Testing approach' : 'Implementation'],
+    ['challenges', project.category === 'QA' ? 'Coverage focus' : 'Technical focus'],
     ['outcome', 'Outcome'],
   ].filter(([key]) => project[key]);
   const copyLink = async () => {
@@ -74,6 +83,11 @@ export default function ProjectPage() {
         <p>{project.shortDescription}</p>
       </header>
       <div className="project-primary-actions">
+        {project.links.documentation && (
+          <a className="button" href={project.links.documentation} target="_blank" rel="noreferrer">
+            View QA workbook <ArrowUpRight size={17} />
+          </a>
+        )}
         {project.links.live && (
           <a className="button" href={project.links.live} target="_blank" rel="noreferrer">
             Visit live project <ArrowUpRight size={17} />
@@ -102,34 +116,68 @@ export default function ProjectPage() {
           {copyStatus}
         </span>
       </div>
-      <figure
-        className={`project-figure ${project.imageLayout === 'portrait' ? 'project-figure-portrait' : ''}`}
-      >
-        <div className="project-screenshot">
-          <ProjectArtwork project={project} large />
-          {project.image && (
-            <button
-              ref={screenshotButton}
-              className="screenshot-expand"
-              onClick={() => setScreenshotOpen(true)}
-            >
-              <Maximize2 size={16} /> Enlarge screenshot
-            </button>
+      {project.evidence ? (
+        <section className="qa-evidence" aria-labelledby="qa-evidence-title">
+          <div className="qa-evidence-heading">
+            <ClipboardCheck size={26} strokeWidth={1.5} aria-hidden="true" />
+            <div>
+              <span className="eyebrow">QA documentation</span>
+              <h2 id="qa-evidence-title">{project.evidence.title}</h2>
+            </div>
+          </div>
+          <p>{project.evidence.description}</p>
+          <dl className="qa-coverage">
+            {project.evidence.coverage.map((item) => (
+              <div key={item.label}>
+                <dt>{item.label}</dt>
+                <dd>{item.count}</dd>
+              </div>
+            ))}
+          </dl>
+          <p className="qa-evidence-source">
+            {project.evidence.summary}{' '}
+            <span>
+              Recorded in the shared workbook; reviewed{' '}
+              {new Date(project.evidence.reviewedAt + 'T00:00:00Z').toLocaleDateString('en-GB', {
+                day: 'numeric',
+                month: 'short',
+                year: 'numeric',
+                timeZone: 'UTC',
+              })}
+              .
+            </span>
+          </p>
+        </section>
+      ) : (
+        <figure
+          className={`project-figure ${project.imageLayout === 'portrait' ? 'project-figure-portrait' : ''}`}
+        >
+          <div className="project-screenshot">
+            <ProjectArtwork project={project} large />
+            {project.image && (
+              <button
+                ref={screenshotButton}
+                className="screenshot-expand"
+                onClick={() => setScreenshotOpen(true)}
+              >
+                <Maximize2 size={16} /> Enlarge screenshot
+              </button>
+            )}
+          </div>
+          {project.image && project.imageSource && (
+            <figcaption className="screenshot-note">
+              {project.imageSourceType === 'provided'
+                ? 'App screenshot'
+                : project.imageSourceType === 'repository'
+                  ? 'Repository preview'
+                  : 'Public website screenshot'}
+              <a href={project.imageSource} target="_blank" rel="noreferrer">
+                View original <ArrowUpRight size={13} />
+              </a>
+            </figcaption>
           )}
-        </div>
-        {project.image && project.imageSource && (
-          <figcaption className="screenshot-note">
-            {project.imageSourceType === 'provided'
-              ? 'App screenshot'
-              : project.imageSourceType === 'repository'
-                ? 'Repository preview'
-                : 'Public website screenshot'}
-            <a href={project.imageSource} target="_blank" rel="noreferrer">
-              View original <ArrowUpRight size={13} />
-            </a>
-          </figcaption>
-        )}
-      </figure>
+        </figure>
+      )}
       {project.demoNote && <p className="demo-note">{project.demoNote}</p>}
       <div className="project-story">
         <aside className="project-facts">
@@ -148,7 +196,7 @@ export default function ProjectPage() {
             ))}
           </nav>
           <div className="case-stack">
-            <h2>Technologies</h2>
+            <h2>{project.category === 'QA' ? 'Methods & tools' : 'Technologies'}</h2>
             {groupStack(project.techStack).map(({ label, items }) => (
               <div key={label}>
                 <h3>{label}</h3>
