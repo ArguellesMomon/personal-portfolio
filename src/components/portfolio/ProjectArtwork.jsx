@@ -4,7 +4,9 @@ export default function ProjectArtwork({ project, large = false, cover = false }
   const useCover = cover && Boolean(project.coverImage);
   if (project.image)
     return (
-      <div className={`project-art real-art ${large ? 'art-large' : ''}`}>
+      <div
+        className={`project-art real-art ${project.imageLayout === 'portrait' ? 'portrait-art' : ''} ${large ? 'art-large' : ''}`}
+      >
         <img
           src={useCover ? project.coverImage : project.image}
           alt={(useCover ? project.coverImageAlt : project.imageAlt) || project.title}

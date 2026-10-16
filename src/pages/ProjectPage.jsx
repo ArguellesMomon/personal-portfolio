@@ -102,7 +102,9 @@ export default function ProjectPage() {
           {copyStatus}
         </span>
       </div>
-      <figure className="project-figure">
+      <figure
+        className={`project-figure ${project.imageLayout === 'portrait' ? 'project-figure-portrait' : ''}`}
+      >
         <div className="project-screenshot">
           <ProjectArtwork project={project} large />
           {project.image && (
@@ -117,9 +119,11 @@ export default function ProjectPage() {
         </div>
         {project.image && project.imageSource && (
           <figcaption className="screenshot-note">
-            {project.imageSourceType === 'repository'
-              ? 'Repository preview'
-              : 'Public website screenshot'}
+            {project.imageSourceType === 'provided'
+              ? 'App screenshot'
+              : project.imageSourceType === 'repository'
+                ? 'Repository preview'
+                : 'Public website screenshot'}
             <a href={project.imageSource} target="_blank" rel="noreferrer">
               View original <ArrowUpRight size={13} />
             </a>

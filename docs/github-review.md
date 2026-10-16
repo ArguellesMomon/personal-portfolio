@@ -1,6 +1,19 @@
-# GitHub project review — 14 October 2026
+# GitHub project review
 
-Reviewed all 25 public repositories returned by the [GitHub account API](https://api.github.com/users/ArguellesMomon/repos?per_page=100&sort=updated), including default-branch file lists, available READMEs, package metadata, and latest push dates. Private repositories are outside this public review. The current collection has 13 case studies, ten linked to public repositories; existing case studies without public source remain available.
+The initial review on 14 October 2026 covered 25 public repositories returned by the [GitHub account API](https://api.github.com/users/ArguellesMomon/repos?per_page=100&sort=updated), including default-branch file lists, available READMEs, package metadata, and latest push dates. Private repositories are outside this public review. Following the additions below, the collection has 15 case studies, 13 linked to public repositories.
+
+## Follow-up — 16 October 2026
+
+Reviewed the public package metadata and implementation for the supplied repositories:
+
+- [Job Finder](https://github.com/ArguellesMomon/job-finder-app): added the Empllo listing integration, search and filters, per-user saved jobs, and local application tracking. The case study identifies sign-in and application submission as local demo flows.
+- [Online Ordering System](https://github.com/ArguellesMomon/online-ordering-system-react-native): added product discovery, price filters and sorting, shared cart state, selected-item totals, and checkout validation. Payment and order confirmation are simulated; the case study states this explicitly.
+- [Eventure](https://github.com/bmsj23/final-project-group3-mobapp): retained the source link supplied by Richmond, reviewed Supabase event and booking modules, and scoped the contribution to booking flow and validation within the team project. Welcome-screen activity figures are labeled as interface copy rather than verified usage metrics.
+- [Travel Diary](https://github.com/ArguellesMomon/travel-diary): confirmed local photo/location/note storage and added the supplied empty-state screenshot.
+
+All four supplied phone screenshots have cropped display copies with their status bars and home indicators removed. The originals are preserved and linked from their case studies. Screenshots document the supplied interfaces; no sign-in, booking, application submission, payment, or other account writes were performed during review.
+
+## Initial review — 14 October 2026
 
 | Repository                                                                         | Portfolio decision                                                                                                                                |
 | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |

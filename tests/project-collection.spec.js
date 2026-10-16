@@ -6,7 +6,7 @@ test('technology filters match exact stacks and persist through project navigati
   await page.goto('/projects');
   const technology = page.getByRole('combobox', { name: 'Filter by technology' });
   await technology.selectOption('React Native');
-  await expect(page.locator('.work-card')).toHaveCount(2);
+  await expect(page.locator('.work-card')).toHaveCount(4);
   await expect(page).toHaveURL(/tech=React\+Native/);
   await page.reload();
   await expect(technology).toHaveValue('React Native');
@@ -17,7 +17,7 @@ test('technology filters match exact stacks and persist through project navigati
   await expect(page.getByRole('heading', { name: 'No projects found' })).toBeVisible();
   await page.getByRole('button', { name: 'Reset filters' }).click();
   await expect(technology).toHaveValue('');
-  await expect(page.locator('.work-card')).toHaveCount(13);
+  await expect(page.locator('.work-card')).toHaveCount(15);
   await technology.selectOption('React');
   await expect(page.locator('.work-card')).toHaveCount(9);
   await expect(page.locator('.work-card h2')).not.toContainText(['Eventure']);
@@ -39,7 +39,7 @@ test('case study sections and technology links connect to the collection', async
   await expect(page.getByRole('combobox', { name: 'Filter by technology' })).toHaveValue(
     'Supabase',
   );
-  await expect(page.locator('.work-card')).toHaveCount(3);
+  await expect(page.locator('.work-card')).toHaveCount(4);
   await page
     .getByRole('heading', { name: 'C4A Fieldnotes', exact: true })
     .getByRole('link')

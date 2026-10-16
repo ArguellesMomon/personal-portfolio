@@ -135,6 +135,25 @@
   max-height: 540px;
   object-fit: contain;
 }
+.project-figure-portrait {
+  max-width: 480px;
+  margin-inline: auto;
+}
+.project-figure-portrait .project-screenshot {
+  padding: 20px 20px 70px;
+}
+.project-screenshot .portrait-art {
+  padding: 0;
+  background: transparent;
+}
+.project-screenshot .portrait-art img {
+  width: auto;
+  max-width: 100%;
+}
+.project-figure-portrait .screenshot-expand {
+  right: 20px;
+  bottom: 16px;
+}
 .project-screenshot .project-placeholder {
   min-height: 300px;
 }

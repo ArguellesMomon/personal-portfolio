@@ -369,6 +369,19 @@ main:focus {
   height: 100%;
   object-fit: cover;
 }
+.project-art.portrait-art {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px;
+}
+.portrait-art img {
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
 .project-placeholder {
   display: flex;
   flex-direction: column;

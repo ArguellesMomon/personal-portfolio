@@ -224,16 +224,68 @@
     "id": "eventure",
     "title": "Eventure",
     "category": "Mobile",
-    "shortDescription": "A React Native campus event booking app with a step-by-step form and input validation.",
-    "techStack": ["React Native", "Expo", "TypeScript"],
-    "role": "Sole developer: booking flow and form validation.",
+    "shortDescription": "A campus event app for discovering events, saving favorites, and managing registrations.",
+    "techStack": ["React Native", "Expo", "TypeScript", "Supabase", "AsyncStorage"],
+    "role": "Team project: booking flow and form validation.",
     "problem": "Students need clear feedback while entering event booking details, before reaching the final submission step.",
-    "approach": "Built a multi-step booking flow with React Native, Expo, and TypeScript. Each step validates its inputs before the user continues.",
+    "approach": "The React Native app uses Expo and Supabase for accounts, event discovery, saved events, and booking history. My contribution focused on the booking flow and input validation.",
     "links": {
-      "github": "",
+      "github": "https://github.com/bmsj23/final-project-group3-mobapp.git",
       "live": ""
     },
-    "image": null
+    "image": "/projects/eventure.jpg",
+    "badge": "Team Project",
+    "demoNote": "The supplied screenshot shows the welcome screen. Its displayed activity figures are interface copy, not verified usage metrics.",
+    "imageWidth": 1290,
+    "imageHeight": 2586,
+    "imageAlt": "Eventure welcome screen with campus event discovery and sign-in, account creation, and guest browsing actions",
+    "imageLayout": "portrait",
+    "imageSource": "/projects/eventure.PNG",
+    "imageSourceType": "provided"
+  },
+  {
+    "id": "job-finder-app",
+    "title": "Job Finder",
+    "category": "Mobile",
+    "shortDescription": "A mobile job browser with live listings, search and filters, saved jobs, and local application tracking.",
+    "techStack": ["React Native", "Expo", "TypeScript", "AsyncStorage", "React Navigation"],
+    "problem": "Job seekers need a way to compare listings, keep a shortlist, and track the roles they have applied for.",
+    "approach": "Loads listings from the Empllo API and normalizes company, location, salary, and application-link data. Search and filters narrow the results. AsyncStorage keeps saved listings and application records for each local user, with a validated application form.",
+    "challenges": "Handling missing salary data, generating stable listing IDs, and keeping saved jobs and application records associated with the current user.",
+    "demoNote": "Listings come from Empllo. Sign-in and application tracking are local demo flows; submitting the in-app form does not send an application to an employer.",
+    "links": {
+      "github": "https://github.com/ArguellesMomon/job-finder-app",
+      "live": ""
+    },
+    "image": "/projects/job-finder.jpg",
+    "imageWidth": 1290,
+    "imageHeight": 2586,
+    "imageAlt": "Job Finder mobile search screen showing Empllo listings, company information, salary ranges, and saved and applied job tabs",
+    "imageLayout": "portrait",
+    "imageSource": "/projects/job%20finder%20app%20-%20react%20native.PNG",
+    "imageSourceType": "provided"
+  },
+  {
+    "id": "online-ordering-system",
+    "title": "Online Ordering System",
+    "category": "Mobile",
+    "shortDescription": "A mobile product catalog with search, price filters, a quantity-aware cart, and a validated demo checkout.",
+    "techStack": ["React Native", "Expo", "TypeScript", "React Navigation"],
+    "problem": "Shoppers need to find products, adjust quantities, and understand the total before confirming an order.",
+    "approach": "Built a typed React Native shopping flow with product details, search, sorting, and price filters. Shared cart state handles quantities and selected items. Checkout validates delivery details and payment selection, then calculates shipping and tax before a simulated confirmation.",
+    "challenges": "Keeping selected-item totals consistent with quantity changes and preventing the same checkout from being confirmed twice.",
+    "demoNote": "Checkout simulates order confirmation. No payment is collected or order sent to a server. The cart is held in memory for the current app session.",
+    "links": {
+      "github": "https://github.com/ArguellesMomon/online-ordering-system-react-native",
+      "live": ""
+    },
+    "image": "/projects/ordering-system.jpg",
+    "imageWidth": 1290,
+    "imageHeight": 2586,
+    "imageAlt": "Online Ordering System dark product catalog with search, filters, a cart action, and product cards with Philippine peso prices",
+    "imageLayout": "portrait",
+    "imageSource": "/projects/ordering%20system%20-%20react%20native.PNG",
+    "imageSourceType": "provided"
   },
   {
     "id": "iris",
@@ -279,7 +331,13 @@
       "github": "https://github.com/ArguellesMomon/travel-diary",
       "live": ""
     },
-    "image": null
+    "image": "/projects/travel-diary.jpg",
+    "imageWidth": 1290,
+    "imageHeight": 2586,
+    "imageAlt": "Travel Diary dark homepage with journal statistics, an empty memory collection, and a New Memory action",
+    "imageLayout": "portrait",
+    "imageSource": "/projects/travel%20diary.PNG",
+    "imageSourceType": "provided"
   },
   {
     "id": "node-red-dashboard",

@@ -18,7 +18,7 @@ Use `npm.cmd` or `npx.cmd` in Windows PowerShell if script execution is restrict
 ## Pages
 
 - `/`: introduction, background and capabilities, three featured projects, two certificate highlights, and direct contact links. A layered portrait, floating cube, section reveals, and interactive perspective add depth. Hero animations settle within five seconds and suspend while offscreen or in hidden tabs.
-- `/projects`: thirteen projects with search, category, technology, and live-demo filters. Filters persist in the URL and when returning from a case study.
+- `/projects`: fifteen projects with search, category, technology, and live-demo filters. Filters persist in the URL and when returning from a case study.
 - `/projects/:id`: purpose, implementation, technical focus, contribution, technologies, and available demo/source links. Screenshots support enlargement and actual-size viewing. Previews and account requirements are labeled.
 - `/about`: background, education, and demonstrated technical skills.
 - `/achievements`: eighteen certificates and academic records with search, category filters, original documents, downloads, and a keyboard-accessible viewer.
@@ -37,9 +37,9 @@ The portrait, project cards, and homepage certificate previews gently tilt towar
 - `src/data/skills.js`: technologies demonstrated in the project collection.
 - `src/data/achievements.json`: supplied certificate metadata. Original files live in `src/Certificates/`; previews live in `public/certificates/previews/`.
 
-All 25 public GitHub repositories were reviewed on 14 October 2026. The collection includes Pocket Quest; smaller coursework, personal gift pages, and duplicate portfolios remain outside the curated collection. See [repository coverage](docs/github-review.md).
+The initial public GitHub review was completed on 14 October 2026. Job Finder and Online Ordering System were added in a source-code review on 16 October, alongside the supplied Eventure repository and updated Travel Diary screenshots. Smaller coursework, personal gift pages, and duplicate portfolios remain outside the curated collection. See [repository coverage](docs/github-review.md).
 
-Nine projects have real screenshots. Seven deployment screenshots were refreshed on 14 October. Pocket Quest uses a labeled repository preview with sample progress; AedesCapella shows its public operator sign-in. Projects without screenshots display a clearly labeled placeholder. Source attribution is available on each case study.
+Thirteen projects have real screenshots. Seven deployment screenshots were refreshed on 14 October. Pocket Quest uses a labeled repository preview with sample progress; AedesCapella shows its public operator sign-in. Eventure, Travel Diary, Job Finder, and Online Ordering System use supplied phone screenshots, with status bars and home indicators cropped from display copies. Originals remain available through each case study. Portrait screenshots keep their proportions in cards, details, and the enlargement dialog. Projects without screenshots display a clearly labeled placeholder.
 
 ## Validation and maintenance
 

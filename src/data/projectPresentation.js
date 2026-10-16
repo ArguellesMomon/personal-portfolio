@@ -1,7 +1,17 @@
 const stackGroups = [
   [
     'Interface',
-    ['React', 'React Native', 'Expo', 'Vite', 'TypeScript', 'Tailwind CSS', 'Recharts', 'Leaflet'],
+    [
+      'React',
+      'React Native',
+      'Expo',
+      'React Navigation',
+      'Vite',
+      'TypeScript',
+      'Tailwind CSS',
+      'Recharts',
+      'Leaflet',
+    ],
   ],
   ['Data & storage', ['Supabase', 'Neon Auth', 'Neon Postgres', 'IndexedDB', 'AsyncStorage']],
   [

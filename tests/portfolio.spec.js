@@ -3,24 +3,24 @@ import AxeBuilder from '@axe-core/playwright';
 
 test('project search, category filters, URL state, and empty recovery', async ({ page }) => {
   await page.goto('/projects');
-  await expect(page.locator('.work-card')).toHaveCount(13);
+  await expect(page.locator('.work-card')).toHaveCount(15);
   await page.getByRole('button', { name: 'Mobile apps', exact: true }).click();
-  await expect(page.locator('.work-card')).toHaveCount(2);
+  await expect(page.locator('.work-card')).toHaveCount(4);
   await expect(page).toHaveURL(/category=Mobile/);
   await page.reload();
-  await expect(page.locator('.work-card')).toHaveCount(2);
+  await expect(page.locator('.work-card')).toHaveCount(4);
   await page.getByRole('button', { name: 'All projects', exact: true }).click();
   await page.getByRole('searchbox').fill('Chami');
   await expect(page.locator('.work-card h2')).toHaveText('MedTech Mate');
   await page.getByRole('searchbox').fill('no-such-project');
   await expect(page.getByRole('heading', { name: 'No projects found' })).toBeVisible();
   await page.getByRole('button', { name: 'Reset filters' }).click();
-  await expect(page.locator('.work-card')).toHaveCount(13);
+  await expect(page.locator('.work-card')).toHaveCount(15);
   await page.getByRole('button', { name: 'Mobile apps', exact: true }).click();
   await page.getByRole('heading', { name: 'Travel Diary', exact: true }).getByRole('link').click();
   await page.getByRole('link', { name: 'Back to projects', exact: true }).click();
   await expect(page).toHaveURL(/category=Mobile/);
-  await expect(page.locator('.work-card')).toHaveCount(2);
+  await expect(page.locator('.work-card')).toHaveCount(4);
 });
 
 test('project cards lead directly to details, demo, and source', async ({ page }) => {

@@ -16,7 +16,7 @@ test('live-demo filtering survives reload, details, and filter resets', async ({
   await expect(page.getByRole('checkbox', { name: /Live demos only/ })).toBeChecked();
   await page.getByRole('searchbox').fill('not-a-project');
   await page.getByRole('button', { name: 'Reset filters' }).click();
-  await expect(page.locator('.work-card')).toHaveCount(13);
+  await expect(page.locator('.work-card')).toHaveCount(15);
   await expect(page.getByRole('checkbox', { name: /Live demos only/ })).not.toBeChecked();
   await page.goto('/projects/node-red-dashboard');
   await expect(page.getByRole('heading', { level: 1 })).toContainText('Node-RED');
