@@ -215,8 +215,8 @@ export default function Home() {
             internship planning workspace to an acoustic mosquito detection thesis.
           </p>
           <p>
-            That means building the screens people use, connecting the data behind them, and testing
-            how the pieces work together.
+            I’m also exploring game development with Rae Jacob: Beyond the Balete, my first game—a
+            pixel-art adventure inspired by Philippine folklore.
           </p>
           <Link className="text-link" to="/about">
             More about me <ArrowRight size={17} />

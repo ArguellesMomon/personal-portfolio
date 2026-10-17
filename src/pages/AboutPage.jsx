@@ -27,9 +27,12 @@ export default function AboutPage() {
             systems.
           </p>
           <p>
-            I’ve built internship planning tools, local discovery apps, and an acoustic mosquito
-            detection thesis. These projects cover interface design, authentication, data storage,
-            and device integration.
+            My work includes internship planning tools, local discovery apps, and an acoustic
+            mosquito detection thesis. I’m now exploring game development with{' '}
+            <Link to="/projects/rae-jacob" state={{ returnTo: '/about' }}>
+              Rae Jacob: Beyond the Balete
+            </Link>
+            , my first game—a pixel-art adventure inspired by Philippine folklore.
           </p>
           <div className="education-fact">
             <span className="eyebrow">Education</span>

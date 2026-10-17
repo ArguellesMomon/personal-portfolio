@@ -7,6 +7,7 @@ export const categoryLabels = {
   'Embedded/Hardware': 'Embedded systems',
   'Web App': 'Web apps',
   Mobile: 'Mobile apps',
+  Game: 'Games',
   'ML/Data': 'Data & ML',
   QA: 'Software QA',
 };

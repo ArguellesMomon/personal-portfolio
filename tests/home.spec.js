@@ -11,6 +11,11 @@ test('homepage connects background, projects, credentials, and contact with real
   await expect(page.locator('#home-about')).toContainText('acoustic mosquito detection thesis');
   await expect(page.getByRole('link', { name: 'More about me' })).toHaveAttribute('href', '/about');
   await expect(page.locator('.selected-work .work-card')).toHaveCount(3);
+  await expect(page.locator('.selected-work .work-card h3')).toHaveText([
+    'Rae Jacob: Beyond the Balete',
+    'AedesCapella',
+    'MedTech Mate',
+  ]);
   await expect(page.getByRole('link', { name: 'All 18 learning records' })).toHaveAttribute(
     'href',
     '/achievements',

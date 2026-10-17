@@ -160,17 +160,20 @@ export default function ProjectPage() {
                 className="screenshot-expand"
                 onClick={() => setScreenshotOpen(true)}
               >
-                <Maximize2 size={16} /> Enlarge screenshot
+                <Maximize2 size={16} />{' '}
+                {project.imageSourceType === 'artwork' ? 'Enlarge preview' : 'Enlarge screenshot'}
               </button>
             )}
           </div>
           {project.image && project.imageSource && (
             <figcaption className="screenshot-note">
-              {project.imageSourceType === 'provided'
-                ? 'App screenshot'
-                : project.imageSourceType === 'repository'
-                  ? 'Repository preview'
-                  : 'Public website screenshot'}
+              {project.imageSourceType === 'artwork'
+                ? 'Scene artwork preview'
+                : project.imageSourceType === 'provided'
+                  ? 'App screenshot'
+                  : project.imageSourceType === 'repository'
+                    ? 'Repository preview'
+                    : 'Public website screenshot'}
               <a href={project.imageSource} target="_blank" rel="noreferrer">
                 View original <ArrowUpRight size={13} />
               </a>

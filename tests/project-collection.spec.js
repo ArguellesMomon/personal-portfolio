@@ -6,7 +6,7 @@ test('technology filters match exact stacks and persist through project navigati
   await page.goto('/projects');
   const technology = page.getByRole('combobox', { name: 'Filter by technology' });
   await technology.selectOption('React Native');
-  await expect(page.locator('.work-card')).toHaveCount(4);
+  await expect(page.locator('.work-card')).toHaveCount(5);
   await expect(page).toHaveURL(/tech=React\+Native/);
   await page.reload();
   await expect(technology).toHaveValue('React Native');
@@ -17,7 +17,7 @@ test('technology filters match exact stacks and persist through project navigati
   await expect(page.getByRole('heading', { name: 'No projects found' })).toBeVisible();
   await page.getByRole('button', { name: 'Reset filters' }).click();
   await expect(technology).toHaveValue('');
-  await expect(page.locator('.work-card')).toHaveCount(15);
+  await expect(page.locator('.work-card')).toHaveCount(16);
   await technology.selectOption('React');
   await expect(page.locator('.work-card')).toHaveCount(9);
   await expect(page.locator('.work-card h2')).not.toContainText(['Eventure']);
@@ -67,4 +67,26 @@ test('phone visitors can filter and open projects without overflow', async ({ pa
       true,
     );
   }
+});
+
+test('game discovery, artwork preview, and About return path work on phones', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 740 });
+  await page.goto('/projects');
+  await page.getByRole('button', { name: 'Games', exact: true }).click();
+  await expect(page.locator('.work-card')).toHaveCount(1);
+  await page.getByRole('link', { name: 'View project', exact: true }).click();
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Rae Jacob: Beyond the Balete');
+  await expect(page.locator('.screenshot-note')).toContainText('Scene artwork preview');
+  await expect(page.getByRole('link', { name: 'Visit live project' })).toHaveCount(0);
+  await page.getByRole('button', { name: 'Enlarge preview' }).click();
+  await expect(page.getByRole('dialog')).toContainText('artwork preview');
+  await page.keyboard.press('Escape');
+  await expect(page.getByRole('button', { name: 'Enlarge preview' })).toBeFocused();
+  await page.getByRole('link', { name: 'Back to projects', exact: true }).click();
+  await expect(page).toHaveURL(/category=Game/);
+  await page.goto('/about');
+  await page.getByRole('link', { name: 'Rae Jacob: Beyond the Balete', exact: true }).click();
+  await page.getByRole('link', { name: 'Back to about', exact: true }).click();
+  await expect(page).toHaveURL('/about');
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 });

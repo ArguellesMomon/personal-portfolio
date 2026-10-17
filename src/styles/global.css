@@ -584,6 +584,11 @@ main:focus {
   max-width: 650px;
   color: var(--muted);
 }
+.about-intro-copy > p a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
 .education-fact {
   display: grid;
   gap: 4px;

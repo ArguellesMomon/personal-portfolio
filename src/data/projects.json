@@ -1,5 +1,38 @@
 [
   {
+    "id": "rae-jacob",
+    "title": "Rae Jacob: Beyond the Balete",
+    "category": "Game",
+    "badge": "First game",
+    "featured": true,
+    "shortDescription": "A Philippine folklore adventure with pixel-art worlds, character conversations, exploration, and environmental puzzles.",
+    "techStack": [
+      "React Native",
+      "TypeScript",
+      "Expo",
+      "React Native SVG",
+      "AsyncStorage",
+      "Expo Audio"
+    ],
+    "role": "Personal project: gameplay, story interactions, scene integration, and local progress.",
+    "problem": "Create an explorable Philippine folklore world where conversations, discoveries, and environmental puzzles move the story forward.",
+    "approach": "Built a landscape adventure with React Native, TypeScript, and Expo. A custom game loop handles movement, collision, contextual interactions, and a following companion across six maps. Branching conversations, field notes, and a water-routing puzzle connect the story. AsyncStorage preserves journey checkpoints, while scene replay uses a separate save.",
+    "challenges": "Keeping movement, dialogue, and puzzle state consistent across map changes and interruptions. Safe checkpoints and save migration preserve progress; touch and keyboard controls share the same interactions. Audio and camera settings can be adjusted independently of the journey.",
+    "outcome": "A playable Chapter 1 and the opening arc of Chapter 2, with pixel-art scenes, animated characters, local saves, bundled audio, and replayable story checkpoints. Further chapters and physical-device polish are still in progress.",
+    "demoNote": "Prototype available from the source repository; run it locally with Expo Go or the browser preview. The image is a scene artwork render from the repository. Physical-device validation is still pending.",
+    "links": {
+      "github": "https://github.com/ArguellesMomon/Rae-Jacob-Beyond-The-Balete",
+      "live": ""
+    },
+    "image": "/projects/rae-jacob.png",
+    "imageWidth": 1280,
+    "imageHeight": 896,
+    "imageAlt": "Rae and Lola in a pixel-art Philippine garden, with a wooden house, hanging laundry, and a balete tree",
+    "imageSource": "https://github.com/ArguellesMomon/Rae-Jacob-Beyond-The-Balete/blob/3b7822c0cbcf968dc6d8d63ecb229aa5b91acea8/artifacts/lolas-yard-art-preview.png",
+    "imageSourceType": "artwork",
+    "imagePosition": "center"
+  },
+  {
     "id": "aedescapella",
     "imagePosition": "top",
     "title": "AedesCapella",
@@ -43,7 +76,7 @@
   {
     "id": "pickletayo",
     "title": "Pickle Batangas",
-    "featured": true,
+    "featured": false,
     "category": "Web App",
     "shortDescription": "A Batangas pickleball court finder with map search, venue comparisons, saved shortlists, and shareable game plans.",
     "techStack": ["React", "Vite", "Leaflet", "PWA"],

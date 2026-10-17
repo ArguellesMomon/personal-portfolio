@@ -11,6 +11,7 @@ const stackGroups = [
       'Tailwind CSS',
       'Recharts',
       'Leaflet',
+      'React Native SVG',
     ],
   ],
   ['Data & storage', ['Supabase', 'Neon Auth', 'Neon Postgres', 'IndexedDB', 'AsyncStorage']],

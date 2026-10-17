@@ -1,6 +1,12 @@
 # GitHub project review
 
-The initial review on 14 October 2026 covered 25 public repositories returned by the [GitHub account API](https://api.github.com/users/ArguellesMomon/repos?per_page=100&sort=updated), including default-branch file lists, available READMEs, package metadata, and latest push dates. Private repositories are outside this public review. Following the additions below, the collection has 15 case studies, 13 linked to public repositories.
+The initial review on 14 October 2026 covered 25 public repositories returned by the [GitHub account API](https://api.github.com/users/ArguellesMomon/repos?per_page=100&sort=updated), including default-branch file lists, available READMEs, package metadata, and latest push dates. Private repositories are outside this public review. Following the additions below, the collection has 16 case studies, 14 linked to public repositories.
+
+## Follow-up — 17 October 2026
+
+Added [Rae Jacob: Beyond the Balete](https://github.com/ArguellesMomon/Rae-Jacob-Beyond-The-Balete), Richmond’s first game, at reviewed commit `3b7822c0cbcf968dc6d8d63ecb229aa5b91acea8`. Reviewed README, package/app metadata, gameplay engine, save/controller code, and scene artwork. The stack is React Native, TypeScript, Expo, React Native SVG, AsyncStorage, and Expo Audio. The case study covers the six-map adventure, conversations, environmental puzzle, local checkpoints, and isolated replay saves. It identifies Chapter 1 and the opening Chapter 2 arc as prototype work; no physical-device testing or completed release is claimed.
+
+The featured trio is now Rae Jacob, AedesCapella, and MedTech Mate. Pickle Batangas remains in the collection. A Games category and first-game mentions on Home and About connect the new work to the existing portfolio. The opening-yard image is copied unchanged from `artifacts/lolas-yard-art-preview.png`, attributed to the reviewed commit, and explicitly labeled as scene artwork rather than a running-app screenshot. The owner confirmed there is no public play URL yet; the project links to source only.
 
 ## Follow-up — 16 October 2026
 

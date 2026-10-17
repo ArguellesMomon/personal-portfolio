@@ -1,6 +1,6 @@
 # Richmond Arguelles — portfolio
 
-A React portfolio for web, mobile, embedded systems, and software QA work. The site uses self-hosted Inter typography, a restrained green palette, and light/dark/system themes.
+A React portfolio for web, mobile, games, embedded systems, and software QA work. The site uses self-hosted Inter typography, a restrained green palette, and light/dark/system themes.
 
 Static paper grain, fading drafting grids, and a small certificate-section hatch add texture to the background. Patterns adapt to each theme, stay behind content, and disappear in forced-colors and print modes. The grain is a small local SVG; no external assets or animation are needed.
 
@@ -18,7 +18,7 @@ Use `npm.cmd` or `npx.cmd` in Windows PowerShell if script execution is restrict
 ## Pages
 
 - `/`: introduction, background and capabilities, three featured projects, two certificate highlights, and direct contact links. A layered portrait, floating cube, section reveals, and interactive perspective add depth. Hero animations settle within five seconds and suspend while offscreen or in hidden tabs.
-- `/projects`: fifteen projects with search, category, technology, and live-demo filters. Filters persist in the URL and when returning from a case study.
+- `/projects`: sixteen projects with search, category, technology, and live-demo filters. Filters persist in the URL and when returning from a case study.
 - `/projects/:id`: purpose, implementation, technical focus, contribution, technologies, and available demo/source links. Screenshots support enlargement and actual-size viewing. Previews and account requirements are labeled.
 - `/about`: background, education, and demonstrated technical skills.
 - `/achievements`: eighteen certificates and academic records with search, category filters, original documents, downloads, and a keyboard-accessible viewer.
@@ -38,6 +38,8 @@ The portrait, project cards, and homepage certificate previews gently tilt towar
 - `src/data/achievements.json`: supplied certificate metadata. Original files live in `src/Certificates/`; previews live in `public/certificates/previews/`.
 
 IRIS is a Software QA case study. Its methods, role, and evidence describe the evaluation team's work. The shared Google Sheets workbook opens in a read-only view; the displayed unit, integration, and system counts are team-reported workbook figures reviewed on 16 October 2026. Update the evidence summary when that workbook changes. IRIS does not contribute hardware-development tools to the skills list.
+
+The featured projects are Rae Jacob: Beyond the Balete, AedesCapella, and MedTech Mate. Rae Jacob is Richmond’s first game, a React Native/Expo Philippine folklore adventure prototype added on 17 October. Its case study distinguishes the playable first chapter and opening Chapter 2 arc from future work. There is no hosted demo yet. The image is a labeled scene artwork render from the source repository, with a link pinned to the reviewed commit.
 
 The initial public GitHub review was completed on 14 October 2026. Job Finder and Online Ordering System were added in a source-code review on 16 October, alongside the supplied Eventure repository and updated Travel Diary screenshots. Smaller coursework, personal gift pages, and duplicate portfolios remain outside the curated collection. See [repository coverage](docs/github-review.md).
 

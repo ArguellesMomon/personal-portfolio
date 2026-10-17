@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Maximize2, Minimize2, X } from 'lucide-react';
 
 export default function ScreenshotDialog({ project, onClose, returnFocus }) {
+  const artwork = project.imageSourceType === 'artwork';
   const dialog = useRef(null);
   const [zoomed, setZoomed] = useState(false);
   useEffect(() => {
@@ -51,8 +52,15 @@ export default function ScreenshotDialog({ project, onClose, returnFocus }) {
       }}
     >
       <header className="screenshot-toolbar">
-        <h2 id="screenshot-title">{project.title} — screenshot</h2>
-        <button autoFocus className="icon-button" aria-label="Close screenshot" onClick={onClose}>
+        <h2 id="screenshot-title">
+          {project.title} — {artwork ? 'artwork preview' : 'screenshot'}
+        </h2>
+        <button
+          autoFocus
+          className="icon-button"
+          aria-label={artwork ? 'Close preview' : 'Close screenshot'}
+          onClick={onClose}
+        >
           <X size={20} />
         </button>
       </header>
@@ -60,7 +68,7 @@ export default function ScreenshotDialog({ project, onClose, returnFocus }) {
         className={`screenshot-stage ${zoomed ? 'is-zoomed' : ''}`}
         tabIndex={0}
         role="region"
-        aria-label="Project screenshot; scroll to explore at actual size"
+        aria-label={`Project ${artwork ? 'artwork preview' : 'screenshot'}; scroll to explore at actual size`}
         style={{ '--image-width': `${project.imageWidth || 1600}px` }}
       >
         <img
@@ -72,7 +80,11 @@ export default function ScreenshotDialog({ project, onClose, returnFocus }) {
       </div>
       <footer className="screenshot-controls">
         <span>
-          {zoomed ? 'Scroll to explore the details.' : 'A closer look at the actual interface.'}
+          {zoomed
+            ? 'Scroll to explore the details.'
+            : artwork
+              ? 'A closer look at the scene artwork.'
+              : 'A closer look at the actual interface.'}
         </span>
         <button
           className="button button-outline button-small"
