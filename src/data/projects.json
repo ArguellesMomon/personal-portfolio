@@ -172,7 +172,6 @@
     "id": "pocket-quest",
     "title": "Pocket Quest",
     "category": "Web App",
-    "badge": "Latest build",
     "featured": false,
     "shortDescription": "A task journal that turns completed work into coins and XP, with animated companions, a customizable habitat, focus timers, and AI chat.",
     "techStack": ["React", "Vite", "Neon Auth", "Neon Postgres", "Groq", "PWA"],
