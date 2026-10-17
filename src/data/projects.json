@@ -123,6 +123,7 @@
     "id": "wellbot",
     "title": "MedTech Mate",
     "category": "Web App",
+    "badge": "First personal AI project",
     "shortDescription": "A MedTech internship workspace for rotations, procedure quotas, shifts, notes, and documents, with Chami as an AI study companion.",
     "techStack": ["React", "Vite", "Supabase", "Groq"],
     "role": "Sole developer: internship workspace, data integration, and Chami study chat.",
