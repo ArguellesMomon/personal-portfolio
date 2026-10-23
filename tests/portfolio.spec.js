@@ -18,7 +18,7 @@ test('project search, category filters, URL state, and empty recovery', async ({
   await expect(page.locator('.work-card')).toHaveCount(16);
   await page.getByRole('button', { name: 'Mobile apps', exact: true }).click();
   await page.getByRole('heading', { name: 'Travel Diary', exact: true }).getByRole('link').click();
-  await page.getByRole('link', { name: 'Back to projects', exact: true }).click();
+  await page.goBack();
   await expect(page).toHaveURL(/category=Mobile/);
   await expect(page.locator('.work-card')).toHaveCount(4);
 });
@@ -40,7 +40,7 @@ test('project cards lead directly to details, demo, and source', async ({ page }
     'https://github.com/ArguellesMomon/Pocket_Quest_App',
   );
   await expect(page).toHaveTitle('Pocket Quest — Richmond Arguelles');
-  await page.getByRole('link', { name: 'Back to projects', exact: true }).click();
+  await page.goBack();
   await expect(page.getByRole('searchbox')).toHaveValue('Pocket');
 });
 

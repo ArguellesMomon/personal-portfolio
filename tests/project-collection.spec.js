@@ -11,7 +11,7 @@ test('technology filters match exact stacks and persist through project navigati
   await page.reload();
   await expect(technology).toHaveValue('React Native');
   await page.locator('.work-card h2').first().getByRole('link').click();
-  await page.getByRole('link', { name: 'Back to projects', exact: true }).click();
+  await page.goBack();
   await expect(technology).toHaveValue('React Native');
   await page.getByRole('checkbox', { name: 'Live demos only' }).check();
   await expect(page.getByRole('heading', { name: 'No projects found' })).toBeVisible();
@@ -44,7 +44,7 @@ test('case study sections and technology links connect to the collection', async
     .getByRole('heading', { name: 'C4A Fieldnotes', exact: true })
     .getByRole('link')
     .click();
-  await page.getByRole('link', { name: 'Back to projects', exact: true }).click();
+  await page.goBack();
   await expect(page.getByRole('combobox', { name: 'Filter by technology' })).toHaveValue(
     'Supabase',
   );

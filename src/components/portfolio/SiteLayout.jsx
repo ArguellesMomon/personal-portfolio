@@ -165,7 +165,7 @@ export function PreviousPageNavigation() {
   const label = `Back to ${canGoBack ? (previousPath ? pageLabel(previousPath) : 'previous page') : 'Home'}`;
 
   return (
-    <nav className="container page-navigation" aria-label="Page history">
+    <nav className="container page-navigation mobile-back-control" aria-label="Page history">
       <button
         type="button"
         className="text-link previous-button"

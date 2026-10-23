@@ -493,6 +493,9 @@ main:focus {
 }
 
 /* Shared page rhythm. */
+.mobile-back-control {
+  display: none;
+}
 .page-navigation {
   padding-top: 12px;
 }
@@ -960,6 +963,12 @@ main:focus {
   }
 }
 @media (max-width: 760px) {
+  .mobile-back-control {
+    display: inline-flex;
+  }
+  .page-navigation.mobile-back-control {
+    display: block;
+  }
   .header-inner {
     min-height: 68px;
     justify-content: space-between;

@@ -12,7 +12,7 @@ test('live-demo filtering survives reload, details, and filter resets', async ({
     .getByRole('heading', { name: 'C4A Fieldnotes', exact: true })
     .getByRole('link')
     .click();
-  await page.getByRole('link', { name: 'Back to projects', exact: true }).click();
+  await page.goBack();
   await expect(page.getByRole('checkbox', { name: /Live demos only/ })).toBeChecked();
   await page.getByRole('searchbox').fill('not-a-project');
   await page.getByRole('button', { name: 'Reset filters' }).click();

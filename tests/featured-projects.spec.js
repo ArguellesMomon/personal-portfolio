@@ -111,6 +111,7 @@ test('keyboard navigation, phone widths, and desktop grid remain accessible', as
 test('all homepage project links and next-project links preserve the return path', async ({
   page,
 }) => {
+  await page.setViewportSize({ width: 560, height: 900 });
   await page.goto('/');
   for (const selector of ['.work-card-media', 'h3 a', '.card-actions a:first-child']) {
     await page.locator('#featured-projects .work-card').first().locator(selector).click();

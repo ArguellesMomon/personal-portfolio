@@ -7,7 +7,7 @@ const allProjects = JSON.parse(
 
 for (const width of [320, 1440]) {
   for (const theme of ['light', 'dark']) {
-    test(`every route has one back control except Home at ${width}px in ${theme}`, async ({
+    test(`back controls follow the mobile layout on every route at ${width}px in ${theme}`, async ({
       page,
     }, testInfo) => {
       test.setTimeout(90000);
@@ -30,8 +30,10 @@ for (const width of [320, 1440]) {
         const backControls = page
           .getByRole('button', { name: /^Back / })
           .or(page.getByRole('link', { name: /^Back / }));
-        await expect(backControls, `${route} back controls`).toHaveCount(route === '/' ? 0 : 1);
-        if (route !== '/') await expect(backControls).toBeVisible();
+        const expectedCount = route === '/' || width > 760 ? 0 : 1;
+        await expect(backControls, `${route} back controls`).toHaveCount(expectedCount);
+        if (expectedCount) await expect(backControls).toBeVisible();
+        if (width > 760) await expect(page.locator('.mobile-back-control')).toBeHidden();
         if (route === '/' || route.startsWith('/projects/') || route === '/missing')
           await expect(page.getByRole('navigation', { name: 'Page history' })).toHaveCount(0);
         expect(
@@ -48,6 +50,7 @@ for (const width of [320, 1440]) {
 }
 
 test('primary subpages offer one back button and Home has none', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
   for (const route of ['/projects', '/about', '/contact', '/achievements']) {
     await page.goto(route);
     const previous = page.getByRole('navigation', { name: 'Page history' }).getByRole('button');
@@ -64,15 +67,20 @@ test('primary subpages offer one back button and Home has none', async ({ page }
 test('Back navigation retraces navigation without creating a back-button loop', async ({
   page,
 }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');
   const previous = page.getByRole('navigation', { name: 'Page history' }).getByRole('button');
   const navigation = page.getByRole('navigation', { name: 'Main navigation' });
+  const visit = async (name) => {
+    await page.getByRole('button', { name: 'Open navigation' }).click();
+    await navigation.getByRole('link', { name, exact: true }).click();
+  };
   await expect(previous).toHaveCount(0);
-  await navigation.getByRole('link', { name: 'About', exact: true }).click();
+  await visit('About');
   await expect(previous).toHaveText('Back to Home');
-  await navigation.getByRole('link', { name: 'Contact', exact: true }).click();
+  await visit('Contact');
   await expect(previous).toHaveText('Back to About');
-  await navigation.getByRole('link', { name: 'Certificates', exact: true }).click();
+  await visit('Certificates');
   await expect(previous).toHaveText('Back to Contact');
   for (const route of ['/contact', '/about', '/']) {
     await previous.click();
@@ -88,8 +96,8 @@ test('Back navigation retraces navigation without creating a back-button loop', 
   await page.keyboard.press('Enter');
   await expect(page).toHaveURL('/');
   await expect(previous).toHaveCount(0);
-  await navigation.getByRole('link', { name: 'About', exact: true }).click();
-  await navigation.getByRole('link', { name: 'Home', exact: true }).click();
+  await visit('About');
+  await visit('Home');
   await expect(previous).toHaveCount(0);
   await page.reload();
   await expect(previous).toHaveCount(0);
@@ -98,6 +106,7 @@ test('Back navigation retraces navigation without creating a back-button loop', 
 test('Back navigation preserves filtered collections and referring route state after reload', async ({
   page,
 }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/projects?q=Pocket#project-index');
   await page.getByRole('link', { name: 'View project', exact: true }).click();
   await page.reload();
@@ -114,6 +123,23 @@ test('Back navigation preserves filtered collections and referring route state a
     'href',
     '/projects?q=Pocket#project-index',
   );
+});
+
+test('back controls update at the mobile breakpoint without reserving desktop space', async ({
+  page,
+}) => {
+  for (const route of ['/about', '/projects/rae-jacob', '/missing']) {
+    await page.goto(route);
+    const backControl = page.locator('.mobile-back-control');
+    for (const width of [760, 761, 1440, 390]) {
+      await page.setViewportSize({ width, height: 900 });
+      if (width <= 760) await expect(backControl).toBeVisible();
+      else {
+        await expect(backControl).toBeHidden();
+        await expect(backControl).toHaveCSS('display', 'none');
+      }
+    }
+  }
 });
 
 test('back labels name project destinations and wrap on narrow screens', async ({ page }) => {

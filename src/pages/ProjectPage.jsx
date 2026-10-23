@@ -71,7 +71,11 @@ export default function ProjectPage() {
       tabIndex={-1}
       className="container page-content detail-page case-study-page"
     >
-      <Link className="text-link back-link" to={returnTo} state={location.state?.returnState}>
+      <Link
+        className="text-link back-link mobile-back-control"
+        to={returnTo}
+        state={location.state?.returnState}
+      >
         <ArrowLeft size={16} /> Back to {sourceLabel || 'projects'}
       </Link>
       <header className="project-heading">

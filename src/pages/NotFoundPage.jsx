@@ -9,7 +9,7 @@ export default function NotFoundPage() {
       <h1>Page not found</h1>
       <p>This link may be outdated. Return home or browse the projects.</p>
       <div className="hero-buttons">
-        <Link className="button" to="/">
+        <Link className="button mobile-back-control" to="/">
           <ArrowLeft size={17} /> Back home
         </Link>
         <Link className="button button-outline" to="/projects">

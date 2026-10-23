@@ -44,7 +44,7 @@ test('IRIS is discoverable as QA work and its workbook opens independently of li
   const popup = await popupPromise;
   await expect(popup).toHaveURL(workbook);
   await popup.close();
-  await page.getByRole('link', { name: 'Back to projects', exact: true }).click();
+  await page.goBack();
   await expect(page).toHaveURL(/category=QA/);
   await page.getByRole('combobox', { name: 'Filter by technology' }).selectOption('Manual Testing');
   await expect(page.locator('.work-card h2')).toHaveText('IRIS QA Testing');
