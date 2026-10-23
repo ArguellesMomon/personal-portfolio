@@ -12,6 +12,128 @@ async function fillMessage(page) {
     .fill('I would like to discuss an internship opportunity with you.');
 }
 
+test('message count follows typing, minimum validation, limits, and restored drafts', async ({
+  page,
+}) => {
+  await page.goto('/contact');
+  const message = page.getByRole('textbox', { name: 'Your message', exact: true });
+  const count = page.locator('#message-count');
+  const requirement = page.locator('#message-requirement');
+  await expect(count).toHaveText('0 / 5,000 characters');
+  await expect(requirement).toHaveText('20 more characters needed');
+  await message.fill('a'.repeat(19));
+  await expect(count).toHaveText('19 / 5,000 characters');
+  await expect(requirement).toHaveText('1 more character needed');
+  await message.press('End');
+  await message.press('a');
+  await expect(requirement).toHaveText('20-character minimum reached');
+  await page.reload();
+  await expect(count).toHaveText('20 / 5,000 characters');
+  await expect(requirement).toHaveText('20-character minimum reached');
+  await message.fill(' '.repeat(20));
+  await expect(requirement).toHaveText('20 more characters needed');
+  await message.fill('a'.repeat(5001));
+  await expect(count).toHaveText('5,000 / 5,000 characters');
+  await page.getByRole('button', { name: 'Clear draft' }).click();
+  await expect(count).toHaveText('0 / 5,000 characters');
+});
+
+test('attachments enforce the combined size limit and can be removed or cleared', async ({
+  page,
+}) => {
+  let requests = 0;
+  await page.route('https://formsubmit.co/**', async (route) => {
+    requests++;
+    await route.abort();
+  });
+  await page.goto('/contact');
+  await fillMessage(page);
+  await page.locator('#contact-attachment-0').setInputFiles({
+    name: 'brief.pdf',
+    mimeType: 'application/pdf',
+    buffer: Buffer.alloc(6_000_000),
+  });
+  await page.getByRole('button', { name: 'Add another file' }).click();
+  await page.locator('#contact-attachment-1').setInputFiles({
+    name: 'reference.png',
+    mimeType: 'image/png',
+    buffer: Buffer.alloc(5_000_000),
+  });
+  await expect(page.getByRole('alert')).toContainText('exceed 10 MB');
+  await page.getByRole('button', { name: 'Continue to send', exact: true }).click();
+  expect(requests).toBe(0);
+  await expect(page.locator('#contact-attachment-0')).toBeFocused();
+  await page.getByRole('button', { name: 'Remove attachment 2: reference.png' }).click();
+  await expect(page.getByRole('alert')).toBeHidden();
+  await page.getByRole('button', { name: 'Add another file' }).click();
+  await expect(page.getByRole('button', { name: 'Add another file' })).toHaveCount(0);
+  await page.getByRole('button', { name: 'Clear draft' }).click();
+  await expect(page.locator('input[type="file"]')).toHaveCount(1);
+  expect(await page.locator('#contact-attachment-0').evaluate((input) => input.files.length)).toBe(
+    0,
+  );
+  await expect(page.getByRole('button', { name: 'Send message', exact: true })).toBeEnabled();
+});
+
+test('selected files are not persisted with the text draft', async ({ page }) => {
+  await page.goto('/contact');
+  await fillMessage(page);
+  await page.locator('#contact-attachment-0').setInputFiles({
+    name: 'brief.txt',
+    mimeType: 'text/plain',
+    buffer: Buffer.from('Project brief'),
+  });
+  await page.reload();
+  await expect(page.locator('#contact-name')).toHaveValue('Portfolio Visitor');
+  expect(await page.locator('#contact-attachment-0').evaluate((input) => input.files.length)).toBe(
+    0,
+  );
+  await expect(page.getByRole('button', { name: 'Send message', exact: true })).toBeVisible();
+});
+
+test('files use native multipart submission while retaining message and metadata', async ({
+  page,
+}) => {
+  let uploadRequest;
+  const uploadEndpoint = 'https://formsubmit.co/arguellesrichmond@gmail.com';
+  await page.route(uploadEndpoint, async (route) => {
+    uploadRequest = route.request();
+    await route.fulfill({ contentType: 'text/html', body: '<h1>Test upload page</h1>' });
+  });
+  await page.goto('/contact');
+  await fillMessage(page);
+  for (let index = 0; index < 3; index++) {
+    if (index) await page.getByRole('button', { name: 'Add another file' }).click();
+    await page.locator(`#contact-attachment-${index}`).setInputFiles({
+      name: `brief-${index}.txt`,
+      mimeType: 'text/plain',
+      buffer: Buffer.from(`Project brief ${index}`),
+    });
+  }
+  const files = await page.locator('.contact-form').evaluate(async (form) => {
+    const data = new FormData(form);
+    return Promise.all(
+      [...data.entries()]
+        .filter(([, value]) => value instanceof File && value.name)
+        .map(async ([field, file]) => ({ field, name: file.name, content: await file.text() })),
+    );
+  });
+  expect(files).toEqual([
+    { field: 'attachment', name: 'brief-0.txt', content: 'Project brief 0' },
+    { field: 'attachment2', name: 'brief-1.txt', content: 'Project brief 1' },
+    { field: 'attachment3', name: 'brief-2.txt', content: 'Project brief 2' },
+  ]);
+  await page.getByRole('button', { name: 'Continue to send', exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'Test upload page' })).toBeVisible();
+  expect(uploadRequest.method()).toBe('POST');
+  expect(uploadRequest.headers()['content-type']).toContain('multipart/form-data; boundary=');
+  const body = uploadRequest.postData();
+  expect(body).toContain('Portfolio Visitor');
+  expect(body).toContain('visitor@example.com');
+  expect(body).toContain('Portfolio enquiry: Internship opportunity');
+  expect(body).toContain('internship opportunity with you.');
+});
+
 test('pending activation is explained without claiming a message was sent', async ({ page }) => {
   await page.route(endpoint, (route) =>
     route.fulfill({ json: { success: 'false', message: 'This form needs Activation.' } }),

@@ -709,6 +709,57 @@ main:focus {
   resize: vertical;
   min-height: 140px;
 }
+.message-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 4px 16px;
+  margin-top: -12px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.minimum-reached {
+  color: var(--accent);
+}
+.attachment-fields {
+  display: grid;
+  gap: 12px;
+}
+.attachment-help {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+.attachment-field {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 8px;
+}
+.contact-form input[type='file'] {
+  padding: 8px;
+  font-size: 13px;
+}
+.contact-form input[type='file']::file-selector-button {
+  margin-right: 8px;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--surface-alt);
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+}
+.attachment-fields > .text-link {
+  justify-self: start;
+  font-size: 13px;
+}
+.attachment-error {
+  font-size: 12px;
+}
+.attachment-error:empty {
+  display: none;
+}
 .contact-form ::placeholder {
   color: var(--muted);
   opacity: 1;

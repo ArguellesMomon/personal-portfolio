@@ -67,9 +67,11 @@ The repository review script discovers all public repositories with pagination, 
 
 ## Contact delivery
 
-Messages are submitted through [FormSubmit AJAX](https://formsubmit.co/ajax-documentation) to `arguellesrichmond@gmail.com`. The service requires the recipient to activate the form through its one-time activation email. A successful service response does not independently confirm inbox delivery.
+Text-only messages are submitted through [FormSubmit AJAX](https://formsubmit.co/ajax-documentation) to `arguellesrichmond@gmail.com`. The service requires the recipient to activate the form through its one-time activation email. A successful service response does not independently confirm inbox delivery.
 
-Drafts stay in `sessionStorage` for the current browser tab and clear after submission or the Clear draft action. Failed requests retain the message and offer a prefilled email link. The form includes a honeypot, duplicate-submit prevention, and a 20-second timeout. No private credentials are stored in this repository.
+The message field shows a live count out of 5,000 characters and the remaining characters needed to reach the 20-character minimum. Minimum validation ignores spaces at the ends. Visitors may attach up to three files, totaling at most 10 MB. File submissions use FormSubmit's documented native multipart POST and continue to its send/confirmation page; text-only messages retain inline AJAX feedback. Oversized attachments are blocked before submission and can be removed individually. Files stay in the current form only and must be selected again after a reload or attached manually in the email-app fallback. No files are stored in browser drafts.
+
+Text drafts stay in `sessionStorage` for the current browser tab and clear after an accepted inline submission or the Clear draft action. Attachment submissions retain the text draft while the visitor completes the external send flow. Failed inline requests retain the message and offer a prefilled email link. The form includes a honeypot, duplicate-submit prevention, and a 20-second timeout for inline requests. No private credentials are stored in this repository.
 
 ## Hosting
 

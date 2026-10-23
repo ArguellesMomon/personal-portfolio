@@ -1,10 +1,20 @@
 import { useEffect, useRef, useState } from 'react';
-import { ArrowUpRight, LoaderCircle, Mail, Send, CheckCircle2, Trash2 } from 'lucide-react';
+import {
+  ArrowUpRight,
+  LoaderCircle,
+  Mail,
+  Send,
+  CheckCircle2,
+  Trash2,
+  Paperclip,
+  X,
+} from 'lucide-react';
 import profile from '../data/profile.js';
 import { PageHeading } from '../components/portfolio/SiteLayout.jsx';
 const draftKey = 'portfolio-contact-draft';
 const emptyDraft = { name: '', email: '', topic: 'Collaboration', message: '' };
 const topics = ['Internship opportunity', 'Collaboration', 'Project enquiry', 'General enquiry'];
+const maxAttachmentBytes = 10_000_000;
 function restoreDraft() {
   try {
     const saved = JSON.parse(sessionStorage.getItem(draftKey));
@@ -25,9 +35,24 @@ export default function ContactPage() {
   const hasDraft = Boolean(draft.name || draft.email || draft.message);
   const [status, setStatus] = useState('idle');
   const [feedback, setFeedback] = useState('');
+  const [attachments, setAttachments] = useState([null]);
+  const [attachmentError, setAttachmentError] = useState('');
+  const attachmentInputs = useRef([]);
+  const hasAttachments = attachments.some(Boolean);
+  const charactersNeeded = Math.max(0, 20 - draft.message.trim().length);
   const pendingRequest = useRef(null);
   useEffect(() => {
-    return () => pendingRequest.current?.abort();
+    // Restore the form if the visitor returns from the attachment send page.
+    const restore = () => {
+      pendingRequest.current = null;
+      setStatus('idle');
+      setFeedback('');
+    };
+    window.addEventListener('pageshow', restore);
+    return () => {
+      window.removeEventListener('pageshow', restore);
+      pendingRequest.current?.abort();
+    };
   }, []);
   useEffect(() => {
     try {
@@ -45,6 +70,22 @@ export default function ContactPage() {
   };
   const clearDraft = () => {
     setDraft(emptyDraft);
+    attachmentInputs.current.forEach((input) => {
+      if (input) input.value = '';
+    });
+    setAttachments([null]);
+    setAttachmentError('');
+    setStatus('idle');
+    setFeedback('');
+  };
+  const updateAttachment = (index, file) => {
+    const next = attachments.map((attachment, slot) => (slot === index ? file : attachment));
+    setAttachments(next);
+    setAttachmentError(
+      next.reduce((total, attachment) => total + (attachment?.size || 0), 0) > maxAttachmentBytes
+        ? 'Files exceed 10 MB in total. Remove a file or choose a smaller one.'
+        : '',
+    );
     setStatus('idle');
     setFeedback('');
   };
@@ -61,6 +102,12 @@ export default function ContactPage() {
     const form = event.currentTarget;
     const fields = new FormData(form);
     if (fields.get('_honey')) return;
+    const files = [...fields.values()].filter((value) => value instanceof File && value.name);
+    if (files.reduce((total, file) => total + file.size, 0) > maxAttachmentBytes) {
+      setAttachmentError('Files exceed 10 MB in total. Remove a file or choose a smaller one.');
+      attachmentInputs.current.find((input) => input?.files.length)?.focus();
+      return;
+    }
     for (const [name, minimum] of [
       ['name', 2],
       ['message', 20],
@@ -75,6 +122,20 @@ export default function ContactPage() {
     }
     const controller = new AbortController();
     pendingRequest.current = controller;
+    if (files.length) {
+      // FormSubmit documents attachments for native multipart submissions.
+      // Keep the file inputs enabled so their bytes are included in the POST.
+      setStatus('uploading');
+      setFeedback('Continuing to FormSubmit to send your message and attachments…');
+      try {
+        HTMLFormElement.prototype.submit.call(form);
+      } catch {
+        pendingRequest.current = null;
+        setStatus('error');
+        setFeedback('The send page could not be opened. Your message and files are still here.');
+      }
+      return;
+    }
     setStatus('sending');
     setFeedback('Sending your message…');
     const timeout = setTimeout(() => controller.abort('timeout'), 20000);
@@ -101,6 +162,8 @@ export default function ContactPage() {
       }
       form.reset();
       setDraft(emptyDraft);
+      setAttachments([null]);
+      setAttachmentError('');
       setStatus('success');
       setFeedback(
         'Message submitted. Thank you for reaching out! I’ll reply to the email you provided.',
@@ -144,9 +207,12 @@ export default function ContactPage() {
           <h2>Send a message</h2>
           <form
             className="contact-form"
+            action={`https://formsubmit.co/${profile.email}`}
+            method="post"
+            encType="multipart/form-data"
             onSubmit={sendMessage}
             onInput={(event) => event.target.setCustomValidity?.('')}
-            aria-busy={status === 'sending'}
+            aria-busy={status === 'sending' || status === 'uploading'}
           >
             <fieldset disabled={status === 'sending'}>
               <legend className="visually-hidden">Send Richmond a message</legend>
@@ -206,13 +272,85 @@ export default function ContactPage() {
                   required
                   minLength={20}
                   maxLength={5000}
+                  aria-describedby="message-requirement message-count"
                 />
               </label>
+              <div className="message-meta">
+                <span
+                  id="message-requirement"
+                  className={charactersNeeded === 0 ? 'minimum-reached' : ''}
+                  aria-live="polite"
+                  aria-atomic="true"
+                >
+                  {charactersNeeded
+                    ? `${charactersNeeded} more ${charactersNeeded === 1 ? 'character' : 'characters'} needed`
+                    : '20-character minimum reached'}
+                </span>
+                <span id="message-count">
+                  {draft.message.length.toLocaleString('en-US')} / 5,000 characters
+                </span>
+              </div>
+              <div className="attachment-fields">
+                <p id="attachment-help" className="attachment-help">
+                  Up to 3 files, 10 MB total. Files aren’t saved with drafts. With attachments,
+                  you’ll continue to FormSubmit to send your message.
+                </p>
+                {attachments.map((attachment, index) => (
+                  <div key={index} className="attachment-field">
+                    <label htmlFor={`contact-attachment-${index}`}>
+                      <span>
+                        <Paperclip size={14} aria-hidden="true" />{' '}
+                        {index === 0
+                          ? 'Attachment (optional)'
+                          : `Attachment ${index + 1} (optional)`}
+                      </span>
+                      <input
+                        ref={(input) => {
+                          attachmentInputs.current[index] = input;
+                        }}
+                        id={`contact-attachment-${index}`}
+                        type="file"
+                        name={index === 0 ? 'attachment' : `attachment${index + 1}`}
+                        aria-describedby="attachment-help attachment-error"
+                        onChange={(event) => updateAttachment(index, event.target.files[0] || null)}
+                      />
+                    </label>
+                    {attachment && (
+                      <button
+                        type="button"
+                        className="icon-button attachment-remove"
+                        aria-label={`Remove attachment ${index + 1}: ${attachment.name}`}
+                        onClick={() => {
+                          attachmentInputs.current[index].value = '';
+                          updateAttachment(index, null);
+                        }}
+                      >
+                        <X size={18} aria-hidden="true" />
+                      </button>
+                    )}
+                  </div>
+                ))}
+                {attachments.length < 3 && (
+                  <button
+                    type="button"
+                    className="text-link"
+                    onClick={() => setAttachments((previous) => [...previous, null])}
+                  >
+                    <Paperclip size={15} aria-hidden="true" /> Add another file
+                  </button>
+                )}
+                <p id="attachment-error" className="feedback-error attachment-error" role="alert">
+                  {attachmentError}
+                </p>
+              </div>
+              <input type="hidden" name="_subject" value={`Portfolio enquiry: ${draft.topic}`} />
+              <input type="hidden" name="_template" value="table" />
+              <input type="hidden" name="_url" value={window.location.href} />
               <div className="form-honeypot" aria-hidden="true">
                 <label htmlFor="contact-website">Leave this field empty</label>
                 <input id="contact-website" name="_honey" tabIndex={-1} autoComplete="off" />
               </div>
-              {hasDraft && (
+              {(hasDraft || hasAttachments) && (
                 <div className="draft-toolbar">
                   <span>
                     {draftSaved
@@ -225,15 +363,22 @@ export default function ContactPage() {
                 </div>
               )}
               <p className="form-privacy">
-                Your name, email, and message are delivered via FormSubmit. All fields are required.
+                Your name, email, message, and any attachments are delivered via FormSubmit.
+                Attachments are optional; all other fields are required.
               </p>
-              <button className="button" type="submit">
+              <button className="button" type="submit" disabled={status === 'uploading'}>
                 {status === 'sending' ? (
                   <LoaderCircle className="sending-icon" size={18} />
                 ) : (
                   <Send size={18} />
                 )}
-                {status === 'sending' ? 'Sending…' : 'Send message'}
+                {status === 'sending'
+                  ? 'Sending…'
+                  : status === 'uploading'
+                    ? 'Continuing…'
+                    : hasAttachments
+                      ? 'Continue to send'
+                      : 'Send message'}
               </button>
             </fieldset>
             <div
@@ -246,9 +391,14 @@ export default function ContactPage() {
               <p>{feedback}</p>
             </div>
             {status === 'error' && (
-              <a className="text-link email-fallback" href={emailFallback}>
-                <Mail size={17} /> Send with your email app <ArrowUpRight size={15} />
-              </a>
+              <div>
+                <a className="text-link email-fallback" href={emailFallback}>
+                  <Mail size={17} /> Send with your email app <ArrowUpRight size={15} />
+                </a>
+                {hasAttachments && (
+                  <p className="attachment-help">Attach your files again in your email app.</p>
+                )}
+              </div>
             )}
           </form>
         </section>
