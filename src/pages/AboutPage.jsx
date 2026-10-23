@@ -23,16 +23,36 @@ export default function AboutPage() {
         <div className="about-intro-copy">
           <h2 id="background-title">Richmond Arguelles</h2>
           <p>
-            I build applications with React and React Native and develop embedded machine learning
-            systems.
+            I’m a Computer Science student at De La Salle Lipa. I build web and mobile applications
+            with React and React Native, and work with embedded machine learning.
           </p>
           <p>
-            My work includes internship planning tools, local discovery apps, and an acoustic
-            mosquito detection thesis. I’m now exploring game development with{' '}
+            One of my main projects is{' '}
+            <Link to="/projects/aedescapella" state={{ returnTo: '/about' }}>
+              AedesCapella
+            </Link>
+            , our thesis on acoustic mosquito detection. It combines wingbeat audio processing and
+            on-device machine learning on an ESP32-S3 with a React monitoring dashboard. My thesis
+            work spans acoustic sensing, the on-device model, and the dashboard that presents sensor
+            status and activity.
+          </p>
+          <p>
+            I also built{' '}
+            <Link to="/projects/wellbot" state={{ returnTo: '/about' }}>
+              MedTech Mate
+            </Link>
+            , my first personal AI project. It helps medical technology interns organize rotations,
+            procedure quotas, shifts, notes, and documents, with Chami as an AI study companion. I
+            developed the workspace, data integration, and study chat.
+          </p>
+          <p>
+            I’m exploring game development through{' '}
             <Link to="/projects/rae-jacob" state={{ returnTo: '/about' }}>
               Rae Jacob: Beyond the Balete
             </Link>
-            , my first game—a pixel-art adventure inspired by Philippine folklore.
+            , my first game. This React Native and Expo prototype brings Philippine folklore into a
+            pixel-art adventure with exploration, character conversations, and environmental
+            puzzles.
           </p>
           <div className="education-fact">
             <span className="eyebrow">Education</span>

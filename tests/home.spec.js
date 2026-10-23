@@ -23,6 +23,7 @@ test('homepage connects background, projects, credentials, and contact with real
   const highlights = page.locator('.home-certificate');
   await expect(highlights).toHaveCount(2);
   for (const highlight of await highlights.all()) {
+    await highlight.scrollIntoViewIfNeeded();
     await expect
       .poll(() =>
         highlight.locator('img').evaluate((image) => image.complete && image.naturalWidth > 0),

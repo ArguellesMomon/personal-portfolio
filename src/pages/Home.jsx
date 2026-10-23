@@ -211,8 +211,10 @@ export default function Home() {
           <span className="eyebrow">01 / Background</span>
           <h2 id="home-about-title">Beyond the interface.</h2>
           <p>
-            I work across the interface, the data, and the device. My projects range from an
-            internship planning workspace to an acoustic mosquito detection thesis.
+            I work across the interface, the data, and the device. My projects include MedTech Mate,
+            an internship planning workspace with an AI study companion, and AedesCapella, our
+            acoustic mosquito detection thesis combining on-device machine learning with a
+            monitoring dashboard.
           </p>
           <p>
             I’m also exploring game development with Rae Jacob: Beyond the Balete, my first game—a
