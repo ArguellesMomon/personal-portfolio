@@ -156,8 +156,11 @@ export function PreviousPageNavigation() {
     }
   }, [visitedPages]);
 
+  // Home needs no back control; project and 404 pages provide their own.
+  // Continue tracking those visits so other pages can name their return destination.
+  if (!navigation.some(([path]) => path !== '/' && path === location.pathname)) return null;
+
   const canGoBack = historyIndex > 0;
-  const disabled = !canGoBack && location.pathname === '/';
   const previousPath = visitedPages[historyIndex - 1]?.pathname;
   const label = `Back to ${canGoBack ? (previousPath ? pageLabel(previousPath) : 'previous page') : 'Home'}`;
 
@@ -166,8 +169,7 @@ export function PreviousPageNavigation() {
       <button
         type="button"
         className="text-link previous-button"
-        disabled={disabled}
-        title={disabled ? 'No previous page' : label}
+        title={label}
         onClick={() => {
           if (canGoBack) navigate(-1);
           else navigate('/', { replace: true });

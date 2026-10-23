@@ -1,17 +1,54 @@
 import { test, expect } from '@playwright/test';
+import { readFileSync } from 'node:fs';
 
-test('Back navigation is available on every route with a home fallback for direct visits', async ({
-  page,
-}) => {
-  for (const route of [
-    '/projects',
-    '/about',
-    '/contact',
-    '/achievements',
-    '/projects/wellbot',
-    '/projects/invalid',
-    '/missing',
-  ]) {
+const allProjects = JSON.parse(
+  readFileSync(new URL('../src/data/projects.json', import.meta.url), 'utf8'),
+);
+
+for (const width of [320, 1440]) {
+  for (const theme of ['light', 'dark']) {
+    test(`every route has one back control except Home at ${width}px in ${theme}`, async ({
+      page,
+    }, testInfo) => {
+      test.setTimeout(90000);
+      await page.setViewportSize({ width, height: 900 });
+      await page.emulateMedia({ colorScheme: theme });
+      const routes = [
+        '/',
+        '/projects',
+        '/about',
+        '/contact',
+        '/achievements',
+        ...allProjects.map((project) => `/projects/${project.id}`),
+        '/missing',
+        '/projects/invalid',
+        '/projects/wellbot/extra',
+      ];
+      for (const route of routes) {
+        await page.goto(route);
+        await expect(page.locator('main h1')).toBeVisible();
+        const backControls = page
+          .getByRole('button', { name: /^Back / })
+          .or(page.getByRole('link', { name: /^Back / }));
+        await expect(backControls, `${route} back controls`).toHaveCount(route === '/' ? 0 : 1);
+        if (route !== '/') await expect(backControls).toBeVisible();
+        if (route === '/' || route.startsWith('/projects/') || route === '/missing')
+          await expect(page.getByRole('navigation', { name: 'Page history' })).toHaveCount(0);
+        expect(
+          await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
+          `${route} horizontal overflow`,
+        ).toBe(true);
+        if (['/', '/about', '/projects/rae-jacob', '/missing'].includes(route))
+          await page.screenshot({
+            path: testInfo.outputPath(`${route.replaceAll('/', '-') || 'home'}.png`),
+          });
+      }
+    });
+  }
+}
+
+test('primary subpages offer one back button and Home has none', async ({ page }) => {
+  for (const route of ['/projects', '/about', '/contact', '/achievements']) {
     await page.goto(route);
     const previous = page.getByRole('navigation', { name: 'Page history' }).getByRole('button');
     await expect(previous).toBeVisible();
@@ -19,7 +56,7 @@ test('Back navigation is available on every route with a home fallback for direc
     await expect(previous).toBeEnabled();
     await previous.click();
     await expect(page).toHaveURL('/');
-    await expect(previous).toBeDisabled();
+    await expect(previous).toHaveCount(0);
     await expect(page.locator('main')).toBeFocused();
   }
 });
@@ -30,27 +67,32 @@ test('Back navigation retraces navigation without creating a back-button loop', 
   await page.goto('/');
   const previous = page.getByRole('navigation', { name: 'Page history' }).getByRole('button');
   const navigation = page.getByRole('navigation', { name: 'Main navigation' });
-  await expect(previous).toBeDisabled();
+  await expect(previous).toHaveCount(0);
   await navigation.getByRole('link', { name: 'About', exact: true }).click();
   await expect(previous).toHaveText('Back to Home');
   await navigation.getByRole('link', { name: 'Contact', exact: true }).click();
   await expect(previous).toHaveText('Back to About');
-  await navigation.getByRole('link', { name: 'Home', exact: true }).click();
-  await expect(previous).toBeEnabled();
+  await navigation.getByRole('link', { name: 'Certificates', exact: true }).click();
   await expect(previous).toHaveText('Back to Contact');
   for (const route of ['/contact', '/about', '/']) {
     await previous.click();
     await expect(page).toHaveURL(route);
-    await expect(previous).toHaveText(route === '/contact' ? 'Back to About' : 'Back to Home');
+    if (route !== '/')
+      await expect(previous).toHaveText(route === '/contact' ? 'Back to About' : 'Back to Home');
   }
-  await expect(previous).toBeDisabled();
+  await expect(previous).toHaveCount(0);
   await page.goForward();
   await expect(page).toHaveURL('/about');
   await expect(previous).toBeEnabled();
   await previous.focus();
   await page.keyboard.press('Enter');
   await expect(page).toHaveURL('/');
-  await expect(previous).toBeDisabled();
+  await expect(previous).toHaveCount(0);
+  await navigation.getByRole('link', { name: 'About', exact: true }).click();
+  await navigation.getByRole('link', { name: 'Home', exact: true }).click();
+  await expect(previous).toHaveCount(0);
+  await page.reload();
+  await expect(previous).toHaveCount(0);
 });
 
 test('Back navigation preserves filtered collections and referring route state after reload', async ({
@@ -59,15 +101,15 @@ test('Back navigation preserves filtered collections and referring route state a
   await page.goto('/projects?q=Pocket#project-index');
   await page.getByRole('link', { name: 'View project', exact: true }).click();
   await page.reload();
-  const previous = page.getByRole('navigation', { name: 'Page history' }).getByRole('button');
-  await expect(previous).toHaveText('Back to Projects');
+  const previous = page.getByRole('link', { name: 'Back to projects', exact: true });
+  await expect(page.getByRole('navigation', { name: 'Page history' })).toHaveCount(0);
   await previous.click();
   await expect(page).toHaveURL('/projects?q=Pocket#project-index');
   await expect(page.getByRole('searchbox')).toHaveValue('Pocket');
   await expect(page.locator('.work-card')).toHaveCount(1);
-  await page.goForward();
+  await page.goBack();
   await expect(page).toHaveURL('/projects/pocket-quest');
-  await expect(previous).toHaveText('Back to Projects');
+  await expect(page.getByRole('navigation', { name: 'Page history' })).toHaveCount(0);
   await expect(page.getByRole('link', { name: 'Back to projects', exact: true })).toHaveAttribute(
     'href',
     '/projects?q=Pocket#project-index',

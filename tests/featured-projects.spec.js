@@ -121,9 +121,11 @@ test('all homepage project links and next-project links preserve the return path
     await page.getByRole('link', { name: 'Back to home', exact: true }).click();
     await expect(page).toHaveURL('/#home-projects');
   }
-  await page.locator('#featured-projects .work-card h3 a').first().click();
+  const firstProjectLink = page.locator('#featured-projects .work-card h3 a').first();
+  const firstTitle = (await firstProjectLink.textContent()).trim();
+  await firstProjectLink.click();
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText(firstTitle);
   const firstProject = page.url();
-  const firstTitle = await page.locator('h1').textContent();
   await page.locator('.next-project').click();
   await page.getByRole('link', { name: `Back to ${firstTitle}`, exact: true }).click();
   await expect(page).toHaveURL(firstProject);
