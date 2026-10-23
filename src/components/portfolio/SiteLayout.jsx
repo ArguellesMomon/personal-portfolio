@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link, NavLink, useLocation } from 'react-router-dom';
-import { ArrowUpRight, Menu, Moon, Sun, X } from 'lucide-react';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { ArrowLeft, ArrowUpRight, Menu, Moon, Sun, X } from 'lucide-react';
 import { useTheme } from './ThemeContext.jsx';
 import profile from '../../data/profile.js';
 import projects from '../../data/projects.json';
@@ -12,6 +12,16 @@ const navigation = [
   ['/achievements', 'Certificates'],
   ['/contact', 'Contact'],
 ];
+
+const pageHistoryStorageKey = 'portfolio-page-history';
+
+function pageLabel(pathname) {
+  return (
+    navigation.find(([path]) => path === pathname)?.[1] ||
+    projects.find((project) => pathname === `/projects/${project.id}`)?.title ||
+    'Page not found'
+  );
+}
 
 export function RouteEffects() {
   const location = useLocation();
@@ -107,6 +117,66 @@ export function SiteHeader() {
         </div>
       </div>
     </header>
+  );
+}
+
+export function PreviousPageNavigation() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  // BrowserRouter's index survives reloads and tracks back/forward navigation.
+  // Unlike history.length, it excludes entries from before this site was opened.
+  const historyIndex = window.history.state?.idx ?? 0;
+  const [visitedPages, setVisitedPages] = useState(() => {
+    try {
+      const saved = JSON.parse(sessionStorage.getItem(pageHistoryStorageKey));
+      return Array.isArray(saved) && saved[historyIndex]?.key === location.key ? saved : [];
+    } catch {
+      return [];
+    }
+  });
+
+  useEffect(() => {
+    setVisitedPages((previous) => {
+      if (
+        previous[historyIndex]?.key === location.key &&
+        previous[historyIndex]?.pathname === location.pathname
+      )
+        return previous;
+      const updated = previous.slice(0, historyIndex + 1);
+      updated[historyIndex] = { key: location.key, pathname: location.pathname };
+      return updated;
+    });
+  }, [historyIndex, location.key, location.pathname]);
+
+  useEffect(() => {
+    try {
+      sessionStorage.setItem(pageHistoryStorageKey, JSON.stringify(visitedPages));
+    } catch {
+      // Labels still work for this visit when browser storage is unavailable.
+    }
+  }, [visitedPages]);
+
+  const canGoBack = historyIndex > 0;
+  const disabled = !canGoBack && location.pathname === '/';
+  const previousPath = visitedPages[historyIndex - 1]?.pathname;
+  const label = `Back to ${canGoBack ? (previousPath ? pageLabel(previousPath) : 'previous page') : 'Home'}`;
+
+  return (
+    <nav className="container page-navigation" aria-label="Page history">
+      <button
+        type="button"
+        className="text-link previous-button"
+        disabled={disabled}
+        title={disabled ? 'No previous page' : label}
+        onClick={() => {
+          if (canGoBack) navigate(-1);
+          else navigate('/', { replace: true });
+        }}
+      >
+        <ArrowLeft size={17} aria-hidden="true" />
+        <span>{label}</span>
+      </button>
+    </nav>
   );
 }
 

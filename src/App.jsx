@@ -2,7 +2,12 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from './components/portfolio/ThemeContext.jsx';
 import { MotionProvider } from './components/portfolio/MotionContext.jsx';
 import DepthEffects from './components/portfolio/DepthEffects.jsx';
-import { SiteHeader, SiteFooter, RouteEffects } from './components/portfolio/SiteLayout.jsx';
+import {
+  SiteHeader,
+  SiteFooter,
+  RouteEffects,
+  PreviousPageNavigation,
+} from './components/portfolio/SiteLayout.jsx';
 import Home from './pages/Home.jsx';
 import ProjectsPage from './pages/ProjectsPage.jsx';
 import ProjectPage from './pages/ProjectPage.jsx';
@@ -22,6 +27,7 @@ export default function App() {
           </a>
           <RouteEffects />
           <SiteHeader />
+          <PreviousPageNavigation />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/projects" element={<ProjectsPage />} />
