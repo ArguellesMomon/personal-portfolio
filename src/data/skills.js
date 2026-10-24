@@ -6,8 +6,9 @@ export default [
   { category: 'Backend & storage', items: ['Supabase', 'Neon Postgres', 'Neon Auth', 'IndexedDB'] },
   {
     category: 'Embedded & data',
-    items: ['ESP32-S3', 'TinyML', '1D-CNN', 'Linear Regression'],
+    items: ['C++', 'ESP32', 'ESP32-S3', 'I2C', 'TinyML', '1D-CNN', 'Linear Regression'],
   },
+  { category: 'Data tools (coursework)', items: ['Jupyter Notebook', 'Kaggle'] },
   {
     category: 'Software QA',
     items: [
@@ -17,5 +18,8 @@ export default [
       'Equivalence Partitioning',
     ],
   },
-  { category: 'Tools & services', items: ['Git', 'GitHub', 'Vercel', 'Groq', 'Leaflet'] },
+  {
+    category: 'Tools & services',
+    items: ['Git', 'GitHub', 'Arduino IDE', 'Blynk', 'Vercel', 'Groq', 'Leaflet'],
+  },
 ];

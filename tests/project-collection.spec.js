@@ -17,7 +17,7 @@ test('technology filters match exact stacks and persist through project navigati
   await expect(page.getByRole('heading', { name: 'No projects found' })).toBeVisible();
   await page.getByRole('button', { name: 'Reset filters' }).click();
   await expect(technology).toHaveValue('');
-  await expect(page.locator('.work-card')).toHaveCount(16);
+  await expect(page.locator('.work-card')).toHaveCount(17);
   await technology.selectOption('React');
   await expect(page.locator('.work-card')).toHaveCount(9);
   await expect(page.locator('.work-card h2')).not.toContainText(['Eventure']);

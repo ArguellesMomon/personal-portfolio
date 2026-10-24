@@ -15,7 +15,22 @@ const stackGroups = [
     ],
   ],
   ['Data & storage', ['Supabase', 'Neon Auth', 'Neon Postgres', 'IndexedDB', 'AsyncStorage']],
-  ['Embedded & data', ['ESP32-S3', 'TinyML', '1D-CNN', 'Linear Regression', 'Data Science']],
+  [
+    'Embedded & data',
+    [
+      'C++',
+      'ESP32',
+      'ESP32-S3',
+      'DHT11',
+      'PIR',
+      'SSD1306 OLED',
+      'I2C',
+      'TinyML',
+      '1D-CNN',
+      'Linear Regression',
+      'Data Science',
+    ],
+  ],
   [
     'Testing & documentation',
     [
@@ -27,6 +42,7 @@ const stackGroups = [
     ],
   ],
   ['AI service', ['Groq']],
+  ['Development & IoT tools', ['Arduino IDE', 'Blynk']],
   ['Platform', ['PWA']],
 ];
 

@@ -14,7 +14,7 @@ export default function ProjectArtwork({ project, large = false, cover = false }
   if (project.image)
     return (
       <div
-        className={`project-art real-art ${project.imageLayout === 'portrait' ? 'portrait-art' : ''} ${large ? 'art-large' : ''}`}
+        className={`project-art real-art ${project.imageLayout === 'portrait' ? 'portrait-art' : ''} ${project.imageSourceType === 'diagram' ? 'diagram-art' : ''} ${large ? 'art-large' : ''}`}
       >
         <img
           src={useCover ? project.coverImage : project.image}

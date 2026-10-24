@@ -3,7 +3,7 @@ import AxeBuilder from '@axe-core/playwright';
 
 test('project search, category filters, URL state, and empty recovery', async ({ page }) => {
   await page.goto('/projects');
-  await expect(page.locator('.work-card')).toHaveCount(16);
+  await expect(page.locator('.work-card')).toHaveCount(17);
   await page.getByRole('button', { name: 'Mobile apps', exact: true }).click();
   await expect(page.locator('.work-card')).toHaveCount(4);
   await expect(page).toHaveURL(/category=Mobile/);
@@ -15,7 +15,7 @@ test('project search, category filters, URL state, and empty recovery', async ({
   await page.getByRole('searchbox').fill('no-such-project');
   await expect(page.getByRole('heading', { name: 'No projects found' })).toBeVisible();
   await page.getByRole('button', { name: 'Reset filters' }).click();
-  await expect(page.locator('.work-card')).toHaveCount(16);
+  await expect(page.locator('.work-card')).toHaveCount(17);
   await page.getByRole('button', { name: 'Mobile apps', exact: true }).click();
   await page.getByRole('heading', { name: 'Travel Diary', exact: true }).getByRole('link').click();
   await page.goBack();

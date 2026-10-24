@@ -17,10 +17,12 @@ test('real project screenshots load with correct source and live links', async (
       'href',
       project.imageSource,
     );
-    await expect(page.getByRole('link', { name: 'View source' })).toHaveAttribute(
-      'href',
-      project.links.github,
-    );
+    if (project.links.github)
+      await expect(page.getByRole('link', { name: 'View source' })).toHaveAttribute(
+        'href',
+        project.links.github,
+      );
+    else await expect(page.getByRole('link', { name: 'View source' })).toHaveCount(0);
     if (project.links.live)
       await expect(page.getByRole('link', { name: 'Visit live project' })).toHaveAttribute(
         'href',

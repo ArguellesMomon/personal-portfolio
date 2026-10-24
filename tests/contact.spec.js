@@ -48,44 +48,70 @@ test('attachments enforce the combined size limit and can be removed or cleared'
   });
   await page.goto('/contact');
   await fillMessage(page);
-  await page.locator('#contact-attachment-0').setInputFiles({
-    name: 'brief.pdf',
-    mimeType: 'application/pdf',
-    buffer: Buffer.alloc(6_000_000),
-  });
-  await page.getByRole('button', { name: 'Add another file' }).click();
-  await page.locator('#contact-attachment-1').setInputFiles({
-    name: 'reference.png',
-    mimeType: 'image/png',
-    buffer: Buffer.alloc(5_000_000),
-  });
+  const picker = page.locator('#contact-attachments');
+  await expect(picker).toHaveAttribute('multiple', '');
+  await picker.setInputFiles([
+    {
+      name: 'brief.pdf',
+      mimeType: 'application/pdf',
+      buffer: Buffer.alloc(6_000_000),
+    },
+    {
+      name: 'reference.png',
+      mimeType: 'image/png',
+      buffer: Buffer.alloc(5_000_000),
+    },
+  ]);
+  await expect(
+    page.getByRole('list', { name: 'Selected attachments' }).getByRole('listitem'),
+  ).toHaveCount(2);
   await expect(page.getByRole('alert')).toContainText('exceed 10 MB');
   await page.getByRole('button', { name: 'Continue to send', exact: true }).click();
   expect(requests).toBe(0);
-  await expect(page.locator('#contact-attachment-0')).toBeFocused();
+  await expect(picker).toBeFocused();
   await page.getByRole('button', { name: 'Remove attachment 2: reference.png' }).click();
   await expect(page.getByRole('alert')).toBeHidden();
-  await page.getByRole('button', { name: 'Add another file' }).click();
-  await expect(page.getByRole('button', { name: 'Add another file' })).toHaveCount(0);
+  expect(await picker.evaluate((input) => [...input.files].map((file) => file.name))).toEqual([
+    'brief.pdf',
+  ]);
+  const submittedFiles = await page
+    .locator('.contact-form')
+    .evaluate((form) =>
+      [...new FormData(form).values()]
+        .filter((value) => value instanceof File && value.name)
+        .map((file) => ({ name: file.name, size: file.size })),
+    );
+  expect(submittedFiles).toEqual([{ name: 'brief.pdf', size: 6_000_000 }]);
+  await picker.setInputFiles(
+    Array.from({ length: 4 }, (_, index) => ({
+      name: `brief-${index}.txt`,
+      mimeType: 'text/plain',
+      buffer: Buffer.from('brief'),
+    })),
+  );
+  await expect(page.getByRole('alert')).toContainText('up to 3 files');
+  await page.getByRole('button', { name: 'Continue to send', exact: true }).click();
+  expect(requests).toBe(0);
+  await page.getByRole('button', { name: 'Remove attachment 4: brief-3.txt' }).click();
+  await expect(page.getByRole('alert')).toBeHidden();
+  await expect(page.locator('input[type="file"]:visible')).toHaveCount(1);
   await page.getByRole('button', { name: 'Clear draft' }).click();
   await expect(page.locator('input[type="file"]')).toHaveCount(1);
-  expect(await page.locator('#contact-attachment-0').evaluate((input) => input.files.length)).toBe(
-    0,
-  );
+  expect(await picker.evaluate((input) => input.files.length)).toBe(0);
   await expect(page.getByRole('button', { name: 'Send message', exact: true })).toBeEnabled();
 });
 
 test('selected files are not persisted with the text draft', async ({ page }) => {
   await page.goto('/contact');
   await fillMessage(page);
-  await page.locator('#contact-attachment-0').setInputFiles({
+  await page.locator('#contact-attachments').setInputFiles({
     name: 'brief.txt',
     mimeType: 'text/plain',
     buffer: Buffer.from('Project brief'),
   });
   await page.reload();
   await expect(page.locator('#contact-name')).toHaveValue('Portfolio Visitor');
-  expect(await page.locator('#contact-attachment-0').evaluate((input) => input.files.length)).toBe(
+  expect(await page.locator('#contact-attachments').evaluate((input) => input.files.length)).toBe(
     0,
   );
   await expect(page.getByRole('button', { name: 'Send message', exact: true })).toBeVisible();
@@ -102,14 +128,13 @@ test('files use native multipart submission while retaining message and metadata
   });
   await page.goto('/contact');
   await fillMessage(page);
-  for (let index = 0; index < 3; index++) {
-    if (index) await page.getByRole('button', { name: 'Add another file' }).click();
-    await page.locator(`#contact-attachment-${index}`).setInputFiles({
+  await page.locator('#contact-attachments').setInputFiles(
+    Array.from({ length: 3 }, (_, index) => ({
       name: `brief-${index}.txt`,
       mimeType: 'text/plain',
       buffer: Buffer.from(`Project brief ${index}`),
-    });
-  }
+    })),
+  );
   const files = await page.locator('.contact-form').evaluate(async (form) => {
     const data = new FormData(form);
     return Promise.all(

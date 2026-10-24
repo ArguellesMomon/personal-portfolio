@@ -49,7 +49,7 @@
       "Recharts",
       "Leaflet"
     ],
-    "role": "Thesis development: acoustic sensing, on-device model, and monitoring dashboard.",
+    "role": "Thesis team: responsible for hardware integration, including the ESP32-S3 and acoustic-sensing setup.",
     "problem": "Manual mosquito monitoring provides limited visibility into activity around a device. AedesCapella explores acoustic sensing and automatic response as an alternative.",
     "approach": "An ESP32-S3 processes wingbeat audio with an on-device 1D-CNN. A React dashboard displays sensor health, activity charts, mapped devices, and placement comparisons. Supabase provides operator authentication and live data, with polling to recover missed updates.",
     "challenges": "Separating device health from dashboard connectivity and showing stale or incomplete data clearly. Model candidates are not biologically confirmed detections, and recorded relay commands do not verify fluid delivery.",
@@ -72,6 +72,29 @@
     "coverImageHeight": 1080,
     "coverCaption": "Public sign-in / live website screenshot",
     "coverImageSource": "https://aedescapella.vercel.app"
+  },
+  {
+    "id": "smart-classroom",
+    "title": "Smart Classroom",
+    "category": "Embedded/Hardware",
+    "badge": "IoT Final Project",
+    "featured": false,
+    "shortDescription": "An ESP32 classroom prototype with environmental sensing, motion-based occupancy, fan control, an OLED display, and Blynk climate alerts.",
+    "techStack": ["ESP32", "C++", "Blynk", "Arduino IDE", "DHT11", "PIR", "SSD1306 OLED", "I2C"],
+    "role": "Team IoT project: firmware, hardware wiring and integration, Blynk configuration, OLED display, functional testing, and IMRAD documentation.",
+    "problem": "Bring classroom sensor readings, local indicators, remote monitoring, and fan control into one demonstrable prototype. The final project extended the original sensor-and-fan system with a local numerical display and remote climate warnings.",
+    "approach": "Developed Arduino C++ firmware on an ESP32 for a DHT11, PIR motion sensor, analog sound module, SSD1306 OLED, five LEDs, and an active-LOW relay controlling a separately powered 5 V fan. AUTO mode requests the fan when recent motion coincides with temperature at or above 33 degrees Celsius or relative humidity at or above 75 percent. Blynk provides telemetry, manual fan override, and climate events. The OLED shows readings, operating mode, commanded fan state, and connection status.",
+    "challenges": "Replaced the proposed LCD with an SSD1306 OLED after contrast difficulties, while preserving sensor and fan operation. The firmware checks invalid DHT readings, retains a motion-based occupied state for ten seconds, and limits climate events to one per sustained alert with a minimum 60-second cooldown. Sound values are raw ADC peaks, and the fan state reflects its control command rather than measured rotation.",
+    "outcome": "The project report documents functional checks of OLED communication and live readings, automatic and manual fan control, and climate notifications. The work demonstrates integration at prototype scale; classroom cooling effectiveness, energy savings, calibrated sound levels, and long-term reliability were not established.",
+    "demoNote": "Architecture diagram from the project report. This is a bench prototype; occupancy is estimated from recent motion and noise is an uncalibrated ADC reading. No public live demo or source repository is linked.",
+    "links": { "github": "", "live": "" },
+    "image": "/projects/smart-classroom-architecture.png",
+    "imageWidth": 1800,
+    "imageHeight": 790,
+    "imageAlt": "Smart Classroom architecture: temperature, humidity, motion, and sound inputs feed an ESP32 connected to an OLED and LEDs, a relay-controlled fan, and Blynk telemetry and controls.",
+    "imageSource": "/projects/smart-classroom-architecture.png",
+    "imageSourceType": "diagram",
+    "imagePosition": "center"
   },
   {
     "id": "pickletayo",

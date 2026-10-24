@@ -15,12 +15,14 @@ import ScreenshotDialog from '../components/portfolio/ScreenshotDialog.jsx';
 import ProjectArtwork from '../components/portfolio/ProjectArtwork.jsx';
 import { categoryLabels } from '../components/portfolio/ProjectCard.jsx';
 import { groupStack } from '../data/projectPresentation.js';
+import { useNavigationHistory } from '../components/portfolio/NavigationHistory.jsx';
 import '../styles/projects.css';
 import NotFoundPage from './NotFoundPage.jsx';
 
 export default function ProjectPage() {
   const { projectId } = useParams();
   const location = useLocation();
+  const history = useNavigationHistory();
   const sourceUrl = location.state?.returnTo ?? location.state?.collectionUrl;
   const sourcePath = typeof sourceUrl === 'string' ? sourceUrl.split(/[?#]/)[0] : '';
   const sourceLabels = {
@@ -75,6 +77,19 @@ export default function ProjectPage() {
         className="text-link back-link mobile-back-control"
         to={returnTo}
         state={location.state?.returnState}
+        replace
+        onClick={(event) => {
+          if (
+            event.button !== 0 ||
+            event.metaKey ||
+            event.ctrlKey ||
+            event.shiftKey ||
+            event.altKey
+          )
+            return;
+          event.preventDefault();
+          history.returnTo(returnTo, location.state?.returnState);
+        }}
       >
         <ArrowLeft size={16} /> Back to {sourceLabel || 'projects'}
       </Link>
@@ -154,7 +169,7 @@ export default function ProjectPage() {
         </section>
       ) : (
         <figure
-          className={`project-figure ${project.imageLayout === 'portrait' ? 'project-figure-portrait' : ''}`}
+          className={`project-figure ${project.imageLayout === 'portrait' ? 'project-figure-portrait' : ''} ${project.imageSourceType === 'diagram' ? 'project-figure-diagram' : ''}`}
         >
           <div className="project-screenshot">
             <ProjectArtwork project={project} large />
@@ -165,19 +180,25 @@ export default function ProjectPage() {
                 onClick={() => setScreenshotOpen(true)}
               >
                 <Maximize2 size={16} />{' '}
-                {project.imageSourceType === 'artwork' ? 'Enlarge preview' : 'Enlarge screenshot'}
+                {project.imageSourceType === 'diagram'
+                  ? 'Enlarge diagram'
+                  : project.imageSourceType === 'artwork'
+                    ? 'Enlarge preview'
+                    : 'Enlarge screenshot'}
               </button>
             )}
           </div>
           {project.image && project.imageSource && (
             <figcaption className="screenshot-note">
-              {project.imageSourceType === 'artwork'
-                ? 'Scene artwork preview'
-                : project.imageSourceType === 'provided'
-                  ? 'App screenshot'
-                  : project.imageSourceType === 'repository'
-                    ? 'Repository preview'
-                    : 'Public website screenshot'}
+              {project.imageSourceType === 'diagram'
+                ? 'System architecture · project report'
+                : project.imageSourceType === 'artwork'
+                  ? 'Scene artwork preview'
+                  : project.imageSourceType === 'provided'
+                    ? 'App screenshot'
+                    : project.imageSourceType === 'repository'
+                      ? 'Repository preview'
+                      : 'Public website screenshot'}
               <a href={project.imageSource} target="_blank" rel="noreferrer">
                 View original <ArrowUpRight size={13} />
               </a>

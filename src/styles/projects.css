@@ -203,7 +203,8 @@
   max-width: 480px;
   margin-inline: auto;
 }
-.project-figure-portrait .project-screenshot {
+.project-figure-portrait .project-screenshot,
+.project-figure-diagram .project-screenshot {
   padding: 20px 20px 70px;
 }
 .project-screenshot .portrait-art {
@@ -214,7 +215,8 @@
   width: auto;
   max-width: 100%;
 }
-.project-figure-portrait .screenshot-expand {
+.project-figure-portrait .screenshot-expand,
+.project-figure-diagram .screenshot-expand {
   right: 20px;
   bottom: 16px;
 }

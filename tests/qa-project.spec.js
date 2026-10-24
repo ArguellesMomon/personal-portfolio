@@ -9,8 +9,8 @@ test('IRIS is discoverable as QA work and its workbook opens independently of li
 }) => {
   await page.goto('/projects');
   await page.getByRole('button', { name: 'Embedded systems', exact: true }).click();
-  await expect(page.locator('.work-card')).toHaveCount(1);
-  await expect(page.locator('.work-card h2')).toHaveText('AedesCapella');
+  await expect(page.locator('.work-card')).toHaveCount(2);
+  await expect(page.locator('.work-card h2')).toHaveText(['AedesCapella', 'Smart Classroom']);
   await page.getByRole('button', { name: 'Software QA', exact: true }).click();
   await expect(page).toHaveURL(/category=QA/);
   await expect(page.locator('.work-card')).toHaveCount(1);

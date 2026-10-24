@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from './components/portfolio/ThemeContext.jsx';
 import { MotionProvider } from './components/portfolio/MotionContext.jsx';
 import DepthEffects from './components/portfolio/DepthEffects.jsx';
+import { NavigationHistoryProvider } from './components/portfolio/NavigationHistory.jsx';
 import {
   SiteHeader,
   SiteFooter,
@@ -21,23 +22,25 @@ export default function App() {
     <ThemeProvider>
       <MotionProvider>
         <BrowserRouter>
-          <DepthEffects />
-          <a className="skip-link" href="#main-content">
-            Skip to content
-          </a>
-          <RouteEffects />
-          <SiteHeader />
-          <PreviousPageNavigation />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/projects" element={<ProjectsPage />} />
-            <Route path="/projects/:projectId" element={<ProjectPage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/contact" element={<ContactPage />} />
-            <Route path="/achievements" element={<AchievementsPage />} />
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
-          <SiteFooter />
+          <NavigationHistoryProvider>
+            <DepthEffects />
+            <a className="skip-link" href="#main-content">
+              Skip to content
+            </a>
+            <RouteEffects />
+            <SiteHeader />
+            <PreviousPageNavigation />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/projects" element={<ProjectsPage />} />
+              <Route path="/projects/:projectId" element={<ProjectPage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/contact" element={<ContactPage />} />
+              <Route path="/achievements" element={<AchievementsPage />} />
+              <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+            <SiteFooter />
+          </NavigationHistoryProvider>
         </BrowserRouter>
       </MotionProvider>
     </ThemeProvider>

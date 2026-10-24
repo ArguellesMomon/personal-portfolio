@@ -15,6 +15,18 @@ const draftKey = 'portfolio-contact-draft';
 const emptyDraft = { name: '', email: '', topic: 'Collaboration', message: '' };
 const topics = ['Internship opportunity', 'Collaboration', 'Project enquiry', 'General enquiry'];
 const maxAttachmentBytes = 10_000_000;
+function attachmentValidation(files) {
+  if (files.length > 3) return 'Choose up to 3 files per message. Remove a file to continue.';
+  if (files.reduce((total, file) => total + file.size, 0) > maxAttachmentBytes)
+    return 'Files exceed 10 MB in total. Remove a file or choose smaller files.';
+  return '';
+}
+
+function fileList(files) {
+  const transfer = new DataTransfer();
+  files.forEach((file) => transfer.items.add(file));
+  return transfer.files;
+}
 function restoreDraft() {
   try {
     const saved = JSON.parse(sessionStorage.getItem(draftKey));
@@ -35,10 +47,10 @@ export default function ContactPage() {
   const hasDraft = Boolean(draft.name || draft.email || draft.message);
   const [status, setStatus] = useState('idle');
   const [feedback, setFeedback] = useState('');
-  const [attachments, setAttachments] = useState([null]);
+  const [attachments, setAttachments] = useState([]);
   const [attachmentError, setAttachmentError] = useState('');
-  const attachmentInputs = useRef([]);
-  const hasAttachments = attachments.some(Boolean);
+  const attachmentInput = useRef(null);
+  const hasAttachments = attachments.length > 0;
   const charactersNeeded = Math.max(0, 20 - draft.message.trim().length);
   const pendingRequest = useRef(null);
   useEffect(() => {
@@ -47,6 +59,9 @@ export default function ContactPage() {
       pendingRequest.current = null;
       setStatus('idle');
       setFeedback('');
+      const files = Array.from(attachmentInput.current?.files || []);
+      setAttachments(files);
+      setAttachmentError(attachmentValidation(files));
     };
     window.addEventListener('pageshow', restore);
     return () => {
@@ -70,22 +85,16 @@ export default function ContactPage() {
   };
   const clearDraft = () => {
     setDraft(emptyDraft);
-    attachmentInputs.current.forEach((input) => {
-      if (input) input.value = '';
-    });
-    setAttachments([null]);
+    if (attachmentInput.current) attachmentInput.current.value = '';
+    setAttachments([]);
     setAttachmentError('');
     setStatus('idle');
     setFeedback('');
   };
-  const updateAttachment = (index, file) => {
-    const next = attachments.map((attachment, slot) => (slot === index ? file : attachment));
-    setAttachments(next);
-    setAttachmentError(
-      next.reduce((total, attachment) => total + (attachment?.size || 0), 0) > maxAttachmentBytes
-        ? 'Files exceed 10 MB in total. Remove a file or choose a smaller one.'
-        : '',
-    );
+  const updateAttachments = (files) => {
+    attachmentInput.current.files = fileList(files);
+    setAttachments(files);
+    setAttachmentError(attachmentValidation(files));
     setStatus('idle');
     setFeedback('');
   };
@@ -103,9 +112,10 @@ export default function ContactPage() {
     const fields = new FormData(form);
     if (fields.get('_honey')) return;
     const files = [...fields.values()].filter((value) => value instanceof File && value.name);
-    if (files.reduce((total, file) => total + file.size, 0) > maxAttachmentBytes) {
-      setAttachmentError('Files exceed 10 MB in total. Remove a file or choose a smaller one.');
-      attachmentInputs.current.find((input) => input?.files.length)?.focus();
+    const fileError = attachmentValidation(files);
+    if (fileError) {
+      setAttachmentError(fileError);
+      attachmentInput.current.focus();
       return;
     }
     for (const [name, minimum] of [
@@ -162,7 +172,7 @@ export default function ContactPage() {
       }
       form.reset();
       setDraft(emptyDraft);
-      setAttachments([null]);
+      setAttachments([]);
       setAttachmentError('');
       setStatus('success');
       setFeedback(
@@ -291,54 +301,56 @@ export default function ContactPage() {
                 </span>
               </div>
               <div className="attachment-fields">
+                <label htmlFor="contact-attachments">
+                  <span>
+                    <Paperclip size={14} aria-hidden="true" /> Attachments (optional)
+                  </span>
+                  <input
+                    ref={attachmentInput}
+                    id="contact-attachments"
+                    type="file"
+                    multiple
+                    aria-describedby="attachment-help attachment-error"
+                    onChange={(event) => updateAttachments(Array.from(event.target.files))}
+                  />
+                </label>
                 <p id="attachment-help" className="attachment-help">
-                  Up to 3 files, 10 MB total. Files aren’t saved with drafts. With attachments,
-                  you’ll continue to FormSubmit to send your message.
+                  Select up to 3 files at once, 10 MB total. Files aren’t saved with drafts. With
+                  attachments, you’ll continue to FormSubmit to send your message.
                 </p>
-                {attachments.map((attachment, index) => (
-                  <div key={index} className="attachment-field">
-                    <label htmlFor={`contact-attachment-${index}`}>
-                      <span>
-                        <Paperclip size={14} aria-hidden="true" />{' '}
-                        {index === 0
-                          ? 'Attachment (optional)'
-                          : `Attachment ${index + 1} (optional)`}
-                      </span>
-                      <input
-                        ref={(input) => {
-                          attachmentInputs.current[index] = input;
-                        }}
-                        id={`contact-attachment-${index}`}
-                        type="file"
-                        name={index === 0 ? 'attachment' : `attachment${index + 1}`}
-                        aria-describedby="attachment-help attachment-error"
-                        onChange={(event) => updateAttachment(index, event.target.files[0] || null)}
-                      />
-                    </label>
-                    {attachment && (
-                      <button
-                        type="button"
-                        className="icon-button attachment-remove"
-                        aria-label={`Remove attachment ${index + 1}: ${attachment.name}`}
-                        onClick={() => {
-                          attachmentInputs.current[index].value = '';
-                          updateAttachment(index, null);
-                        }}
-                      >
-                        <X size={18} aria-hidden="true" />
-                      </button>
-                    )}
-                  </div>
-                ))}
-                {attachments.length < 3 && (
-                  <button
-                    type="button"
-                    className="text-link"
-                    onClick={() => setAttachments((previous) => [...previous, null])}
-                  >
-                    <Paperclip size={15} aria-hidden="true" /> Add another file
-                  </button>
+                {hasAttachments && (
+                  <ul className="attachment-list" aria-label="Selected attachments">
+                    {attachments.map((attachment, index) => (
+                      <li key={`${index}-${attachment.name}`}>
+                        <span className="attachment-name">{attachment.name}</span>
+                        <button
+                          type="button"
+                          className="icon-button attachment-remove"
+                          aria-label={`Remove attachment ${index + 1}: ${attachment.name}`}
+                          onClick={() =>
+                            updateAttachments(attachments.filter((_, slot) => slot !== index))
+                          }
+                        >
+                          <X size={18} aria-hidden="true" />
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
                 )}
+                <div hidden>
+                  {/* FormSubmit receives separate named file fields from one visible picker. */}
+                  {attachments.map((attachment, index) => (
+                    <input
+                      key={index}
+                      type="file"
+                      name={index === 0 ? 'attachment' : `attachment${index + 1}`}
+                      ref={(input) => {
+                        if (input) input.files = fileList([attachment]);
+                      }}
+                      tabIndex={-1}
+                    />
+                  ))}
+                </div>
                 <p id="attachment-error" className="feedback-error attachment-error" role="alert">
                   {attachmentError}
                 </p>

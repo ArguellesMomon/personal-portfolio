@@ -116,13 +116,58 @@ test('Back navigation preserves filtered collections and referring route state a
   await expect(page).toHaveURL('/projects?q=Pocket#project-index');
   await expect(page.getByRole('searchbox')).toHaveValue('Pocket');
   await expect(page.locator('.work-card')).toHaveCount(1);
-  await page.goBack();
+  await page.goForward();
   await expect(page).toHaveURL('/projects/pocket-quest');
   await expect(page.getByRole('navigation', { name: 'Page history' })).toHaveCount(0);
   await expect(page.getByRole('link', { name: 'Back to projects', exact: true })).toHaveAttribute(
     'href',
     '/projects?q=Pocket#project-index',
   );
+});
+
+test('project return links unwind history so the collection goes back Home after a reload', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/');
+  await page.getByRole('button', { name: 'Open navigation' }).click();
+  await page
+    .getByRole('navigation', { name: 'Main navigation' })
+    .getByRole('link', { name: 'Projects', exact: true })
+    .click();
+  await page.getByRole('searchbox').fill('Pocket');
+  await expect(page).toHaveURL('/projects?q=Pocket');
+  await page.getByRole('link', { name: 'View project', exact: true }).click();
+  await expect(page).toHaveURL('/projects/pocket-quest');
+  await page.locator('.next-project').click();
+  await page.getByRole('link', { name: 'Back to Pocket Quest', exact: true }).click();
+  await expect(page).toHaveURL('/projects/pocket-quest');
+  await page.reload();
+  await page.getByRole('link', { name: 'Back to projects', exact: true }).click();
+  await expect(page).toHaveURL('/projects?q=Pocket');
+  const back = page.getByRole('navigation', { name: 'Page history' }).getByRole('button');
+  await expect(back).toHaveText('Back to Home');
+  await page.reload();
+  await expect(back).toHaveText('Back to Home');
+  await back.click();
+  await expect(page).toHaveURL('/');
+  await page.goForward();
+  await expect(page).toHaveURL('/projects?q=Pocket');
+  await expect(back).toHaveText('Back to Home');
+});
+
+test('direct project fallback replaces the entry instead of creating a return loop', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/projects/wellbot');
+  await page.getByRole('link', { name: 'Back to projects', exact: true }).click();
+  await expect(page).toHaveURL('/projects');
+  const back = page.getByRole('navigation', { name: 'Page history' }).getByRole('button');
+  await expect(back).toHaveText('Back to Home');
+  await back.click();
+  await expect(page).toHaveURL('/');
+  await expect(page.getByRole('navigation', { name: 'Page history' })).toHaveCount(0);
 });
 
 test('back controls update at the mobile breakpoint without reserving desktop space', async ({

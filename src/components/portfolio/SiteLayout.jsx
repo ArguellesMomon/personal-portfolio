@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { ArrowLeft, ArrowUpRight, Menu, Moon, Sun, X } from 'lucide-react';
 import { useTheme } from './ThemeContext.jsx';
+import { useNavigationHistory } from './NavigationHistory.jsx';
 import profile from '../../data/profile.js';
 import projects from '../../data/projects.json';
 
@@ -12,8 +13,6 @@ const navigation = [
   ['/achievements', 'Certificates'],
   ['/contact', 'Contact'],
 ];
-
-const pageHistoryStorageKey = 'portfolio-page-history';
 
 function pageLabel(pathname) {
   return (
@@ -123,38 +122,7 @@ export function SiteHeader() {
 export function PreviousPageNavigation() {
   const location = useLocation();
   const navigate = useNavigate();
-  // BrowserRouter's index survives reloads and tracks back/forward navigation.
-  // Unlike history.length, it excludes entries from before this site was opened.
-  const historyIndex = window.history.state?.idx ?? 0;
-  const [visitedPages, setVisitedPages] = useState(() => {
-    try {
-      const saved = JSON.parse(sessionStorage.getItem(pageHistoryStorageKey));
-      return Array.isArray(saved) && saved[historyIndex]?.key === location.key ? saved : [];
-    } catch {
-      return [];
-    }
-  });
-
-  useEffect(() => {
-    setVisitedPages((previous) => {
-      if (
-        previous[historyIndex]?.key === location.key &&
-        previous[historyIndex]?.pathname === location.pathname
-      )
-        return previous;
-      const updated = previous.slice(0, historyIndex + 1);
-      updated[historyIndex] = { key: location.key, pathname: location.pathname };
-      return updated;
-    });
-  }, [historyIndex, location.key, location.pathname]);
-
-  useEffect(() => {
-    try {
-      sessionStorage.setItem(pageHistoryStorageKey, JSON.stringify(visitedPages));
-    } catch {
-      // Labels still work for this visit when browser storage is unavailable.
-    }
-  }, [visitedPages]);
+  const { historyIndex, visitedPages } = useNavigationHistory();
 
   // Home needs no back control; project and 404 pages provide their own.
   // Continue tracking those visits so other pages can name their return destination.

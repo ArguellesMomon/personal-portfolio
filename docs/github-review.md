@@ -1,6 +1,10 @@
 # GitHub project review
 
-The initial review on 14 October 2026 covered 25 public repositories returned by the [GitHub account API](https://api.github.com/users/ArguellesMomon/repos?per_page=100&sort=updated), including default-branch file lists, available READMEs, package metadata, and latest push dates. Private repositories are outside this public review. Following the additions below, the collection has 16 case studies, 14 linked to public repositories.
+The initial review on 14 October 2026 covered 25 public repositories returned by the [GitHub account API](https://api.github.com/users/ArguellesMomon/repos?per_page=100&sort=updated), including default-branch file lists, available READMEs, package metadata, and latest push dates. Private repositories are outside this public review. Including the locally supplied project added on 24 October, the collection has 17 case studies, 14 linked to public repositories.
+
+## Follow-up — 24 October 2026
+
+Added Smart Classroom from the owner's supplied Arduino sketch and IMRAD report, with an architecture diagram from the report. This addition did not come from a public GitHub repository and has no public source or live-demo link. See the [source review and scope](smart-classroom-review.md). Richmond confirmed that his AedesCapella responsibility is hardware and that his Jupyter Notebook and Kaggle experience comes from classroom activities; the role and skills wording distinguish these contexts.
 
 ## Follow-up — 17 October 2026
 

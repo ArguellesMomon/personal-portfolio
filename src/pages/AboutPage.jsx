@@ -32,9 +32,18 @@ export default function AboutPage() {
               AedesCapella
             </Link>
             , our thesis on acoustic mosquito detection. It combines wingbeat audio processing and
-            on-device machine learning on an ESP32-S3 with a React monitoring dashboard. My thesis
-            work spans acoustic sensing, the on-device model, and the dashboard that presents sensor
-            status and activity.
+            on-device machine learning on an ESP32-S3 with a React monitoring dashboard. My
+            responsibility on the thesis team is the hardware, including the ESP32-S3 and
+            acoustic-sensing setup.
+          </p>
+          <p>
+            My embedded work also includes{' '}
+            <Link to="/projects/smart-classroom" state={{ returnTo: '/about' }}>
+              Smart Classroom
+            </Link>
+            , an ESP32 IoT prototype with environmental sensors, an OLED display, automatic and
+            manual fan control, and Blynk climate alerts. I worked across its C++ firmware, hardware
+            integration, cloud setup, testing, and documentation.
           </p>
           <p>
             I also built{' '}
